@@ -66,9 +66,23 @@ Il documento è diviso in tre macro aree: un'introduzione generale alle applicaz
 \tableofcontents
 
 \mainmatter
-\chapter{Itroduzione ai progetti}
+\chapter{Itroduzione}
 \section{InfoStud}
-InfoStud è l'app che si interfaccia 
+%introdurre il progetto parlare di front end e backend (idem con inforprof)
+InfoStud è l'app rivolta agli studenti che permette di interagire con il sistema omonimo di InfoSapienza attraverso lo smartphone. L'app è piuttosto matura e ricca di funzionalità a tal punto di averne aggiunte di nuove rispetto alla piattaforma web, come la visualizzazione dell'orario delle lezioni, il progetto SmartSpaces per la ricerca delle aule con la relativa affluenza o il progetto SmartBiblio per la prenotazione dei posti nelle biblioteche dell'ateneo.
+
+L'interfaccia è sviluppata in Ionic [link pagina uff], un framework che integra le tecnologie JavaScript, HTML, CSS e supporta ufficialmente AngularJS e React. Con esso siamo in grado di sviluppare app ibride [def] multi-piattaforma, il che è un vantaggio perché sviluppiamo una volta per tutti i sistemi operativi, ma ne risentono sia le prestazioni che la coerenza dell'interfaccia grafica rispetto alle linee guida del Material Design [link] o dell'Apple UI Design [link]. Inoltre Ionic non supporta di suo le funzionalità native del sistema operativo ospite, dunque abbiamo bisogno anche dei plug-in di Cordova [link] per integrare anche, banalmente, le comunicazioni HTTP.
+
+Il back-end invece è sviluppato in Go e Python, i nostri server svolgono principalmente la funzione di cache. Questo perchè i server di InfoSapienza hanno un tempo di risposta piuttosto alto quindi generalmente il 62\% delle richieste sono soddisfatte dalla cache, mentre il restante 38\% sono richieste dirette alle API di InfoSapienza. Inoltre la cache permette di continuare ad utilizzare l'app anche quando i server ufficiali sono in manutenzione, chiaramente in modo limitato.
+\section{InfoProf}
+InfoProf, al contrario, è l'app che si rivolge ai professori. Lo stato dell'arte attualmente è un'app in beta con circa 20 tester, le funzionalità offerte sono la visualizzazione degli studenti iscritti ad un verbale d'esame, la verbalizzazione dei voti, l'attivazione dell'OPIS e la ricerca delle aule. Data la natura poco user-friendly ed error-prone dell'interfaccia web [aggiungere fonte], c'è bisogno di un grande lavoro di progettazione da parte degli studenti.
+
+Anche il back-end dell'applicazione ha bisogno di un discreto lavoro da parte del server perchè le API di InfoSapienza sono inesistenti, dunque tutte le informazioni vanno prese direttamente dall'HTML delle pagine generate dal sito web. Questo si fa attraverso l'attività di web scraping [def].
+\section{Metodologie di sviluppo}
+%parlare di git, CI/CD e agile
+\section{Il team}
+%introdurre la struttura del team e come mi sono introdotto nel gruppo di lavoro, parlare dell'attività di bugfixing
+
 
 \chapter{Near-infrared multi-object spectroscopy}
 \label{chap:1} 
