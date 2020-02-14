@@ -47,8 +47,8 @@
 \copyyear{2020}
 \advisor{Prof. Emanuele Panizzi}
 \authoremail{gabrielli.1693726@studenti.uniroma1.it}
-\examdate{}
-\examiner{}
+\examdate{23 marzo 2020}
+\examiner{Prof.}
 
 %we refer to http://ctan.mirrorcatalogs.com/macros/latex/contrib/sapthesis/sapthesis-doc.pdf for an exhaustive description of the sapthesis documentclass.
 
@@ -57,7 +57,6 @@
 
 \frontmatter
 \maketitle
-
 \begin{abstract}
 Oggetto della tesi è lo sviluppo delle app InfoStud e InfoProf in cui mi sono occupato di risolvere i problemi pre-esistenti e aggiungere nuove funzionalità di entità variabile.
 Il documento è diviso in tre macro aree: un'introduzione generale alle applicazioni, al processo di sviluppo e agli strumenti utilizzati, poi l'iniziale attività di bug-fixing che comprende anche l'aggiunta di piccole features e infine una parte dedicata allo studio, progettazione ed implementazione dell'apertura di un verbale d'esame.
@@ -67,41 +66,58 @@ Il documento è diviso in tre macro aree: un'introduzione generale alle applicaz
 
 \mainmatter
 \chapter{Itroduzione}
-\section{InfoStud}
-%introdurre il progetto parlare di front end e backend (idem con inforprof)
-InfoStud è l'app rivolta agli studenti che permette di interagire con il sistema omonimo di InfoSapienza attraverso lo smartphone. L'app è piuttosto matura e ricca di funzionalità a tal punto di averne aggiunte di nuove rispetto alla piattaforma web, come la visualizzazione dell'orario delle lezioni, il progetto SmartSpaces per la ricerca delle aule con la relativa affluenza o il progetto SmartBiblio per la prenotazione dei posti nelle biblioteche dell'ateneo.
+\label{ch:1}
+\section{InfoStud e InfoProf}
+\label{sec:pres}
+L'app InfoStud nasce \textit{n} anni fa dalla necessità degli studenti di avere il sistema InfoStud sviluppato da InfoSapienza su mobile.
+Data la natura poco \textit{mobile-friendly} del sistema web, nacque l'app ufficiale sotto il brand di SapienzaApps.
 
-L'interfaccia è sviluppata in Ionic [link pagina uff], un framework che integra le tecnologie JavaScript, HTML, CSS e supporta ufficialmente AngularJS e React. Con esso siamo in grado di sviluppare app ibride [def] multi-piattaforma, il che è un vantaggio perché sviluppiamo una volta per tutti i sistemi operativi, ma ne risentono sia le prestazioni che la coerenza dell'interfaccia grafica rispetto alle linee guida del Material Design [link] o dell'Apple UI Design [link]. Inoltre Ionic non supporta di suo le funzionalità native del sistema operativo ospite, dunque abbiamo bisogno anche dei plug-in di Cordova [link] per integrare anche, banalmente, le comunicazioni HTTP.
+SapienzaApps, sotto il coordinamento del Prof. Emanuele Panizzi, pubblica e mantiene progetti come SeismoCloud e GeneroCity all'interno
+del Gamification Lab.
 
-Il back-end invece è sviluppato in Go e Python, i nostri server svolgono principalmente la funzione di cache. Questo perchè i server di InfoSapienza hanno un tempo di risposta piuttosto alto quindi generalmente il 62\% delle richieste sono soddisfatte dalla cache, mentre il restante 38\% sono richieste dirette alle API di InfoSapienza. Inoltre la cache permette di continuare ad utilizzare l'app anche quando i server ufficiali sono in manutenzione, chiaramente in modo limitato.
-\section{InfoProf}
-InfoProf, al contrario, è l'app che si rivolge ai professori. Lo stato dell'arte attualmente è un'app in beta con circa 20 tester, le funzionalità offerte sono la visualizzazione degli studenti iscritti ad un verbale d'esame, la verbalizzazione dei voti, l'attivazione dell'OPIS e la ricerca delle aule. Data la natura poco user-friendly ed error-prone dell'interfaccia web [aggiungere fonte], c'è bisogno di un grande lavoro di progettazione da parte degli studenti.
+InfoStud è l'app che si rivolge unicamente agli studenti iscritti alla Sapienza e mette a disposizione un parco di funzionalità ampio
+che copre le funzioni standard del sistema padre (come visualizzazione e gestione esami) e andando oltre in alcuni casi: il sistema
+di gestione dell'orario didattico semi-automatico, la compilazione dei bollettini automatica, la prenotazione dei posti in biblioteca, ecc.
 
-Anche il back-end dell'applicazione ha bisogno di un discreto lavoro da parte del server perchè le API di InfoSapienza sono inesistenti, dunque tutte le informazioni vanno prese direttamente dall'HTML delle pagine generate dal sito web. Questo si fa attraverso l'attività di web scraping [def].
-\section{Metodologie di sviluppo}
-%parlare di git, CI/CD e agile
-\section{Il team}
-%introdurre la struttura del team e come mi sono introdotto nel gruppo di lavoro, parlare dell'attività di bugfixing
+InfoProf, al contrario, è l'app che si rivolge ai professori della Sapienza e vuole essere uno strumento alternativo, e più intuitivo, 
+del sistema web. La semplicità di utilizzo dell'app va però analizzata e progettata in modo empirico. Questo studio porta via molto tempo 
+al lavoro ed è per questo che gran parte della progettazione si traduce in prototyping e test di usabilità, con eventualmente molteplici
+iterazioni. Lo stato dell'arte attualmente è un'app che permette di verbalizzare gli studenti, attivare gli OPIS e cercare le aule.
+Queste funzionalità hanno un denominatore in comune: sono casi d'uso in cui l'utente potrebbe non avere il computer quando ha bisogno
+di utilizzarle. La verbalizzazione infatti può essere fatta subito dopo un orale, senza dover aspettare di tornare in ufficio e 
+registrare i voti di tutti gli studenti. L'OPIS, date le ultime disposizioni, deve essere attivato durante la lezione. Ma un utente
+potrebbe non voler portare un computer solo per attivare il codice OPIS.
+
+%scrivere meglio questo paragrafo per ricollegarsi a quello precedente
+Lo studio che io ho fatto invece riguarda un'altra funzionalità direi fondamentale: l'apertura di un verbale d'esame. Diciamo che
+questa è una necessità che deriva più dal fatto che l'interfaccia web è poco \textit{user-friendly}, ma ne parlerò più approfonditamente
+in \ref{sec:why}.
 
 
-\chapter{Near-infrared multi-object spectroscopy}
-\label{chap:1} 
-\section{Scientific Case}
-\label{sec:caso}
-Over the last decades, innovative observational techniques have been developed to allow spectrographs observing...
+\section{Perché?}
+\label{sec:why}
 
-\chapter{MOONS}
-\label{chap:2}
-\section{The Very Large Telescope}
-Property of the European Southern Observatory...
 
-\section{The Multi-Object Optical and Near-infrared Spectrograph}
-\label{sec:moons}
+\chapter{Metodologie di sviluppo}
+\label{ch:2}
+\section{Organizzazione del team}
+\label{sec:team}
+\section{Tecnologie utilizzate}
+\label{sec:tech}
 
-The \textit{Multi-Object Optical and Near-infrared Spectrograph} is a future generation MOS instrument for the VLT. 
 
-\chapter{Conclusions}
-The grasping power of the mirror..
+\chapter{Progettazione}
+\label{ch:3}
+\section{Need-finding}
+\label{sec:nf}
+\section{Progettazione della UI}
+\label{sec:ui}
+\section{Implementazione}
+\label{sec:dev}
+
+
+\chapter{Concluzioni}
+\label{ch:4}
 
 \backmatter
 \phantomsection
