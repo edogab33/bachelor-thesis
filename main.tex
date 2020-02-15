@@ -18,7 +18,8 @@
 %\usepackage{float}
 %\usepackage{type1cm}
 \usepackage{lettrine}
-\linespread{0.9}
+%portare linespread a 1.1-1.3
+\linespread{1.1}
 %\usepackage{chngcntr}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
 %\onehalfspacing
@@ -91,29 +92,73 @@ potrebbe non voler portare un computer solo per attivare il codice OPIS.
 %scrivere meglio questo paragrafo per ricollegarsi a quello precedente
 Lo studio che io ho fatto invece riguarda un'altra funzionalità direi fondamentale: l'apertura di un verbale d'esame. Diciamo che
 questa è una necessità che deriva più dal fatto che l'interfaccia web è poco \textit{user-friendly}, ma ne parlerò più approfonditamente
-in \ref{sec:why}.
+in \ref{sec:why} e in \ref{sec:nf}.
 
 
 \section{Perché?}
 \label{sec:why}
+%trovare articoli scientifici in merito. 
+Lo smartphone è ormai uno strumento radicato nella nostra quotidianeità. Sono innumerevoli i modi in cui ha cambiato la nostra vita e la
+produttività è uno degli aspetti centrali. Nel settore pubblico l'evoluzione dei sistemi informatici però pecca di una rigorosa analisi 
+e progettazione, il che comporta perdite di tempo e difficoltà nell'utilizzo.
+Dall'indagine preliminare che ho svolto infatti emerge che alcuni intervistati trovano l'interfaccia web \textit{error-prone}, mentre 
+un professore assunto recentemente, ha dichiarato che la piattaforma non è affatto user-friendly e che la logica vorrebbe che ci fosse
+un tasto "crea appello", non che debba andarlo a cercare in "verbalizzazione". Anche all'interno del team di sviluppo, quando ci è
+stata presentata per la prima volta l'interfaccia, abbiamo faticato a capire come svolgere i task che un professore è tenuto normalmente
+a fare. Tolti errori grossolani come l'assegnazione di termini differenti alla stessa cosa [trovare un termine più adatto] 
+\textbf{(inserire figura)}, esistono delle criticità che vanno contro la logica comune: se andiamo ad osservare la lista degli insegnamenti,
+alla destra di ogni elemento possiamo osservare un numero che rappresenta il numero di \textit{corsi} selezionati accoppiati con quell'
+insegnamento. Se selezioniamo il checkbox dell'elemento e andiamo all'interno del sotto-menù, deselezionando tutti i corsi, l'insegnamento
+rimarrà selezionato. Una buona interfaccia \textbf{(citare)}, invece, dovrebbe aiutare l'utente ad evitare gli errori.
+
+%citare le statistice del miur riguardo età e numero di docenti della sapienza
+
+%L'approccio che ho avuto quindi è stato quello di capire cosa gli utenti ritengono più importante nell'apertura di un verbale e mettere
+%in secondo piano le funzionalità che vengono usate raramente. Vedremo infatti che paradossalmente l'interfaccia web, ai docenti che 
+%hanno imparato ad usarla, piace.
 
 
 \chapter{Metodologie di sviluppo}
 \label{ch:2}
-\section{Organizzazione del team}
+\section{Organizzazione}
 \label{sec:team}
+Il team è composto da studenti impiegati nello sviluppo per circa tre mesi. E' prassi iniziare ad ambientarsi nei progetti attraverso
+l'attività di bug-fixing. Familiarizzare con il codice e con i colleghi è centrale dato che per molti di noi è la prima volta che 
+ci troviamo dentro un progetto di discrete dimensioni e all'interno di un contesto semi-professionale.
+
+Dato che molti di noi si fermano solo per tre mesi, la metodologia di sviluppo che si adatta meglio alle nostre esigenze è l'Agile.
+Lo sviluppo agile si basa su un insieme di regole, citandone due significative:
+%centrare le citazioni
+"Our highest priority is to satisfy the customer
+through early and continuous delivery of valuable software."
+
+"Deliver working software frequently, from a
+couple of weeks to a couple of months, with a
+preference to the shorter timescale."
+
+Ciò detto si collega ad un altro aspetto dello sviluppo software del Gamification Lab, quello del Continuous Integration e Continuous
+Delivery. Per lavorare utilizziamo quotidianamente GitLab, che è un sistema di \textit{controllo versione}. Questo aiuta a tenere
+traccia delle modifiche apportate al codice, tornare indietro, pubblicare issue e assegnarle. Questo aiuta a mantenere lo sviluppo
+\textit{agile}, cioè aggiungere piccole funzionalità nel giro di una settimana e mantenerne la qualità attraverso le code review, per
+poi integrarle nel programma beta e infine nell'app ufficiale.
+
+
+
 \section{Tecnologie utilizzate}
 \label{sec:tech}
 
 
 \chapter{Progettazione}
 \label{ch:3}
+%inserire diagramma di flusso di come viene fatta la progettazione (nf -> protoryping -> test -> repeat)
 \section{Need-finding}
 \label{sec:nf}
 \section{Progettazione della UI}
 \label{sec:ui}
+%citare "Developing SMASH"
 \section{Implementazione}
 \label{sec:dev}
+%inserire qualche snippet e magari parlare dei limiti tecnologici di ionic e come li ho superati
 
 
 \chapter{Concluzioni}
