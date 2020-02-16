@@ -1,4 +1,5 @@
 \documentclass[Lau, oneside]{sapthesis}%remove "english" for a thesis written in Italian
+\graphicspath{ {images/} }
 %Bachelor's (laurea triennale) thesis : Lau 
 %Master's (laurea specialistica) thesis: LaM 
 %PhD's thesis: PhD 
@@ -34,8 +35,8 @@
 			anchorcolor=black,
 			citecolor=red,
 			urlcolor=blue,
-			pdftitle={A sample Bachelor's thesis for Sapienza Università di Roma},
-			pdfauthor={FirstName LastName},
+			pdftitle={Sviluppo App},
+			pdfauthor={Edoardo Gabrielli},
 			pdfkeywords={thesis, sapienza, roma, university}
  }
 
@@ -87,8 +88,8 @@ al lavoro ed è per questo che gran parte della progettazione si traduce in prot
 iterazioni. Lo stato dell'arte attualmente è un'app che permette di verbalizzare gli studenti, attivare gli OPIS e cercare le aule.
 Queste funzionalità hanno un denominatore in comune: sono casi d'uso in cui l'utente potrebbe non avere il computer quando ha bisogno
 di utilizzarle. La verbalizzazione infatti può essere fatta subito dopo un orale, senza dover aspettare di tornare in ufficio e 
-registrare i voti di tutti gli studenti. L'OPIS, date le ultime disposizioni, deve essere attivato durante la lezione. Ma un utente
-potrebbe non voler portare un computer solo per attivare il codice OPIS.
+registrare i voti di tutti gli studenti. L'OPIS, date le ultime disposizioni, deve essere attivato durante la lezione, ma un utente
+potrebbe non voler portare un computer in aula solo per attivare il codice OPIS.
 
 Il mio tirocinio, in larga parte, è stato composto dall'aggiunta di piccole funzionalità richieste dall'utenza o dalla risoluzione di 
 problemi: su InfoStud mi sono occupato di migliorare il login, aggiungere un'icona su SmartBiblio per indicare i posti non gestiti
@@ -129,7 +130,7 @@ l'attività di bug-fixing: familiarizzare con il codice e con i colleghi è cent
 dentro un progetto di discrete dimensioni e all'interno di un contesto semi-professionale.
 
 La metodologia di sviluppo che si adatta meglio alle nostre esigenze è l'Agile, il quale si basa su un insieme di regole il cui senso
-generale è un approccio adatto ai cambiamenti, non fisso e rigoroso, che misura i progressi attraverso codice funzionante, incoraggia 
+generale è un approccio adatto ai cambiamenti, non fisso e rigoroso, che misura i progressi attraverso codice funzionante e incoraggia 
 il rilascio continuo del software per soddisfare l'utente finale. 
 
 Un aspetto fondamentale che si ricollega a questo è l'integrazione
@@ -137,11 +138,42 @@ continua del codice prodotto dagli sviluppatori: nel laboratorio utilizziamo Git
 traccia delle modifiche, segnala i conflitti che possono generarsi dalla modifica simultanea dello stesso file e aiuta a gestire i compiti 
 del singolo sviluppatore.
 Ad ogni \textit{merge request}, le modifiche apportate al codice sono revisionate da un controllo umano che garantisce la qualità del codice.
-Se infatti lo stile non è coerente con il resto del progetto, se ci sono bug introdotti dalle modifiche o altri problemi, la merge rquest 
+Se infatti lo stile non è coerente con il resto del progetto, se ci sono bug introdotti dalle modifiche o altri problemi, la merge request 
 viene respinta.
 
 \section{Tecnologie utilizzate}
 \label{sec:tech}
+Per sviluppare il front-end delle app utilizziamo Ionic Framework v3, che è basato su AngularJS. Ionic permette di utilizzare tecnologie
+web per creare interfacce secondo gli standard di Android e iOS. Il vantaggio dell'uso di Angular è che il codice non va adattato ad alcuna
+piattaforma, inoltre per chiunque abbia già una discreta conoscenza della programmazione web è immediato iniziare a programmare. Tutto
+ciò velocizza molto la scrittura di una UI, ma bisogna fare dei compromessi: l'interfaccia non segue diligentemente gli standard imposti
+dal Material Design o dall'iOS UI Design perchè deve adattarsi ad entrambe le piattaforme. Un'altra criticità è che di fatto l'app è
+un'interfaccia web con caratteristiche \textit{app-like}, ovvero una Progressive Web App sviluppata in Angular. 
+Il ruolo di Ionic è fornire gli elementi dei vari standard di design già fatti e di integrare anche le funzionalità native attraverso
+Ionic Native o Cordova. Ciò significa che le prestazioni ne risentono ripetto ad un'app nativa. Inoltre ad oggi Ionic è alla versione 5,
+ma è impossibile aggiornare i progetti senza andare a creare dei conflitti che vanno risolti manualmente, vista la mole di codice che è
+stato scritto quindi, siamo costretti a rimanere ad una versione di qualche anno fa, all'occorenza programmando manualmente le novità
+introdotte dagli standard.
+
+InfoStud ed InfoProf sono progettati seguendo il pattern Model-View-Controller (MVC). Come dice il nome stesso, il pattern impone una 
+separazione del software attraverso tre componenti:
+\begin{itemize}
+	\item Model: rappresentano le classi, contiengono i dati dell'applicazione a cui si accede attraverso i metodi che forniscono;
+	\item View: la view accede ai dati forniti dai modelli e li presenta all'utente, inoltre comunica con i controller;
+	\item Controller: il controller intercetta le azioni dell'utente attraverso la view ed è in grado di modificare i model. 
+\end{itemize}
+
+\begin{figure}[h]
+	\caption{Schema del funzionamento del pattern MVC \cite{ref:mvc}.}
+	\centering
+	\includegraphics[width=0.5\textwidth]{MVC-Process}
+	\label{fig:mvc}
+\end{figure}
+
+Ciò che traspare dunque è che la logica di business viene separata dalla logica di presentazione. Inoltre il pattern MVC incoraggia il 
+lavoro di gruppo permettendo agli sviluppatori di lavorare simultaneamente su diversi aspetti dell'applicazione. Un'altro aspetto importante
+riguardo il riuso del codice, infatti diverse view accedono agli stessi controller e modelli. Ad esempio, quando ho sviluppato l'immagine
+del profilo nel menù laterale, mi è bastato accedere ad un metodo del provider %in realtà non è proprio mvc
 
 
 \chapter{Progettazione}
@@ -150,6 +182,7 @@ viene respinta.
 
 \section{Need-finding}
 \label{sec:nf}
+
 \section{Progettazione della UI}
 \label{sec:ui}
 %citare "Developing SMASH"
@@ -166,14 +199,9 @@ viene respinta.
 \phantomsection
 \begin{thebibliography}{17}
 
-\bibitem{ref:vph}
-Blanche P.A., Gailly P., et al., “\textit{Volume phase holographic gratings: large size and high diffraction efficiency}“, Optical Engineering, Vol. 43, No.11, November 2004
-
-\bibitem{ref:science}
-Cirasuolo M., et al., \textit{"MOONS Science Report"}, MOONS Document Number: VLT-TRE-MON-14620-0001, Issue: $1.0$, $31^{\textup{st}}$ January $2013$
-
-\bibitem{ref:eso}
-European Southern Observatory, \url{http://www.eso.org}
+\bibitem{ref:mvc}
+Tratto da Wikipedia:
+https://it.wikipedia.org/wiki/Model-view-controller
 
 \end{thebibliography}
 
