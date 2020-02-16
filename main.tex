@@ -66,8 +66,9 @@ Il documento è diviso in tre macro aree: un'introduzione generale alle applicaz
 \tableofcontents
 
 \mainmatter
-\chapter{Itroduzione}
+\chapter{Introduzione}
 \label{ch:1}
+
 \section{InfoStud e InfoProf}
 \label{sec:pres}
 L'app InfoStud nasce \textit{n} anni fa dalla necessità degli studenti di avere il sistema InfoStud sviluppato da InfoSapienza su mobile.
@@ -89,11 +90,11 @@ di utilizzarle. La verbalizzazione infatti può essere fatta subito dopo un oral
 registrare i voti di tutti gli studenti. L'OPIS, date le ultime disposizioni, deve essere attivato durante la lezione. Ma un utente
 potrebbe non voler portare un computer solo per attivare il codice OPIS.
 
-%scrivere meglio questo paragrafo per ricollegarsi a quello precedente
-Lo studio che io ho fatto invece riguarda un'altra funzionalità direi fondamentale: l'apertura di un verbale d'esame. Diciamo che
-questa è una necessità che deriva più dal fatto che l'interfaccia web è poco \textit{user-friendly}, ma ne parlerò più approfonditamente
-in \ref{sec:why} e in \ref{sec:nf}.
-
+Il mio tirocinio, in larga parte, è stato composto dall'aggiunta di piccole funzionalità richieste dall'utenza o dalla risoluzione di 
+problemi: su InfoStud mi sono occupato di migliorare il login, aggiungere un'icona su SmartBiblio per indicare i posti non gestiti
+dal sistema, migliorare la dark-mode e aggiungere l'immagine del profilo nel menù laterale. Su InfoProf invece ho lavorato alla
+traduzione automatica, anche qui sul login, sul date-picker nella registrazione del voto di un esame e infine sul vero protagonista del 
+tirocinio, ovvero l'apertura di un verbale, in cui ho fatto uno studio più approfondito di cui parlerò in \ref{ch:3}.
 
 \section{Perché?}
 \label{sec:why}
@@ -120,29 +121,24 @@ rimarrà selezionato. Una buona interfaccia \textbf{(citare)}, invece, dovrebbe 
 
 \chapter{Metodologie di sviluppo}
 \label{ch:2}
+
 \section{Organizzazione}
 \label{sec:team}
 Il team è composto da studenti impiegati nello sviluppo per circa tre mesi. E' prassi iniziare ad ambientarsi nei progetti attraverso
-l'attività di bug-fixing. Familiarizzare con il codice e con i colleghi è centrale dato che per molti di noi è la prima volta che 
-ci troviamo dentro un progetto di discrete dimensioni e all'interno di un contesto semi-professionale.
+l'attività di bug-fixing: familiarizzare con il codice e con i colleghi è centrale dato che per molti di noi è la prima esperienza
+dentro un progetto di discrete dimensioni e all'interno di un contesto semi-professionale.
 
-Dato che molti di noi si fermano solo per tre mesi, la metodologia di sviluppo che si adatta meglio alle nostre esigenze è l'Agile.
-Lo sviluppo agile si basa su un insieme di regole, citandone due significative:
-%centrare le citazioni
-"Our highest priority is to satisfy the customer
-through early and continuous delivery of valuable software."
+La metodologia di sviluppo che si adatta meglio alle nostre esigenze è l'Agile, il quale si basa su un insieme di regole il cui senso
+generale è un approccio adatto ai cambiamenti, non fisso e rigoroso, che misura i progressi attraverso codice funzionante, incoraggia 
+il rilascio continuo del software per soddisfare l'utente finale. 
 
-"Deliver working software frequently, from a
-couple of weeks to a couple of months, with a
-preference to the shorter timescale."
-
-Ciò detto si collega ad un altro aspetto dello sviluppo software del Gamification Lab, quello del Continuous Integration e Continuous
-Delivery. Per lavorare utilizziamo quotidianamente GitLab, che è un sistema di \textit{controllo versione}. Questo aiuta a tenere
-traccia delle modifiche apportate al codice, tornare indietro, pubblicare issue e assegnarle. Questo aiuta a mantenere lo sviluppo
-\textit{agile}, cioè aggiungere piccole funzionalità nel giro di una settimana e mantenerne la qualità attraverso le code review, per
-poi integrarle nel programma beta e infine nell'app ufficiale.
-
-
+Un aspetto fondamentale che si ricollega a questo è l'integrazione
+continua del codice prodotto dagli sviluppatori: nel laboratorio utilizziamo GitLab, un sistema di controllo versione che tiene
+traccia delle modifiche, segnala i conflitti che possono generarsi dalla modifica simultanea dello stesso file e aiuta a gestire i compiti 
+del singolo sviluppatore.
+Ad ogni \textit{merge request}, le modifiche apportate al codice sono revisionate da un controllo umano che garantisce la qualità del codice.
+Se infatti lo stile non è coerente con il resto del progetto, se ci sono bug introdotti dalle modifiche o altri problemi, la merge rquest 
+viene respinta.
 
 \section{Tecnologie utilizzate}
 \label{sec:tech}
@@ -151,11 +147,13 @@ poi integrarle nel programma beta e infine nell'app ufficiale.
 \chapter{Progettazione}
 \label{ch:3}
 %inserire diagramma di flusso di come viene fatta la progettazione (nf -> protoryping -> test -> repeat)
+
 \section{Need-finding}
 \label{sec:nf}
 \section{Progettazione della UI}
 \label{sec:ui}
 %citare "Developing SMASH"
+
 \section{Implementazione}
 \label{sec:dev}
 %inserire qualche snippet e magari parlare dei limiti tecnologici di ionic e come li ho superati
