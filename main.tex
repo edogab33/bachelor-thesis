@@ -20,7 +20,7 @@
 %\usepackage{type1cm}
 \usepackage{lettrine}
 %portare linespread a 1.1-1.3
-\linespread{1.1}
+\linespread{1.4}
 %\usepackage{chngcntr}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
 %\onehalfspacing
@@ -155,33 +155,56 @@ ma è impossibile aggiornare i progetti senza andare a creare dei conflitti che 
 stato scritto quindi, siamo costretti a rimanere ad una versione di qualche anno fa, all'occorenza programmando manualmente le novità
 introdotte dagli standard.
 
-InfoStud ed InfoProf sono progettati seguendo il pattern Model-View-Controller (MVC). Come dice il nome stesso, il pattern impone una 
-separazione del software attraverso tre componenti:
+InfoStud ed InfoProf sono progettati seguendo un pattern architetturale loro. L'idea generale è quella di tenere separate le responsabilità
+di ogni componente. Ciò si traduce sinteticamente in:
+
 \begin{itemize}
 	\item Model: rappresentano le classi, contiengono i dati dell'applicazione a cui si accede attraverso i metodi che forniscono;
-	\item View: la view accede ai dati forniti dai modelli e li presenta all'utente, inoltre comunica con i controller;
-	\item Controller: il controller intercetta le azioni dell'utente attraverso la view ed è in grado di modificare i model. 
+	\item View: la view accede ai dati forniti dai modelli e li presenta all'utente, inoltre comunica con i controller e i provider;
+	\item Controller: il controller risponde alle azioni dell'utente intercettate dalla view e si occupa soltanto della logica di business, a volte comunica con i provider;
+	\item Provider: di fatto "fornisce" i dati. Ha il compito di utilizzare le API e consegnare i dati alla view attraverso i model.
 \end{itemize}
 
 \begin{figure}[h]
-	\caption{Schema del funzionamento del pattern MVC \cite{ref:mvc}.}
+	\caption{Schema del funzionamento del pattern utilizzato da InfoStud e InfoProf.}
 	\centering
-	\includegraphics[width=0.5\textwidth]{MVC-Process}
-	\label{fig:mvc}
+	\includegraphics[width=0.8\textwidth]{arch-pattern-img}
+	\label{fig:pattern}
 \end{figure}
 
-Ciò che traspare dunque è che la logica di business viene separata dalla logica di presentazione. Inoltre il pattern MVC incoraggia il 
-lavoro di gruppo permettendo agli sviluppatori di lavorare simultaneamente su diversi aspetti dell'applicazione. Un'altro aspetto importante
-riguardo il riuso del codice, infatti diverse view accedono agli stessi controller e modelli. Ad esempio, quando ho sviluppato l'immagine
-del profilo nel menù laterale, mi è bastato accedere ad un metodo del provider %in realtà non è proprio mvc
+I vantaggi dell'utilizzo di questo modello è quello di separare la logica di presentazione, quella di business e quella di accesso ai dati
+in entità distinte tra loro in modo da favorire il lavoro di gruppo (non si lavora mai sullo stesso componente simultaneamente, ma si può 
+lavorare insieme su livelli separati). Inoltre, essendo Angular un framework che impone una separazione in moduli del codice [citare], una divisione
+così fatta incoraggia il riusco del codice ovviamente. %fare diagramma di sequenza e un esempio
+
+%Tra ch 1 e 2 bisognerebbe aggiungere altre 8 pagine
 
 
 \chapter{Progettazione}
 \label{ch:3}
 %inserire diagramma di flusso di come viene fatta la progettazione (nf -> protoryping -> test -> repeat)
+L'attività di progettazione consiste nel trovare i bisogni dell'utente attraverso delle domande rivolte agli stessi, costruire un prototipo
+che rispecchi ciò che è emerso dalle domande, eseguire dei test di usabilità sul prototipo e, a seconda delle criticità, emerse dai test
+modificare il prototipo e ripetere i test finchè si è trovata un'interfaccia che funzioni per gran parte degli utenti.
 
 \section{Need-finding}
 \label{sec:nf}
+La prima cosa che ho fatto è capire quali sono i bisogni dell'utente. Non avendo mai utilizzato InfoStud originale, ho chiesto al Prof.
+Panizzi di mostrarmi come apre un verbale solitamente. Il primo approccio è stato piuttosto confusionario: la prima cosa che non capivo
+era la nomenclatura. Cosa si intende per "insegnamento", "corso", "appello", "esame", "verbale" e "insegnamento"? Questi termini nel sistema
+non hanno una definizione precisa e spesso vengono usati come sinonimi. Un altro problema è che il form per l'apertura di un verbale è
+statico, nel senso che potrebbe compilare in automatico le date richieste (che sono 4 in totale) con dei suggerimenti che almeno vagamente
+si avvicinano a ciò che l'utente vuole in modo da accorciare il tempo di inserimento, ma non lo fa. Inoltre c'è una lunga lista di insegnamenti
+che contiene i corsi tenuti dal professore, ripetuti per l'anno accademico precedente, più tutti quelli che ormai non si tengono
+più, ma che per legge bisogna mantenere nel sistema (alcuni potrebbero essere banalmente dei corsi che hanno cambiato nome) e considerare
+all'atto dell'apertura di un verbale d'esame. Non solo, ogni elemento di questa lista ha un sotto-menù che contiene un'altra lista dei corsi a cui
+l'insegnamento afferisce. Ma non finisce qui, perché se si vuole aprire un appello dopo gennaio non si possono più selezionare gli insegnamenti
+dell'anno accademico precedente (che per gli appelli precedenti si era obbligati a fare perchè altrimenti alcuni studenti non vedrebbero
+l'appello) perchè a fine gennaio termina l'anno e per qualche motivo burocratico non si può fare, dunque InfoStud restituisce un errore e 
+il professore non ne conosce neanche il motivo.
+
+Viste le criticità però esiste una funzione che i professori apprezzano, ovvero quella della duplicazione del verbale.
+
 
 \section{Progettazione della UI}
 \label{sec:ui}
@@ -199,9 +222,9 @@ del profilo nel menù laterale, mi è bastato accedere ad un metodo del provider
 \phantomsection
 \begin{thebibliography}{17}
 
-\bibitem{ref:mvc}
-Tratto da Wikipedia:
-https://it.wikipedia.org/wiki/Model-view-controller
+\bibitem{ref:mit}
+Tratto da MIT:
+\url{http://web.mit.edu/6.813/www/sp18/classes/09-more-learnability/#consistency}
 
 \end{thebibliography}
 
