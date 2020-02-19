@@ -147,7 +147,7 @@ Per sviluppare il front-end delle app utilizziamo Ionic Framework v3, che è bas
 web per creare interfacce secondo gli standard di Android e iOS. Il vantaggio dell'uso di Angular è che il codice non va adattato ad alcuna
 piattaforma, inoltre per chiunque abbia già una discreta conoscenza della programmazione web è immediato iniziare a programmare. Tutto
 ciò velocizza molto la scrittura di una UI, ma bisogna fare dei compromessi: l'interfaccia non segue diligentemente gli standard imposti
-dal Material Design o dall'iOS UI Design perchè deve adattarsi ad entrambe le piattaforme. Un'altra criticità è che di fatto l'app è
+dal Material Design o dall'iOS UI Design perché deve adattarsi ad entrambe le piattaforme. Un'altra criticità è che di fatto l'app è
 un'interfaccia web con caratteristiche \textit{app-like}, ovvero una Progressive Web App sviluppata in Angular. 
 Il ruolo di Ionic è fornire gli elementi dei vari standard di design già fatti e di integrare anche le funzionalità native attraverso
 Ionic Native o Cordova. Ciò significa che le prestazioni ne risentono ripetto ad un'app nativa. Inoltre ad oggi Ionic è alla versione 5,
@@ -173,11 +173,10 @@ di ogni componente. Ciò si traduce sinteticamente in:
 \end{figure}
 
 I vantaggi dell'utilizzo di questo modello è quello di separare la logica di presentazione, quella di business e quella di accesso ai dati
-in entità distinte tra loro in modo da favorire il lavoro di gruppo (non si lavora mai sullo stesso componente simultaneamente, ma si può 
-lavorare insieme su livelli separati). Inoltre, essendo Angular un framework che impone una separazione in moduli del codice [citare], una divisione
-così fatta incoraggia il riusco del codice ovviamente. %fare diagramma di sequenza e un esempio
+in entità distinte tra loro in modo da favorire il lavoro di gruppo. Inoltre, essendo Angular un framework che impone una separazione in moduli del codice [citare], una divisione
+così fatta incoraggia il riuso del codice ovviamente. %fare diagramma di sequenza e un esempio
 
-%Tra ch 1 e 2 bisognerebbe aggiungere altre 8 pagine
+%Tra ch 1 e 2 bisognerebbe aggiungere altre 8 pagine, magari apliare la descrizione delle issues
 
 
 \chapter{Progettazione}
@@ -191,7 +190,7 @@ modificare il prototipo e ripetere i test finchè si è trovata un'interfaccia c
 \label{sec:nf}
 La prima cosa che ho fatto è capire quali sono i bisogni dell'utente. Non avendo mai utilizzato InfoStud originale, ho chiesto al Prof.
 Panizzi di mostrarmi come apre un verbale solitamente. Il primo approccio è stato piuttosto confusionario: la prima cosa che non capivo
-era la nomenclatura. Cosa si intende per "insegnamento", "corso", "appello", "esame", "verbale" e "insegnamento"? Questi termini nel sistema
+era la nomenclatura: cosa si intende per "insegnamento", "corso", "appello", "esame", "verbale" e "insegnamento"? Questi termini nel sistema
 non hanno una definizione precisa e spesso vengono usati come sinonimi. Un altro problema è che il form per l'apertura di un verbale è
 statico, nel senso che potrebbe compilare in automatico le date richieste (che sono 4 in totale) con dei suggerimenti che almeno vagamente
 si avvicinano a ciò che l'utente vuole in modo da accorciare il tempo di inserimento, ma non lo fa. Inoltre c'è una lunga lista di insegnamenti
@@ -199,11 +198,82 @@ che contiene i corsi tenuti dal professore, ripetuti per l'anno accademico prece
 più, ma che per legge bisogna mantenere nel sistema (alcuni potrebbero essere banalmente dei corsi che hanno cambiato nome) e considerare
 all'atto dell'apertura di un verbale d'esame. Non solo, ogni elemento di questa lista ha un sotto-menù che contiene un'altra lista dei corsi a cui
 l'insegnamento afferisce. Ma non finisce qui, perché se si vuole aprire un appello dopo gennaio non si possono più selezionare gli insegnamenti
-dell'anno accademico precedente (che per gli appelli precedenti si era obbligati a fare perchè altrimenti alcuni studenti non vedrebbero
-l'appello) perchè a fine gennaio termina l'anno e per qualche motivo burocratico non si può fare, dunque InfoStud restituisce un errore e 
-il professore non ne conosce neanche il motivo.
+dell'anno accademico precedente (che per gli appelli precedenti si era obbligati a fare perché altrimenti alcuni studenti non vedrebbero
+l'appello) perché a fine gennaio termina l'anno e per qualche motivo burocratico non si può fare, dunque InfoStud restituisce un errore e 
+il sistema neanche spiega il perché.
 
-Viste le criticità però esiste una funzione che i professori apprezzano, ovvero quella della duplicazione del verbale.
+Avevo dunque già un'idea delle criticità dell'interfaccia attuale e quindi ho fatto un sondaggio inviando via email le seguenti domande:
+
+\begin{enumerate}
+	\item Se tiene più di un corso, preferisce aprire un verbale unico o aprirne uno per ogni corso che tiene? 
+	\item Trova confusionario il processo di apertura di un verbale? Perché?
+	\item Quanto tempo prima dalla data dell’esame apre il verbale?
+	\item Quanto tempo dà agli studenti per prenotarsi?
+	\item E quanti giorni prima, dal giorno dell’esame, chiude le prenotazioni? 
+\end{enumerate}
+
+Il sondaggio ha solo una domanda aperta, tra l'altro opzionale, in quanto volevo rendere il sondaggio molto corto in modo da aumentare 
+le possibilità di risposta. Per coloro che volessero dedicarmi più tempo ho invece chiesto di argomentare in modo da avere risposte
+più complete, infatti a fine email ho incoraggiato ad argomentare le risposte il più possibile.
+
+La prima domanda è stata fatta per capire come gestiscono la lista degli insegnamenti: la lista sull'app infatti è difficile da gestire
+vista la sua lunghezza. Quindi se la maggior parte dei professori sceglie di selezionare tutto, potrei sintetizzarla in qualche modo.
+La seconda ha un carattere generale, non volevo perdermi dei dettagli importanti che non avrei chiesto se avessi fatto solo domande
+specifiche e inoltre volevo effettivamente capire se i professori sono contenti del sistema attuale o meno. La domanda è importante 
+perché, come vedremo, alla maggior parte degli utenti il sistema attuale piace. Ci sono solo poche persone che hanno risposto "no" e
+hanno argomentato spiegando cosa non andava.
+Le domande dalla 3 alla 5 invece sono state fatte solo per orientarmi nella gestione delle date, visto che avevo già in mente di fare un
+sistema di riempimento automatico.
+
+Gli intervistati sono 60, presi casualmente in vari dipartimenti dell'ateneo in modo di avere un campione più eterogeneo possibile.
+I professori che mi hanno risposto sono 19.
+
+\subsection{Verbale unico o uno per ogni corso?}
+
+Come vediamo dall'immagine \ref{fig:d-i} la maggioranza degli intervistati preferisce aprire un verbale per ogni insegnamento.
+
+\begin{figure}[h]
+	\caption{Grafico delle risposte date alla prima domanda.}
+	\centering
+	\includegraphics[width=0.6\textwidth]{d-i}
+	\label{fig:d-i}
+\end{figure}
+
+\subsection{Trova confusionario il processo di apertura di un verbale?}
+
+\begin{figure}[h]
+	\caption{Grafico delle risposte date alla seconda domanda.}
+	\centering
+	\includegraphics[width=0.4\textwidth]{d-ii}
+	\label{fig:d-ii}
+\end{figure}
+
+\subsection{Quanto tempo prima dalla data dell’esame apre il verbale?}
+
+\begin{figure}[h]
+	\caption{Grafico delle risposte date alla terza domanda.}
+	\centering
+	\includegraphics[width=0.8\textwidth]{d-iii}
+	\label{fig:d-iii}
+\end{figure}
+
+\subsection{Quanto tempo dà agli studenti per prenotarsi?}
+
+\begin{figure}[h]
+	\caption{Grafico delle risposte date alla quarta domanda.}
+	\centering
+	\includegraphics[width=0.8\textwidth]{d-iv}
+	\label{fig:d-iv}
+\end{figure}
+
+\subsection{E quanti giorni prima, dal giorno dell’esame, chiude le prenotazioni? }
+
+\begin{figure}[h]
+	\caption{Grafico delle risposte date alla quinta domanda.}
+	\centering
+	\includegraphics[width=0.7\textwidth]{d-v}
+	\label{fig:d-v}
+\end{figure}
 
 
 \section{Progettazione della UI}
