@@ -60,8 +60,7 @@
 \frontmatter
 \maketitle
 \begin{abstract}
-Oggetto della tesi è lo sviluppo delle app InfoStud e InfoProf in cui mi sono occupato di risolvere i problemi pre-esistenti e aggiungere nuove funzionalità di entità variabile.
-Il documento è diviso in tre macro aree: un'introduzione generale alle applicazioni, al processo di sviluppo e agli strumenti utilizzati, poi l'iniziale attività di bug-fixing che comprende anche l'aggiunta di piccole features e infine una parte dedicata allo studio, progettazione ed implementazione dell'apertura di un verbale d'esame.
+Oggetto della tesi è lo sviluppo delle app InfoStud e InfoProf in cui mi sono occupato di risolvere i problemi pre-esistenti e aggiungere nuove funzionalità di entità variabile. Il documento è diviso in tre macro aree: un'introduzione generale alle applicazioni, al processo di sviluppo e agli strumenti utilizzati, poi l'iniziale attività di bug-fixing che comprende anche l'aggiunta di piccole features e infine una parte dedicata allo studio, progettazione ed implementazione dell'apertura di un verbale d'esame.
 \end{abstract}
 
 \tableofcontents
@@ -182,27 +181,13 @@ così fatta incoraggia il riuso del codice ovviamente. %fare diagramma di sequen
 \chapter{Progettazione}
 \label{ch:3}
 %inserire diagramma di flusso di come viene fatta la progettazione (nf -> protoryping -> test -> repeat)
-L'attività di progettazione consiste nel trovare i bisogni dell'utente attraverso delle domande rivolte agli stessi, costruire un prototipo
-che rispecchi ciò che è emerso dalle domande, eseguire dei test di usabilità sul prototipo e, a seconda delle criticità, emerse dai test
-modificare il prototipo e ripetere i test finchè si è trovata un'interfaccia che funzioni per gran parte degli utenti.
+L'attività di progettazione consiste nel trovare i bisogni dell'utente attraverso delle domande rivolte agli stessi, costruire un prototipo che rispecchi ciò che è emerso dalle domande, eseguire dei test di usabilità sul prototipo e, a seconda delle criticità, emerse dai test modificare il prototipo e ripetere i test finchè si è trovata un'interfaccia che funzioni per gran parte degli utenti.
 
 \section{Need-finding}
 \label{sec:nf}
-La prima cosa che ho fatto è capire quali sono i bisogni dell'utente. Non avendo mai utilizzato InfoStud originale, ho chiesto al Prof.
-Panizzi di mostrarmi come apre un verbale solitamente. Il primo approccio è stato piuttosto confusionario: la prima cosa che non capivo
-era la nomenclatura: cosa si intende per "insegnamento", "corso", "appello", "esame", "verbale" e "insegnamento"? Questi termini nel sistema
-non hanno una definizione precisa e spesso vengono usati come sinonimi. Un altro problema è che il form per l'apertura di un verbale è
-statico, nel senso che potrebbe compilare in automatico le date richieste (che sono 4 in totale) con dei suggerimenti che almeno vagamente
-si avvicinano a ciò che l'utente vuole in modo da accorciare il tempo di inserimento, ma non lo fa. Inoltre c'è una lunga lista di insegnamenti
-che contiene i corsi tenuti dal professore, ripetuti per l'anno accademico precedente, più tutti quelli che ormai non si tengono
-più, ma che per legge bisogna mantenere nel sistema (alcuni potrebbero essere banalmente dei corsi che hanno cambiato nome) e considerare
-all'atto dell'apertura di un verbale d'esame. Non solo, ogni elemento di questa lista ha un sotto-menù che contiene un'altra lista dei corsi a cui
-l'insegnamento afferisce. Ma non finisce qui, perché se si vuole aprire un appello dopo gennaio non si possono più selezionare gli insegnamenti
-dell'anno accademico precedente (che per gli appelli precedenti si era obbligati a fare perché altrimenti alcuni studenti non vedrebbero
-l'appello) perché a fine gennaio termina l'anno e per qualche motivo burocratico non si può fare, dunque InfoStud restituisce un errore e 
-il sistema neanche spiega il perché.
+La prima cosa che ho fatto è capire quali sono i bisogni dell'utente. Non avendo mai utilizzato InfoStud docenti, il primo approccio al sistema è stato insieme al Prof. Panizzi che mi ha mostrato il processo di apertura di un verbale d'esame, le varie funzionalità già esistenti e i dati richiesti nel form che il docente è tenuto a compilare. Da questa dimostrazione sono emerse delle criticità: per un utente inesperto come me è difficile prendere confidenza con l'interfaccia in quanto spesso vengono utilizzati diversi termini per rappresentare lo stesso concetto, c'è una lista molto grande di insegnamenti da poter selezionare e bisogna prestare attenzione a quali sono quelli che si selezionano perchè in alcuni casi il sistema potrebbe restituire un errore. Inoltre l'interfaccia non spiega come inserire il giorno dell'esame (quello che effetivamente gli studenti vedono in fase di prenotazione), bisogna chiederlo a chi già ne è a conoscenza.
 
-Avevo dunque già un'idea delle criticità dell'interfaccia attuale e quindi ho fatto un sondaggio inviando via email le seguenti domande:
+Essendomi fatto un'idea delle criticità dell'interfaccia attuale, ho creato un sondaggio inviando via email le seguenti domande:
 
 \begin{enumerate}
 	\item Se tiene più di un corso, preferisce aprire un verbale unico o aprirne uno per ogni corso che tiene? 
@@ -218,15 +203,11 @@ più complete, infatti a fine email ho incoraggiato ad argomentare le risposte i
 
 La prima domanda è stata fatta per capire come gestiscono la lista degli insegnamenti: la lista sull'app infatti è difficile da gestire
 vista la sua lunghezza. Quindi se la maggior parte dei professori sceglie di selezionare tutto, potrei sintetizzarla in qualche modo.
-La seconda ha un carattere generale, non volevo perdermi dei dettagli importanti che non avrei chiesto se avessi fatto solo domande
-specifiche e inoltre volevo effettivamente capire se i professori sono contenti del sistema attuale o meno. La domanda è importante 
-perché, come vedremo, alla maggior parte degli utenti il sistema attuale piace. Ci sono solo poche persone che hanno risposto "no" e
-hanno argomentato spiegando cosa non andava.
-Le domande dalla 3 alla 5 invece sono state fatte solo per orientarmi nella gestione delle date, visto che avevo già in mente di fare un
-sistema di riempimento automatico.
+La seconda ha un carattere generale, che mira a scoprire qualcosa di più da parte dell'utente.
+Le domande dalla 3 alla 5 invece servono a capire se esistono dei vincoli nella scelta delle date per cercare di automatizzare il processo.
 
 Gli intervistati sono 60, presi casualmente in vari dipartimenti dell'ateneo in modo di avere un campione più eterogeneo possibile.
-I professori che mi hanno risposto sono 19.
+I professori che hanno invece risposto sono stati 19.
 
 \subsection{Verbale unico o uno per ogni corso?}
 
@@ -240,6 +221,7 @@ Come vediamo dall'immagine \ref{fig:d-i} la maggioranza degli intervistati prefe
 \end{figure}
 
 \subsection{Trova confusionario il processo di apertura di un verbale?}
+Qui i risultati sono un po' sorprendenti perchè la maggioranza sostiene che non ci siano grossi problemi, sebbene comunque una percentuale non trascurabile abbia risposto il contrario. Ciò potrebbe essere imputabile al fatto che per molti anni sono stati abituati a questo sistema ed hanno imparato ad utilizzarlo agevolmente, con degli escamotage. Uno fra tutti è quello di utilizzare la funzionalità del "Duplica appello", che di fatto copia un appello già creato. L'utente la utilizza per non dover selezionare nuovamente gli insegnamenti (cambiando dunque le date e le note), ma il nome della funzionalità di fatto suggerisce un altro tipo di utilizzo. Vedremo in seguito come si è trovata una soluzione più elegante a questo problema.
 
 \begin{figure}[h]
 	\caption{Grafico delle risposte date alla seconda domanda.}
