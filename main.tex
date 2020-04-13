@@ -180,7 +180,7 @@ così fatta incoraggia il riuso del codice ovviamente. %fare diagramma di sequen
 
 \chapter{Progettazione}
 \label{ch:3}
-%inserire diagramma di flusso di come viene fatta la progettazione (nf -> protoryping -> test -> repeat)
+%inserire diagramma di flusso di come viene fatta la progettazione (nf -> prototyping -> test -> repeat)
 L'attività di progettazione consiste nel trovare i bisogni dell'utente attraverso delle domande rivolte agli stessi, costruire un prototipo che rispecchi ciò che è emerso dalle domande, eseguire dei test di usabilità sul prototipo e, a seconda delle criticità, emerse dai test modificare il prototipo e ripetere i test finchè si è trovata un'interfaccia che funzioni per gran parte degli utenti.
 
 \section{Need-finding}
@@ -211,7 +211,7 @@ I professori che hanno invece risposto sono stati 19.
 
 \subsection{Verbale unico o uno per ogni corso?}
 
-Come vediamo dall'immagine \ref{fig:d-i} la maggioranza degli intervistati preferisce aprire un verbale per ogni insegnamento.
+Come vediamo dall'immagine \ref{fig:d-i} la maggioranza degli intervistati preferisce aprire un verbale per ogni insegnamento. Ricordo che "un insegnamento", nella tabella, corrisponde a tutti gli insegnamenti vecchi che hanno cambiato nome e per ognuno esistono due righe: una per l'anno accademico corrente ed una per quello precedente.
 
 \begin{figure}[h]
 	\caption{Grafico delle risposte date alla prima domanda.}
@@ -221,7 +221,17 @@ Come vediamo dall'immagine \ref{fig:d-i} la maggioranza degli intervistati prefe
 \end{figure}
 
 \subsection{Trova confusionario il processo di apertura di un verbale?}
-Qui i risultati sono un po' sorprendenti perchè la maggioranza sostiene che non ci siano grossi problemi, sebbene comunque una percentuale non trascurabile abbia risposto il contrario. Ciò potrebbe essere imputabile al fatto che per molti anni sono stati abituati a questo sistema ed hanno imparato ad utilizzarlo agevolmente, con degli escamotage. Uno fra tutti è quello di utilizzare la funzionalità del "Duplica appello", che di fatto copia un appello già creato. L'utente la utilizza per non dover selezionare nuovamente gli insegnamenti (cambiando dunque le date e le note), ma il nome della funzionalità di fatto suggerisce un altro tipo di utilizzo. Vedremo in seguito come si è trovata una soluzione più elegante a questo problema.
+Qui i risultati sono un po' sorprendenti perchè la maggioranza sostiene che non ci siano grossi problemi, sebbene comunque una percentuale non trascurabile abbia risposto il contrario. Ciò potrebbe essere imputabile al fatto che per molti anni sono stati abituati a questo sistema ed hanno imparato ad utilizzarlo agevolmente, con degli escamotage. Uno fra tutti è quello di utilizzare la funzionalità del "Duplica appello", che di fatto copia un appello già creato. L'utente la utilizza per non dover selezionare nuovamente gli insegnamenti (cambiando solo le date e le note), ma il nome della funzionalità di fatto suggerisce un altro tipo di utilizzo. Vedremo in seguito come si è trovata una soluzione più elegante a questo problema.
+
+Alcuni dei docenti che hanno risposto "no" alla domanda, si sono espressi anche sul perché. Cito: 
+\begin{itemize}
+	\item "Il processo di apertura di un verbale più che confusionario è piuttosto "error-prone" con campi che si riempiono automaticamente o campi che scompaiono quando si effettua una scelta da un menù a tendina."
+	\item "Ho difficoltà a mettere gli appelli di esame perchè non so mai per quali corsi debba essere valido l'esame. E sovente gli studenti non vedono l'appello o meglio alcuni lo vedono e altri no."
+	\item "La scelta degli insegnamenti è caotica perché ci sono nomi ripetuti con diverse diciture e lo stesso codice (non parliamo poi dei corsi di studio associati, che non apro neppure); l'anno accademico non serve a niente e complica l'immissione anche perché crea il refresh dell'elenco materie; oltre ad "avvisi e note" bisognerebbe poter inserire il luogo dell'esame e l'orario o i vari appelli, se più d'uno."
+	\item "Un problema che trovo riguarda la scelta dell'A.A di riferimento. Vorrei che non esistesse questa opzione."
+\end{itemize}
+
+Ho avuto inoltre la fortuna di intervistare un docente nuovo, che mi ha esplicitamente detto che ha avuto grosse difficoltà nell'aprire il suo primo verbale. Nessuno gli ha spiegato come fare, dunque ha impiegato molto tempo a cercare le funzionalità che gli servivano.
 
 \begin{figure}[h]
 	\caption{Grafico delle risposte date alla seconda domanda.}
@@ -231,6 +241,7 @@ Qui i risultati sono un po' sorprendenti perchè la maggioranza sostiene che non
 \end{figure}
 
 \subsection{Quanto tempo prima dalla data dell’esame apre il verbale?}
+La metà degli intervistati ha dichiarato di aprire i verbali all'inizio dell'anno accademico. Infatti molti dipartimenti impongono questa condizione ai docenti, dunque è necessario velocizzare il tempo di apertura di un singolo verbale perchè aprirne 7 per ogni insegnamento potrebbe essere un'attività che porta via del tempo.
 
 \begin{figure}[h]
 	\caption{Grafico delle risposte date alla terza domanda.}
@@ -240,6 +251,7 @@ Qui i risultati sono un po' sorprendenti perchè la maggioranza sostiene che non
 \end{figure}
 
 \subsection{Quanto tempo dà agli studenti per prenotarsi?}
+Qui le risposte sono piuttosto eterogenee.
 
 \begin{figure}[h]
 	\caption{Grafico delle risposte date alla quarta domanda.}
@@ -249,7 +261,7 @@ Qui i risultati sono un po' sorprendenti perchè la maggioranza sostiene che non
 \end{figure}
 
 \subsection{E quanti giorni prima, dal giorno dell’esame, chiude le prenotazioni? }
-
+Al contrario invece, qui la maggior parte dei docenti preferisce chidere le prenotazioni 1 o 2 giorni prima dal giorno dell'esame. Questa è una buona notizia perchè in questo caso posso utilizzare l'informazione per definire un default per una futura funzionalità di compilazione automatica del form.
 \begin{figure}[h]
 	\caption{Grafico delle risposte date alla quinta domanda.}
 	\centering
@@ -260,14 +272,35 @@ Qui i risultati sono un po' sorprendenti perchè la maggioranza sostiene che non
 
 \section{Progettazione della UI}
 \label{sec:ui}
-%citare "Developing SMASH"
+%citare "Developing SMASH", Nielsen e Gerhardt-Powals' cognitive engineering principles
+Nel precedente capitolo ho descritto le riposte che sono state date al sondaggio ed ho effetivamente trascritto quali sono i margini di miglioramento. Abbiamo visto che una buona percentuale dei partecipanti al sondaggio non è contenta dell'interfaccia desktop e mi ha dato dei buoni spunti su cui lavorare, come l'aggiunta di orario e luogo d'esame. Ma per ora mi concentrerò soltanto nel miglioramento dell'esperienza utente.
+
+In questo capitolo descriverò i requisiti che ho individuato e le varie fasi di progettazione che ho intrapreso per la realizzazione finale della funzionalità di apertura del verbale.
+
+\subsection{Requisiti}
+Raccolte ed organizzate le risposte al sondaggio, ho individuato i seguenti requisiti \footnote{Non ordinati.}:
+\begin{enumerate}
+	\item L'ambiente in cui l'app funzionerà per la maggior parte del tempo è su uno smartphone, dunque su uno schermo molto piccolo rispetto a quello del PC. Quindi è necessario sintetizzare gli elementi che su InfoStud docenti occupano più spazio, come ad esempio la tabella degli insegnamenti.
+	\item L'apertura di un verbale deve avvenire nel minor tempo possibile, in modo da velocizzare l'apertura consecutiva di più verbali.
+	\item L'interfaccia deve aiutare l'utente ad evitare gli errori o perlomeno dare delle informazioni chiare quando se ne commette uno.
+	\item L'interfaccia dovrebbe essere ragionevolmente semplice da capire ed utilizzare, senza perdere troppo in precisione \footnote{Per precisione intendo la quantità di informazione fornita all'utente, comparata all'interfaccia desktop.} e senza aver bisogno di una spiegazione.
+\end{enumerate}
+
+\subsection{Valutazione dell'interfaccia mobile}
+%parlare di euristiche e test
+Prima di cominciare a parlare di della fase di prototyping, introduco le tecniche di valutazione dell'interfaccia che ho utilizzato. Le tecniche di valutazione testano l'usabilità e le funzionalità di un sistema, in modo da valutarne i problemi e gli effetti che l'interfaccia ha sull'utente. Queste tecniche inoltre richiedono un artefatto da testare, che può essere sia un prototipo, che un implementazione completa del sistema. In questo caso procederò ad iterare su dei prototipi, applicando le tecniche di valutazione a fine di ogni iterazione, le quali mi restituiranno sempre un artefatto diverso da quello dell'iterazione precedente.
+
+Inizialmente ho voluto testare i prototipi attraverso dei test di usabilità sul campo, con la partecipazione di rappresentati scelti a caso dagli utenti stessi. Questi test prevedono di avere un prototipo funzionante da far provare ai rappresentanti i quali durante il test sono osservati e descrivono ciò che stanno facendo (think aloud). Nei casi in cui questo test produce poche informazioni ho introdotto la variante del \textit{cooperative evaluation}.
+
+\subsection{Iterazioni}
+%parlare SOLO dei prototipi e fare una valutazione secondo test/euristiche a fine di ogni iterazione.
 
 \section{Implementazione}
 \label{sec:dev}
 %inserire qualche snippet e magari parlare dei limiti tecnologici di ionic e come li ho superati
 
 
-\chapter{Concluzioni}
+\chapter{Conclusioni}
 \label{ch:4}
 
 \backmatter
