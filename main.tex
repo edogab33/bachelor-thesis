@@ -16,9 +16,10 @@
 %\usepackage{varioref}
 %\usepackage[bottom]{footmisc}
 %\usepackage{wrapfig}
-%\usepackage{float}
+\usepackage{float}
 %\usepackage{type1cm}
 \usepackage{lettrine}
+%\usepackage{subcaption}
 %portare linespread a 1.1-1.3
 \linespread{1.4}
 %\usepackage{chngcntr}
@@ -270,15 +271,14 @@ Al contrario invece, qui la maggior parte dei docenti preferisce chidere le pren
 \end{figure}
 
 
-\section{Progettazione della UI}
+\section{Requisiti}
 \label{sec:ui}
 %citare "Developing SMASH", Nielsen e Gerhardt-Powals' cognitive engineering principles
-Nel precedente capitolo ho descritto le riposte che sono state date al sondaggio ed ho effetivamente trascritto quali sono i margini di miglioramento. Abbiamo visto che una buona percentuale dei partecipanti al sondaggio non è contenta dell'interfaccia desktop e mi ha dato dei buoni spunti su cui lavorare, come l'aggiunta di orario e luogo d'esame. Ma per ora mi concentrerò soltanto nel miglioramento dell'esperienza utente.
+Nella precedente sezione ho descritto le riposte che sono state date al sondaggio ed ho effetivamente trascritto quali sono i margini di miglioramento. Abbiamo visto che una buona percentuale dei partecipanti al sondaggio non è contenta dell'interfaccia desktop e mi ha dato dei buoni spunti su cui lavorare, come l'aggiunta di orario e luogo d'esame. Ma per ora mi concentrerò soltanto nel miglioramento dell'esperienza utente.
 
-In questo capitolo descriverò i requisiti che ho individuato e le varie fasi di progettazione che ho intrapreso per la realizzazione finale della funzionalità di apertura del verbale.
+In questo capitolo descriverò i requisiti che ho individuato, per poi passare alle iterazioni che ho passato prima di arrivare all'interfaccia finale.
 
-\subsection{Requisiti}
-Raccolte ed organizzate le risposte al sondaggio, ho individuato i seguenti requisiti \footnote{Non ordinati.}:
+Requisiti \footnote{Non ordinati.}:
 \begin{enumerate}
 	\item L'ambiente in cui l'app funzionerà per la maggior parte del tempo è su uno smartphone, dunque su uno schermo molto piccolo rispetto a quello del PC. Quindi è necessario sintetizzare gli elementi che su InfoStud docenti occupano più spazio, come ad esempio la tabella degli insegnamenti.
 	\item L'apertura di un verbale deve avvenire nel minor tempo possibile, in modo da velocizzare l'apertura consecutiva di più verbali.
@@ -286,14 +286,73 @@ Raccolte ed organizzate le risposte al sondaggio, ho individuato i seguenti requ
 	\item L'interfaccia dovrebbe essere ragionevolmente semplice da capire ed utilizzare, senza perdere troppo in precisione \footnote{Per precisione intendo la quantità di informazione fornita all'utente, comparata all'interfaccia desktop.} e senza aver bisogno di una spiegazione.
 \end{enumerate}
 
-\subsection{Valutazione dell'interfaccia mobile}
+\section{Iterazioni}
+%parlare solo dei prototipi e fare una valutazione secondo test/euristiche a fine di ogni iterazione.
+\subsection{Valutazione dell'interfaccia}
 %parlare di euristiche e test
 Prima di cominciare a parlare di della fase di prototyping, introduco le tecniche di valutazione dell'interfaccia che ho utilizzato. Le tecniche di valutazione testano l'usabilità e le funzionalità di un sistema, in modo da valutarne i problemi e gli effetti che l'interfaccia ha sull'utente. Queste tecniche inoltre richiedono un artefatto da testare, che può essere sia un prototipo, che un implementazione completa del sistema. In questo caso procederò ad iterare su dei prototipi, applicando le tecniche di valutazione a fine di ogni iterazione, le quali mi restituiranno sempre un artefatto diverso da quello dell'iterazione precedente.
 
-Inizialmente ho voluto testare i prototipi attraverso dei test di usabilità sul campo, con la partecipazione di rappresentati scelti a caso dagli utenti stessi. Questi test prevedono di avere un prototipo funzionante da far provare ai rappresentanti i quali durante il test sono osservati e descrivono ciò che stanno facendo (think aloud). Nei casi in cui questo test produce poche informazioni ho introdotto la variante del \textit{cooperative evaluation}.
+Inizialmente ho voluto testare i prototipi attraverso dei test di usabilità sul campo, con la partecipazione di rappresentati scelti a caso dagli utenti stessi. Questi test prevedono di avere un prototipo funzionante da far provare ai rappresentanti i quali durante il test sono osservati e descrivono ciò che stanno facendo (think aloud). Invece nei casi in cui questo test produce poche informazioni ho introdotto la variante del \textit{cooperative evaluation}\footnote{Permette al valutatore di fare domande e viceversa.}. A causa di forza maggiore ho dovuto abbandonare questa via per dare spazio alle euristiche. %elencare le euristiche utilizzate
+Le euristiche sono delle regole, o linee guida, utilizzate per valutare o guidare la progettazione delle interfacce grafiche. Per il mio progetto di tirocinio ho utilizzato le euristiche di Neilsen che riporto qui di seguito:
+\begin{enumerate}
+	\item Visibilità dello stato del sistema
+	\item Corrispondenza tra il mondo reale e il sistema
+	\item Libertà e controllo da parte degli utenti
+	\item Coerenza e standard
+	\item Prevenzione degli errori
+	\item Riconoscere piuttosto che ricordare
+	\item Flessibilità ed efficienza d’uso 
+	\item Design minimalista ed estetico
+	\item Aiutare gli utenti a riconoscere, diagnosticare e correggere gli errori
+	\item Aiutare e documentare
+\end{enumerate}
 
-\subsection{Iterazioni}
-%parlare SOLO dei prototipi e fare una valutazione secondo test/euristiche a fine di ogni iterazione.
+\subsection{Iterazione 1}
+L'apertura di un verbale è uno dei motivi principali per cui viene utilizzato il sistema InfoStud. Essendo una funzionalità di fondamentale importanza è giusto che non venga nascosta, bensì messa in prima pagina proprio dove viene mostrata la lista degli esami aperti in passato. Un bottone con il simbolo "+" in alto a destra suggerisce l'aggiunta di un nuovo elemento alla lista. Se cliccato, l'app propone una la lista degli insegnamenti tenuti dal professore e una lista di \textit{alias}. 
+
+Gli alias sono etichette che si applicano ad uno o più insegnamenti in modo da non doverli selezionare ad ogni apertura di un nuovo verbale. Questo meccanismo, pre-esistente all'interno dell'applicazione, va a sostituire quello che fa il "Duplica appello" di InfoStud andando incontro ad uno dei requisiti degli utenti InfoStud, senza l'utilizzo di funzionalità ambigue.
+
+Inoltre accanto ad ogni insegnamento c'è un'icona blu "i" che se cliccata porta ad una nuova vista che mostra i corsi collegati all'insegnamento. Tutti questi elementi (insegnamenti e corsi) sono selezionabili e quando si clicca sul bottone "Continua" si arriva infine al form che richiede l'inserimento delle date di inizio e fine appello, inizio e fine prenotazioni, la necessità dell'OPIS ed eventualmente le note per gli studenti.
+
+Dai test svolti questa interfaccia è andata sempre bene. Ogni intervistato è sepre riuscito ad aprire il verbale senza difficoltà nell'ordine di due o tre minuti. C'era qualche incertezza nel campo note e in pochi si sono interessati del tasto "i" accanto agli insegnamenti. Ho provato inoltre ad interrompere il test quando l'intervistato si trovava nella schermata di inserimento delle date. Quando riprendevamo il test, l'intervistato non ricordava che insegnamenti aveva selezionato. Serve dunque un modo per far ricordare all'utente le scelte fatte nel corso dell'attività.
+
+%\begin{figure}[p]
+%	\begin{subfigure}
+%	\caption{Schermata principale}
+%	\centering
+%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/main}
+%	\label{fig:i-main}
+%	\end{subfigure}
+%
+%\begin{subfigure}
+%	\caption{Schermata principale}
+%	\centering
+%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/select-teaching}
+%	\label{fig:i-select-teaching}
+%\end{subfigure}
+%
+%\begin{subfigure}
+%	\caption{Schermata principale}
+%	\centering
+%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/select-program}
+%	\label{fig:i-select-program}
+%\end{subfigure}
+%
+%\begin{subfigure}
+%	\caption{Schermata principale}
+%	\centering
+%	\includegraphics[width=0.5\textwidth]{ui-iterations/i/form}
+%	\label{fig:i-form}
+%\end{subfigure}
+%
+%\begin{subfigure}
+%	\caption{Schermata principale}
+%	\centering
+%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/error-form}
+%	\label{fig:i-error-form}
+%\end{subfigure}
+%\end{figure}
+
 
 \section{Implementazione}
 \label{sec:dev}
