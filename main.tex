@@ -15,11 +15,13 @@
 %\usepackage{multirow}
 %\usepackage{varioref}
 %\usepackage[bottom]{footmisc}
-%\usepackage{wrapfig}
+\usepackage{wrapfig}
 \usepackage{float}
 %\usepackage{type1cm}
 \usepackage{lettrine}
-%\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{bookmark}
 %portare linespread a 1.1-1.3
 \linespread{1.4}
 %\usepackage{chngcntr}
@@ -60,9 +62,6 @@
 
 \frontmatter
 \maketitle
-\begin{abstract}
-Oggetto della tesi è lo sviluppo delle app InfoStud e InfoProf in cui mi sono occupato di risolvere i problemi pre-esistenti e aggiungere nuove funzionalità di entità variabile. Il documento è diviso in tre macro aree: un'introduzione generale alle applicazioni, al processo di sviluppo e agli strumenti utilizzati, poi l'iniziale attività di bug-fixing che comprende anche l'aggiunta di piccole features e infine una parte dedicata allo studio, progettazione ed implementazione dell'apertura di un verbale d'esame.
-\end{abstract}
 
 \tableofcontents
 
@@ -165,7 +164,7 @@ di ogni componente. Ciò si traduce sinteticamente in:
 	\item Provider: di fatto "fornisce" i dati. Ha il compito di utilizzare le API e consegnare i dati alla view attraverso i model.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\caption{Schema del funzionamento del pattern utilizzato da InfoStud e InfoProf.}
 	\centering
 	\includegraphics[width=0.8\textwidth]{arch-pattern-img}
@@ -214,7 +213,7 @@ I professori che hanno invece risposto sono stati 19.
 
 Come vediamo dall'immagine \ref{fig:d-i} la maggioranza degli intervistati preferisce aprire un verbale per ogni insegnamento. Ricordo che "un insegnamento", nella tabella, corrisponde a tutti gli insegnamenti vecchi che hanno cambiato nome e per ognuno esistono due righe: una per l'anno accademico corrente ed una per quello precedente.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\caption{Grafico delle risposte date alla prima domanda.}
 	\centering
 	\includegraphics[width=0.6\textwidth]{d-i}
@@ -234,7 +233,7 @@ Alcuni dei docenti che hanno risposto "no" alla domanda, si sono espressi anche 
 
 Ho avuto inoltre la fortuna di intervistare un docente nuovo, che mi ha esplicitamente detto che ha avuto grosse difficoltà nell'aprire il suo primo verbale. Nessuno gli ha spiegato come fare, dunque ha impiegato molto tempo a cercare le funzionalità che gli servivano.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\caption{Grafico delle risposte date alla seconda domanda.}
 	\centering
 	\includegraphics[width=0.4\textwidth]{d-ii}
@@ -244,7 +243,7 @@ Ho avuto inoltre la fortuna di intervistare un docente nuovo, che mi ha esplicit
 \subsection{Quanto tempo prima dalla data dell’esame apre il verbale?}
 La metà degli intervistati ha dichiarato di aprire i verbali all'inizio dell'anno accademico. Infatti molti dipartimenti impongono questa condizione ai docenti, dunque è necessario velocizzare il tempo di apertura di un singolo verbale perchè aprirne 7 per ogni insegnamento potrebbe essere un'attività che porta via del tempo.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\caption{Grafico delle risposte date alla terza domanda.}
 	\centering
 	\includegraphics[width=0.8\textwidth]{d-iii}
@@ -254,7 +253,7 @@ La metà degli intervistati ha dichiarato di aprire i verbali all'inizio dell'an
 \subsection{Quanto tempo dà agli studenti per prenotarsi?}
 Qui le risposte sono piuttosto eterogenee.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\caption{Grafico delle risposte date alla quarta domanda.}
 	\centering
 	\includegraphics[width=0.8\textwidth]{d-iv}
@@ -263,7 +262,7 @@ Qui le risposte sono piuttosto eterogenee.
 
 \subsection{E quanti giorni prima, dal giorno dell’esame, chiude le prenotazioni? }
 Al contrario invece, qui la maggior parte dei docenti preferisce chidere le prenotazioni 1 o 2 giorni prima dal giorno dell'esame. Questa è una buona notizia perchè in questo caso posso utilizzare l'informazione per definire un default per una futura funzionalità di compilazione automatica del form.
-\begin{figure}[h]
+\begin{figure}[ht]
 	\caption{Grafico delle risposte date alla quinta domanda.}
 	\centering
 	\includegraphics[width=0.7\textwidth]{d-v}
@@ -272,7 +271,7 @@ Al contrario invece, qui la maggior parte dei docenti preferisce chidere le pren
 
 
 \section{Requisiti}
-\label{sec:ui}
+\label{sec:req}
 %citare "Developing SMASH", Nielsen e Gerhardt-Powals' cognitive engineering principles
 Nella precedente sezione ho descritto le riposte che sono state date al sondaggio ed ho effetivamente trascritto quali sono i margini di miglioramento. Abbiamo visto che una buona percentuale dei partecipanti al sondaggio non è contenta dell'interfaccia desktop e mi ha dato dei buoni spunti su cui lavorare, come l'aggiunta di orario e luogo d'esame. Ma per ora mi concentrerò soltanto nel miglioramento dell'esperienza utente.
 
@@ -301,7 +300,7 @@ Le euristiche sono delle regole, o linee guida, utilizzate per valutare o guidar
 	\item Coerenza e standard
 	\item Prevenzione degli errori
 	\item Riconoscere piuttosto che ricordare
-	\item Flessibilità ed efficienza d’uso 
+	\item Flessibilit\'a ed efficienza d’uso 
 	\item Design minimalista ed estetico
 	\item Aiutare gli utenti a riconoscere, diagnosticare e correggere gli errori
 	\item Aiutare e documentare
@@ -314,49 +313,94 @@ Gli alias sono etichette che si applicano ad uno o più insegnamenti in modo da 
 
 Inoltre accanto ad ogni insegnamento c'è un'icona blu "i" che se cliccata porta ad una nuova vista che mostra i corsi collegati all'insegnamento. Tutti questi elementi (insegnamenti e corsi) sono selezionabili e quando si clicca sul bottone "Continua" si arriva infine al form che richiede l'inserimento delle date di inizio e fine appello, inizio e fine prenotazioni, la necessità dell'OPIS ed eventualmente le note per gli studenti.
 
-Dai test svolti questa interfaccia è andata sempre bene. Ogni intervistato è sepre riuscito ad aprire il verbale senza difficoltà nell'ordine di due o tre minuti. C'era qualche incertezza nel campo note e in pochi si sono interessati del tasto "i" accanto agli insegnamenti. Ho provato inoltre ad interrompere il test quando l'intervistato si trovava nella schermata di inserimento delle date. Quando riprendevamo il test, l'intervistato non ricordava che insegnamenti aveva selezionato. Serve dunque un modo per far ricordare all'utente le scelte fatte nel corso dell'attività.
+Dai test svolti questa interfaccia è andata sempre bene. Ogni intervistato è sempre riuscito ad aprire il verbale senza difficoltà nell'ordine di due o tre minuti. C'era qualche incertezza nel campo note, dove "Note per gli studenti" veniva spesso confuso con un placeholder. In pochi si sono interessati del tasto "i" accanto agli insegnamenti. Ho provato inoltre ad interrompere il test quando l'intervistato si trovava nella schermata di inserimento delle date. Quando riprendevamo il test, l'intervistato non ricordava che insegnamenti aveva selezionato. Serviva dunque un modo per far ricordare all'utente le scelte fatte nel corso dell'attività. Inoltre il prototipo ha una lista degli insegnamenti "ottimistica". Nella realtà la lista sarebbe molto più grande e non volevo vincolare gli utenti ad utilizzare per forza gli alias i quali, allo stato attuale, passano inosservati.
 
-%\begin{figure}[p]
-%	\begin{subfigure}
-%	\caption{Schermata principale}
-%	\centering
-%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/main}
-%	\label{fig:i-main}
-%	\end{subfigure}
-%
-%\begin{subfigure}
-%	\caption{Schermata principale}
-%	\centering
-%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/select-teaching}
-%	\label{fig:i-select-teaching}
-%\end{subfigure}
-%
-%\begin{subfigure}
-%	\caption{Schermata principale}
-%	\centering
-%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/select-program}
-%	\label{fig:i-select-program}
-%\end{subfigure}
-%
-%\begin{subfigure}
-%	\caption{Schermata principale}
-%	\centering
-%	\includegraphics[width=0.5\textwidth]{ui-iterations/i/form}
-%	\label{fig:i-form}
-%\end{subfigure}
-%
-%\begin{subfigure}
-%	\caption{Schermata principale}
-%	\centering
-%	\includegraphics[width=0.4\textwidth]{ui-iterations/i/error-form}
-%	\label{fig:i-error-form}
-%\end{subfigure}
-%\end{figure}
+\begin{figure}[ht]
+	\begin{subfigure}{0.6\textwidth}
+	  \centering
+	  \includegraphics[width=0.5\linewidth]{ui-iterations/i/main}  
+	  \caption{Put your sub-caption here}
+	  \label{fig:sub-first}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+	  \centering
+	  \includegraphics[width=0.5\linewidth]{ui-iterations/i/select-teaching}  
+	  \caption{Put your sub-caption here}
+	  \label{fig:sub-second}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{ui-iterations/i/select-program}  
+		\caption{Put your sub-caption here}
+		\label{fig:sub-second}
+	  \end{subfigure}
+	  \begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{ui-iterations/i/form}  
+		\caption{Put your sub-caption here}
+		\label{fig:sub-second}
+	  \end{subfigure}
+	  \begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{ui-iterations/i/error-form}  
+		\caption{Put your sub-caption here}
+		\label{fig:sub-second}
+	  \end{subfigure}
+	  
+	\caption{Prima iterazione}
+	\label{fig:fig}
+\end{figure}	
+
+\subsection{Iterazione 2}
+Il problema più grande della prima iterazione era il fatto che la prima view e la seconda (nella quale si inseriscono le date) non erano legate in alcun modo, questo costringe l'utente a ricordare le scelte fatte nella view precedente. Dato che la lista può essere complicata da gestire ed è importante aiutarlo a non fargli commettere errori, ho deciso di cambiare l'ordine della navigazione: la prima pagina infatti è stata spostata come prima view, con un bottone "Scegli insegnamenti" che porta alla pagina della scelta degli insegnamenti e degli alias. Quando questi vengono selezionati, si torna indietro e sopra al bottone di prima compaiono gli insegnamenti selezionati.
+
+Altre modifiche all'interfaccia sono state quelle relative ai titoli delle navbar, che ora sono più inerenti, sono stati aggiunti dei messaggi di errore, il campo di testo ora è più chiaro ed ha un placeholder. In questa iterazione ho inoltre collegato le view al backend, dunque potevo lavorare su dei dati che strutturalmente rappresentavano i dati reali. Da qui ho implementato un meccanismo per sintetizzare la tabella degli insegnamenti, in cui parlerò più approfonditamente in \ref{sec:dev}.
+
+Anche la grafica è cambiata, rendendola più simile a quella dell'aggiunta di un appuntamento sul calendario di iOS e Google. Non potendo fare più i test di usabilità, che hanno bisogno di essere fatti in presenza, mi sono affidato agli standard che hanno applicazioni più importanti. Infatti l'aggiunta di un appuntamento su un calendario non è tanto differente dall'apertura di un verbale: abbiamo infatti da gestire tre date in più rispetto ad un appuntamento, che in realtà si esaurisce nella giornata stessa, ma abbiamo da gestire in meno l'orario, il luogo, gli invitati e le etichette. Anche se, per utilizzare una metafora, si può pensare agli insegnamenti come degli invitati ed infatti il pulsante che permette di selezionare gli insegnamenti è molto simile a quello dell'aggiunta di persone all'evento.
+
+Un altro miglioramento che è stato apportato è quello del compilamento automatico delle date. L'idea è quella di selezionare la data di inizio dell'appello e l'app, ricordando le date che sono state utilizzate precedentemente, prevede quali saranno quelle che l'utente inserirà, facendolo per lui. Infatti dalle interviste è emerso che i professori tendono a frammentarsi nel scegliere il numero di giorni dedicati all'appello e alle prenotazioni, ma la maggior parte è costante e utilizza sempre quelli. Dunque ho deciso di far ricordare all'applicazione le scelte fatte dall'utente in precedenza ed applicarle nella compilazione delle date.
+Questo dovrebbe velocizzare di molto l'apertura di un verbale. % aggiungere eventuali feedback dati dalla beta
+
+Infine, invece di utilizzare delle view, ho deciso di utilizzare dei modali per far sparire i tab a fine pagina. Questo impedisce all'utente di navigare all'interno dell'applicazione dopo aver iniziato l'apertura di un verbale, ma è ragionevole pensare che un utente non voglia farlo semplicemente perchè ho fatto in modo che tutto ciò che serve all'utente per aprire un appello è visibile nella pagina dedicata. Inoltre questo permette di risparmiare un po' di spazio per evitare lo scroll.
+
+% analizzare la soddifacibilità dell'interfaccia con le euristiche proposte. Es. coerenza e standard per il fatto che si copia l'app di google e ios calendario, visibilità dello stato del sistema e riconoscere invece di ricordare tramite insegnamenti nella view principale, prevenzione degli errori tramite il collasso degli insegnamenti, design minimalista nascondendo i dettagli come quelli dei corsi associati agli insegnamenti e gli insegnamenti collassati in meno voci, efficienza d'uso tramite la compilazione automatica delle date, aiutare l'utente a diagnosticare gli errori tramite il ristrotturamento degli errori (poco chiari nella piattaforma desktop), corrispondenza tra il mondo reale e il sistema utilizzando sempre gli stessi termini per appello, insegnamento e corso. Libertà e controllo tramite la scelta dei corsi.
+
+\begin{figure}[ht]
+	\begin{subfigure}{0.6\textwidth}
+	  \centering
+	  \includegraphics[width=0.5\linewidth]{ui-iterations/ii/select-faculty}  
+	  \caption{Put your sub-caption here}
+	  \label{fig:sub-first}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+	  \centering
+	  \includegraphics[width=0.5\linewidth]{ui-iterations/ii/form}  
+	  \caption{Put your sub-caption here}
+	  \label{fig:sub-second}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{ui-iterations/ii/error-faculty}  
+		\caption{Put your sub-caption here}
+		\label{fig:sub-second}
+	  \end{subfigure}
+	  \begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{ui-iterations/ii/teaching-list}  
+		\caption{Put your sub-caption here}
+		\label{fig:sub-second}
+	  \end{subfigure}
+	  
+	\caption{Seconda iterazione}
+	\label{fig:fig}
+\end{figure}
+
+\subsection{Iterazione 3}
 
 
 \section{Implementazione}
 \label{sec:dev}
-%inserire qualche snippet e magari parlare dei limiti tecnologici di ionic e come li ho superati
+%inserire qualche snippet, parlare di come si sono "collassati" gli insegnamenti, come si passano i dati tra le view, ecc...
 
 
 \chapter{Conclusioni}
