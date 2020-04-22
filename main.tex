@@ -43,7 +43,7 @@
 			pdfkeywords={thesis, sapienza, roma, university}
  }
 
-\title{Sviluppo App}
+\title{Progettazione e sviluppo della funzionalità di apertura di un verbale in InfoProf}
 \author{Edoardo Gabrielli}
 \IDnumber{1693726}
 \course[]{Informatica}
@@ -142,20 +142,10 @@ viene respinta.
 
 \section{Tecnologie utilizzate}
 \label{sec:tech}
-Per sviluppare il front-end delle app utilizziamo Ionic Framework v3, che è basato su AngularJS. Ionic permette di utilizzare tecnologie
-web per creare interfacce secondo gli standard di Android e iOS. Il vantaggio dell'uso di Angular è che il codice non va adattato ad alcuna
-piattaforma, inoltre per chiunque abbia già una discreta conoscenza della programmazione web è immediato iniziare a programmare. Tutto
-ciò velocizza molto la scrittura di una UI, ma bisogna fare dei compromessi: l'interfaccia non segue diligentemente gli standard imposti
-dal Material Design o dall'iOS UI Design perché deve adattarsi ad entrambe le piattaforme. Un'altra criticità è che di fatto l'app è
-un'interfaccia web con caratteristiche \textit{app-like}, ovvero una Progressive Web App sviluppata in Angular. 
-Il ruolo di Ionic è fornire gli elementi dei vari standard di design già fatti e di integrare anche le funzionalità native attraverso
-Ionic Native o Cordova. Ciò significa che le prestazioni ne risentono ripetto ad un'app nativa. Inoltre ad oggi Ionic è alla versione 5,
-ma è impossibile aggiornare i progetti senza andare a creare dei conflitti che vanno risolti manualmente, vista la mole di codice che è
-stato scritto quindi, siamo costretti a rimanere ad una versione di qualche anno fa, all'occorenza programmando manualmente le novità
-introdotte dagli standard.
+Per sviluppare il front-end delle app utilizziamo Ionic Framework v3, che è basato su AngularJS. Ionic permette di utilizzare tecnologie web per creare interfacce secondo gli standard di Android e iOS. Il vantaggio dell'uso di Angular è che il codice non va adattato ad alcuna piattaforma, inoltre per chiunque abbia già una discreta conoscenza della programmazione web è immediato iniziare a programmare. Tutto ciò velocizza molto la scrittura di una UI, ma bisogna fare dei compromessi: l'interfaccia non segue diligentemente gli standard imposti dal Material Design o dall'iOS UI Design perché deve adattarsi ad entrambe le piattaforme. Un'altra criticità è che di fatto l'app è un'interfaccia web con caratteristiche \textit{app-like}, ovvero una Progressive Web App sviluppata in Angular. 
+Il ruolo di Ionic è fornire gli elementi dei vari standard di design già fatti e di integrare anche le funzionalità native attraverso Ionic Native o Cordova. Ciò significa che le prestazioni ne risentono ripetto ad un'app nativa. Inoltre ad oggi Ionic è alla versione 5, ma è impossibile aggiornare i progetti senza andare a creare dei conflitti che vanno risolti manualmente, vista la mole di codice che è stato scritto quindi, siamo costretti a rimanere ad una versione di qualche anno fa, all'occorenza programmando manualmente le novità introdotte dagli standard.
 
-InfoStud ed InfoProf sono progettati seguendo un pattern architetturale loro. L'idea generale è quella di tenere separate le responsabilità
-di ogni componente. Ciò si traduce sinteticamente in:
+InfoStud ed InfoProf sono progettati seguendo un pattern architetturale loro. L'idea generale è quella di tenere separate le responsabilità di ogni componente. Ciò si traduce sinteticamente in:
 
 \begin{itemize}
 	\item Model: rappresentano le classi, contiengono i dati dell'applicazione a cui si accede attraverso i metodi che forniscono;
@@ -200,9 +190,7 @@ Essendomi fatto un'idea delle criticità dell'interfaccia attuale, ho creato un 
 Il sondaggio ha solo una domanda aperta, tra l'altro opzionale, in quanto volevo rendere il sondaggio molto corto in modo da aumentare 
 le possibilità di risposta. Per coloro che volessero dedicarmi più tempo ho invece chiesto di argomentare in modo da avere risposte
 più complete, infatti a fine email ho incoraggiato ad argomentare le risposte il più possibile.
-
-La prima domanda è stata fatta per capire come gestiscono la lista degli insegnamenti: la lista sull'app infatti è difficile da gestire
-vista la sua lunghezza. Quindi se la maggior parte dei professori sceglie di selezionare tutto, potrei sintetizzarla in qualche modo.
+La prima domanda è stata fatta per capire come gestiscono la lista degli insegnamenti: la lista sull'app infatti è difficile da gestire vista la sua lunghezza. Quindi se la maggior parte dei professori sceglie di selezionare tutto, potrei sintetizzarla in qualche modo.
 La seconda ha un carattere generale, che mira a scoprire qualcosa di più da parte dell'utente.
 Le domande dalla 3 alla 5 invece servono a capire se esistono dei vincoli nella scelta delle date per cercare di automatizzare il processo.
 
@@ -288,6 +276,7 @@ Requisiti \footnote{Non ordinati.}:
 \section{Iterazioni}
 %parlare solo dei prototipi e fare una valutazione secondo test/euristiche a fine di ogni iterazione.
 \subsection{Valutazione dell'interfaccia}
+\label{heuristics}
 %parlare di euristiche e test
 Prima di cominciare a parlare di della fase di prototyping, introduco le tecniche di valutazione dell'interfaccia che ho utilizzato. Le tecniche di valutazione testano l'usabilità e le funzionalità di un sistema, in modo da valutarne i problemi e gli effetti che l'interfaccia ha sull'utente. Queste tecniche inoltre richiedono un artefatto da testare, che può essere sia un prototipo, che un implementazione completa del sistema. In questo caso procederò ad iterare su dei prototipi, applicando le tecniche di valutazione a fine di ogni iterazione, le quali mi restituiranno sempre un artefatto diverso da quello dell'iterazione precedente.
 
@@ -354,16 +343,17 @@ Dai test svolti questa interfaccia è andata sempre bene. Ogni intervistato è s
 \subsection{Iterazione 2}
 Il problema più grande della prima iterazione era il fatto che la prima view e la seconda (nella quale si inseriscono le date) non erano legate in alcun modo, questo costringe l'utente a ricordare le scelte fatte nella view precedente. Dato che la lista può essere complicata da gestire ed è importante aiutarlo a non fargli commettere errori, ho deciso di cambiare l'ordine della navigazione: la prima pagina infatti è stata spostata come prima view, con un bottone "Scegli insegnamenti" che porta alla pagina della scelta degli insegnamenti e degli alias. Quando questi vengono selezionati, si torna indietro e sopra al bottone di prima compaiono gli insegnamenti selezionati.
 
-Altre modifiche all'interfaccia sono state quelle relative ai titoli delle navbar, che ora sono più inerenti, sono stati aggiunti dei messaggi di errore, il campo di testo ora è più chiaro ed ha un placeholder. In questa iterazione ho inoltre collegato le view al backend, dunque potevo lavorare su dei dati che strutturalmente rappresentavano i dati reali. Da qui ho implementato un meccanismo per sintetizzare la tabella degli insegnamenti, in cui parlerò più approfonditamente in \ref{sec:dev}.
+Altre modifiche all'interfaccia sono state quelle relative ai titoli delle navbar, che ora sono più inerenti, sono stati aggiunti dei messaggi di errore, il campo di testo ora è più chiaro ed ha un placeholder. In questa iterazione ho inoltre collegato le view al backend, dunque potevo lavorare su dei dati che strutturalmente rappresentavano i dati reali. Da qui ho implementato un meccanismo per sintetizzare la tabella degli insegnamenti, in cui parlerò più approfonditamente in \ref{sec:dev}. Per ora basti sapere che, mentre nell'interfaccia desktop abbiamo almeno due copie per ogni insegnamento (vecchio o presente che sia) \footnote{Gli insegnamenti infatti hanno tutti una voce per l'A.A. corrente e quello precedente.}, nell'app questo non avviene perchè saranno racchiusi in una voce sola. Sarà poi l'app, in modo totalmente trasparente all'utente, a decidere quali voci devono essere selezionate.
 
 Anche la grafica è cambiata, rendendola più simile a quella dell'aggiunta di un appuntamento sul calendario di iOS e Google. Non potendo fare più i test di usabilità, che hanno bisogno di essere fatti in presenza, mi sono affidato agli standard che hanno applicazioni più importanti. Infatti l'aggiunta di un appuntamento su un calendario non è tanto differente dall'apertura di un verbale: abbiamo infatti da gestire tre date in più rispetto ad un appuntamento, che in realtà si esaurisce nella giornata stessa, ma abbiamo da gestire in meno l'orario, il luogo, gli invitati e le etichette. Anche se, per utilizzare una metafora, si può pensare agli insegnamenti come degli invitati ed infatti il pulsante che permette di selezionare gli insegnamenti è molto simile a quello dell'aggiunta di persone all'evento.
 
 Un altro miglioramento che è stato apportato è quello del compilamento automatico delle date. L'idea è quella di selezionare la data di inizio dell'appello e l'app, ricordando le date che sono state utilizzate precedentemente, prevede quali saranno quelle che l'utente inserirà, facendolo per lui. Infatti dalle interviste è emerso che i professori tendono a frammentarsi nel scegliere il numero di giorni dedicati all'appello e alle prenotazioni, ma la maggior parte è costante e utilizza sempre quelli. Dunque ho deciso di far ricordare all'applicazione le scelte fatte dall'utente in precedenza ed applicarle nella compilazione delle date.
 Questo dovrebbe velocizzare di molto l'apertura di un verbale. % aggiungere eventuali feedback dati dalla beta
 
-Infine, invece di utilizzare delle view, ho deciso di utilizzare dei modali per far sparire i tab a fine pagina. Questo impedisce all'utente di navigare all'interno dell'applicazione dopo aver iniziato l'apertura di un verbale, ma è ragionevole pensare che un utente non voglia farlo semplicemente perchè ho fatto in modo che tutto ciò che serve all'utente per aprire un appello è visibile nella pagina dedicata. Inoltre questo permette di risparmiare un po' di spazio per evitare lo scroll.
+Infine, invece di utilizzare delle view, ho deciso di utilizzare dei modali per far sparire i tab a fine pagina. Questo impedisce all'utente di navigare all'interno dell'applicazione dopo aver iniziato l'apertura di un verbale, ma è ragionevole pensare che un utente non voglia farlo, semplicemente perchè ho fatto in modo che tutto ciò che serve all'utente per aprire un appello è visibile durante la navigazione della funzionalità. Inoltre questo permette di risparmiare un po' di spazio per evitare lo scroll.
 
-% analizzare la soddifacibilità dell'interfaccia con le euristiche proposte. Es. coerenza e standard per il fatto che si copia l'app di google e ios calendario, visibilità dello stato del sistema e riconoscere invece di ricordare tramite insegnamenti nella view principale, prevenzione degli errori tramite il collasso degli insegnamenti, design minimalista nascondendo i dettagli come quelli dei corsi associati agli insegnamenti e gli insegnamenti collassati in meno voci, efficienza d'uso tramite la compilazione automatica delle date, aiutare l'utente a diagnosticare gli errori tramite il ristrotturamento degli errori (poco chiari nella piattaforma desktop), corrispondenza tra il mondo reale e il sistema utilizzando sempre gli stessi termini per appello, insegnamento e corso. Libertà e controllo tramite la scelta dei corsi.
+Come anticipato ad inizio capitolo \ref{heuristics}, valuterò questa iterazione tramite le euristiche di Neilsen. Possiamo dire che l'interfaccia, arrivata a questo punto, le soddisfa almeno per buona parte.
+Per quanto riguarda la prima regola, "Visibilità dello stato del sistema" direi che è soddisfatta pienamente da tutti gli elementi. La seconda, "Corrispondenza tra sistema e mondo reale", è soddisfatta pienamente anche lei in quanto i termini "Appello", "Corso", "Insegnamento" e "Facolt\'a" sono gli stessi utilizzati nel gergo comune, inoltre non essendo cambiati dall'iterazione precedente ed avendo fatto dei test su quella, nessun professore è rimasto confuso dalla scelta dei termini. Anche "Controllo e libertà" viene rispettata tramite l'aggiunta degli alias, che permettono una scorciatoia agli utenti esperti e la scelta dei corsi permette una certa libertà nell'apertura di un appello. L'uniformità dei termini usati garantisce la "coerenza", mentre la selezione delle date, che dovrà rispettare determinati vincoli \footnote{Non è possibile selezionare date nel passato e non devono accavallarsi tra di loro.} e saranno compilate automaticamente, unita al collasso degli insegnamenti in meno voci all'interno della tabella garantiscono la prevenzione degli errori, l'efficienza d'uso ed un design minimalista. La regola "riconoscere invece che ricordare" è stata già discussa ad inizio sezione, anche se, quando gli alias sono vuoti, non c'è alcuna indicazione su cosa sono e come vengono creati. Per quanto riguarda gli errori, per ora ci sono solo quelli che vengono lanciati quando l'utente preme "ok" senza selezionare una facoltà all'interno dell'alert e quando clicca su "invia" senza aver messo le date o almeno un insegnamento. Come si vede dalle immagini, però, sono stati creati ad arte per essere ben diagnosticabili. Le condizioni per cui un utente può lanciare un errore è solo in questi due casi comunque, quindi sono veramente poche. Vedremo nella terza iterazione come sono riuscito ad abbassare le condizioni a solo un caso, cioè quello dei campi obbligatori (date o insegnamenti) mancanti.
 
 \begin{figure}[ht]
 	\begin{subfigure}{0.6\textwidth}
@@ -400,6 +390,7 @@ Infine, invece di utilizzare delle view, ho deciso di utilizzare dei modali per 
 
 \section{Implementazione}
 \label{sec:dev}
+%inserire diagramma classi, sequenza e use case?
 %inserire qualche snippet, parlare di come si sono "collassati" gli insegnamenti, come si passano i dati tra le view, ecc...
 
 
