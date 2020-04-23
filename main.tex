@@ -386,13 +386,57 @@ Per quanto riguarda la prima regola, "Visibilità dello stato del sistema" dire
 \end{figure}
 
 \subsection{Iterazione 3}
+La terza iterazione in realtà va solo a risolvere i problemi individuati nella seconda, dunque non sarà piena di contenuti come le altre.
+Il cambiamento più importante è stato quello di togliere i corsi. L'obbiattivo finale dell'app è infatti togliere tutto ciò che non è indispensabile. Infatti nei test e nei questionari, non solo sono fonte di confusione, ma non vengono mai usati. Quindi aveva veramente senso lasciarli? La dimostrazione arriverà quando la funzionalità sarà rilasciata nella beta.
+
+Altri miglioramenti minori sono stati apportati all'alert per la scelta della facoltà dove ora il bottone per confermare la facoltà è disabilitato finchè non se ne seleziona una (questo elimina un triggher per gli errori). Inoltre le etichette agli input del form sono cambiate, adesso quelle per ogni singolo elemento sono più esplicative ed ho tolto i titoli nelle varie sezioni che occupavano solo spazio. Anche il textbox ora è più grigio in modo tale da essere ben visibile all'utente. Infine è stato aggiunto un messaggio che inviti l'utente ad utilizzare gli alias e il perché esistono. Dunque in \ref{fig:it-3} si può vedere l'interfaccia finale.
+
+\begin{figure}[ht]
+	\begin{subfigure}{0.6\textwidth}
+	  \centering
+	  \includegraphics[width=0.5\linewidth]{ui-iterations/iii/facolta-1}  
+	  \caption{Put your sub-caption here}
+	  \label{fig:sub-first}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+	  \centering
+	  \includegraphics[width=0.5\linewidth]{ui-iterations/iii/facolta-2}  
+	  \caption{Put your sub-caption here}
+	  \label{fig:sub-second}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{ui-iterations/iii/form}  
+		\caption{Put your sub-caption here}
+		\label{fig:sub-second}
+	  \end{subfigure}
+	  \begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{ui-iterations/iii/insegnamenti}  
+		\caption{Put your sub-caption here}
+		\label{fig:sub-second}
+	  \end{subfigure}
+	  
+	\caption{Terza iterazione}
+	\label{fig:it-3}
+\end{figure}
 
 
 \section{Implementazione}
 \label{sec:dev}
 %inserire diagramma classi, sequenza e use case?
 %inserire qualche snippet, parlare di come si sono "collassati" gli insegnamenti, come si passano i dati tra le view, ecc...
-
+\subsection{Le classi}
+Per realizzare tutto ciò che è stato detto nella sezione precedente, ho bisogno di diverse classi:
+\begin{itemize}
+	\item \textbf{ActTeachings}: Rappresenta un appello;
+	\item \textbf{Teaching}: Rappresenta un insegnamento;
+	\item \textbf{Program}: Rappresenta un corso di studi;
+	\item \textbf{ActController}: Ha il compito di raccogliere gli insegnamenti con lo stesso nome in una sola voce;
+	\item \textbf{NewActPage}: Rappresenta la UI del form;
+	\item \textbf{TeachingListPage}: Mostra la UI per la selezione degli insegnamenti;
+	\item \textbf{DetailedListPage}: Mostra la UI per la selezione dei corsi di studio collegati ad un insegnamento.
+\end{itemize}
 
 \chapter{Conclusioni}
 \label{ch:4}
