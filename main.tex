@@ -7,6 +7,9 @@
 \usepackage[utf8]{inputenx}
 \usepackage{indentfirst}
 \usepackage{microtype}
+\usepackage{amsmath}  % for \hookrightarrow
+\usepackage{xcolor}   % for \textcolor
+\usepackage{listings}
 %\usepackage{chemformula}
 %\usepackage{setspace}
 %\usepackage{yfonts,color}https://www.overleaf.com/project/5e4187442ef81c00013a37ea
@@ -23,7 +26,7 @@
 \usepackage{subcaption}
 \usepackage{bookmark}
 %portare linespread a 1.1-1.3
-\linespread{1.4}
+\linespread{1.8}
 %\usepackage{chngcntr}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
 %\onehalfspacing
@@ -41,7 +44,30 @@
 			pdftitle={Sviluppo App},
 			pdfauthor={Edoardo Gabrielli},
 			pdfkeywords={thesis, sapienza, roma, university}
- }
+}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstset{
+  language=JavaScript,
+  basicstyle=\tiny,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\color{red}$\hookrightarrow$\space}
+}
 
 \title{Progettazione e sviluppo della funzionalità di apertura di un verbale in InfoProf}
 \author{Edoardo Gabrielli}
@@ -304,7 +330,7 @@ Inoltre accanto ad ogni insegnamento c'è un'icona blu "i" che se cliccata porta
 
 Dai test svolti questa interfaccia è andata sempre bene. Ogni intervistato è sempre riuscito ad aprire il verbale senza difficoltà nell'ordine di due o tre minuti. C'era qualche incertezza nel campo note, dove "Note per gli studenti" veniva spesso confuso con un placeholder. In pochi si sono interessati del tasto "i" accanto agli insegnamenti. Ho provato inoltre ad interrompere il test quando l'intervistato si trovava nella schermata di inserimento delle date. Quando riprendevamo il test, l'intervistato non ricordava che insegnamenti aveva selezionato. Serviva dunque un modo per far ricordare all'utente le scelte fatte nel corso dell'attività. Inoltre il prototipo ha una lista degli insegnamenti "ottimistica". Nella realtà la lista sarebbe molto più grande e non volevo vincolare gli utenti ad utilizzare per forza gli alias i quali, allo stato attuale, passano inosservati.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
 	  \centering
 	  \includegraphics[width=0.5\linewidth]{ui-iterations/i/main}  
@@ -355,7 +381,7 @@ Infine, invece di utilizzare delle view, ho deciso di utilizzare dei modali per 
 Come anticipato ad inizio capitolo \ref{heuristics}, valuterò questa iterazione tramite le euristiche di Neilsen. Possiamo dire che l'interfaccia, arrivata a questo punto, le soddisfa almeno per buona parte.
 Per quanto riguarda la prima regola, "Visibilità dello stato del sistema" direi che è soddisfatta pienamente da tutti gli elementi. La seconda, "Corrispondenza tra sistema e mondo reale", è soddisfatta pienamente anche lei in quanto i termini "Appello", "Corso", "Insegnamento" e "Facolt\'a" sono gli stessi utilizzati nel gergo comune, inoltre non essendo cambiati dall'iterazione precedente ed avendo fatto dei test su quella, nessun professore è rimasto confuso dalla scelta dei termini. Anche "Controllo e libertà" viene rispettata tramite l'aggiunta degli alias, che permettono una scorciatoia agli utenti esperti e la scelta dei corsi permette una certa libertà nell'apertura di un appello. L'uniformità dei termini usati garantisce la "coerenza", mentre la selezione delle date, che dovrà rispettare determinati vincoli \footnote{Non è possibile selezionare date nel passato e non devono accavallarsi tra di loro.} e saranno compilate automaticamente, unita al collasso degli insegnamenti in meno voci all'interno della tabella garantiscono la prevenzione degli errori, l'efficienza d'uso ed un design minimalista. La regola "riconoscere invece che ricordare" è stata già discussa ad inizio sezione, anche se, quando gli alias sono vuoti, non c'è alcuna indicazione su cosa sono e come vengono creati. Per quanto riguarda gli errori, per ora ci sono solo quelli che vengono lanciati quando l'utente preme "ok" senza selezionare una facoltà all'interno dell'alert e quando clicca su "invia" senza aver messo le date o almeno un insegnamento. Come si vede dalle immagini, però, sono stati creati ad arte per essere ben diagnosticabili. Le condizioni per cui un utente può lanciare un errore è solo in questi due casi comunque, quindi sono veramente poche. Vedremo nella terza iterazione come sono riuscito ad abbassare le condizioni a solo un caso, cioè quello dei campi obbligatori (date o insegnamenti) mancanti.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
 	  \centering
 	  \includegraphics[width=0.5\linewidth]{ui-iterations/ii/select-faculty}  
@@ -391,7 +417,7 @@ Il cambiamento più importante è stato quello di togliere i corsi. L'obbiattivo
 
 Altri miglioramenti minori sono stati apportati all'alert per la scelta della facoltà dove ora il bottone per confermare la facoltà è disabilitato finchè non se ne seleziona una (questo elimina un triggher per gli errori). Inoltre le etichette agli input del form sono cambiate, adesso quelle per ogni singolo elemento sono più esplicative ed ho tolto i titoli nelle varie sezioni che occupavano solo spazio. Anche il textbox ora è più grigio in modo tale da essere ben visibile all'utente. Infine è stato aggiunto un messaggio che inviti l'utente ad utilizzare gli alias e il perché esistono. Dunque in \ref{fig:it-3} si può vedere l'interfaccia finale.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
 	  \centering
 	  \includegraphics[width=0.5\linewidth]{ui-iterations/iii/facolta-1}  
@@ -421,22 +447,154 @@ Altri miglioramenti minori sono stati apportati all'alert per la scelta della fa
 	\label{fig:it-3}
 \end{figure}
 
-
+\newpage
 \section{Implementazione}
 \label{sec:dev}
 %inserire diagramma classi, sequenza e use case?
 %inserire qualche snippet, parlare di come si sono "collassati" gli insegnamenti, come si passano i dati tra le view, ecc...
 \subsection{Le classi}
-Per realizzare tutto ciò che è stato detto nella sezione precedente, ho bisogno di diverse classi:
+Per realizzare tutto ciò che è stato detto nella sezione precedente, ho bisogno delle seguenti classi:
 \begin{itemize}
 	\item \textbf{ActTeachings}: Rappresenta un appello;
 	\item \textbf{Teaching}: Rappresenta un insegnamento;
 	\item \textbf{Program}: Rappresenta un corso di studi;
+	\item \textbf{Faculty}: Rappresenta una facoltà;
 	\item \textbf{ActController}: Ha il compito di raccogliere gli insegnamenti con lo stesso nome in una sola voce;
 	\item \textbf{NewActPage}: Rappresenta la UI del form;
 	\item \textbf{TeachingListPage}: Mostra la UI per la selezione degli insegnamenti;
-	\item \textbf{DetailedListPage}: Mostra la UI per la selezione dei corsi di studio collegati ad un insegnamento.
+	\item \textbf{DetailedListPage}: Mostra la UI per la selezione dei corsi di studio collegati ad un insegnamento;
+	\item \textbf{InfoprofProvider}: Classe che accede ai dati del server.
 \end{itemize}
+
+Ho dunque realizzato il diagramma delle classi \ref{fig:classDiagram}.
+\begin{figure}[H]
+	\caption{Diagramma delle classi.}
+	\centering
+	\includegraphics[width=1\textwidth]{diagrams/classDiagram}
+	\label{fig:classDiagram}
+\end{figure}
+
+Adesso analizzarò i metodi principali partendo da quelli del provider. InfoprofProvider è la classe che si occupa di utilizzare le API per accedere ai dati nel server, quando questi dati sono dei "getter" il server risponde con dei dati in formato JSON che andranno deserializzati con gli appositi metodi che ogni classe di tipo "entity" forsnisce nel costruttore o, se trattiamo un array di JSON, allora con il metodo uniserializeAll() fornito sempre dalle classi entity stesse che hanno inoltre i classici getters e setters per ogni attributo. La funzionalità di apertura di un verbale ha dunque bisogno di comunicare in 2 occasioni con il server, per un totale di 3 chiamate: la prima e la seconda vvengono chiamate quando l'utente accede al form di apertura del verbale e scarica prima le facoltà (getFaculties()) in cui l'utente è coinvolto e poi (getTeachings()) gli insegnamenti corrispondenti alla facoltà scelta. L'ultima chiamata (registerAct()) invece viene attivata quando bisogna registrare l'appello, ovvero quando l'utente clicca sul pulsante "Invia".
+
+Passando invece alle pagine, NewActPage è la prima e contiene il form nel quale inserire le varie informazioni necessarie al successo dell'operazione. Il primo metodo è fillDates() e, come il nome suggerisce, è il responsabile della compilazione automatica delle date per l'utente. 
+
+\begin{lstlisting}[frame=single]
+private fillDates() {
+	if (this.actEnd == undefined && this.prenStart == undefined && this.prenEnd == undefined) {
+		let actStart = moment(this.actStart);
+		if (this.actPeriod >= 0) {
+			this.actEnd = actStart.add(this.actPeriod, 'd').format("YYYY-MM-DD");
+		} else {
+			this.actEnd = actStart.add(1, 'M').format("YYYY-MM-DD");
+		}
+		actStart = moment(this.actStart);
+		if (this.emptyPeriod >= 0) {
+			this.prenEnd = actStart.subtract(this.emptyPeriod, 'd').format("YYYY-MM-DD");
+		} else {
+			this.prenEnd = actStart.subtract(1, 'd').format("YYYY-MM-DD");
+		}
+		let prenEnd = moment(this.prenEnd);
+		if (this.reservationPeriod >= 0) {
+			this.prenStart = prenEnd.subtract(this.reservationPeriod, 'd').format("YYYY-MM-DD");
+		} else {
+			this.prenStart = actStart.subtract(1, 'M').format("YYYY-MM-DD");
+		}
+		actStart = moment(this.actStart);
+		this.maxPrenEnd = actStart.subtract(1, "d").format("YYYY-MM-DD");
+		actStart = moment(this.actStart);
+		this.maxPrenStart = actStart.subtract(1, "d").format("YYYY-MM-DD");
+		if (moment(this.prenStart).isBefore(this.minPrenStart)) {
+			this.prenStart = this.minPrenStart;
+			this.savePeriods = false;
+		} else if (moment(this.prenStart).isAfter(this.maxPrenStart)) {
+			this.prenStart = this.maxPrenStart
+			this.savePeriods = false;
+		}
+		if (moment(this.prenEnd).isBefore(this.prenStart)) {
+			this.prenEnd = this.prenStart;
+			this.savePeriods = false;
+		} else if (moment(this.prenEnd).isAfter(this.maxPrenEnd)) {
+			this.prenEnd = this.maxPrenEnd;
+			this.savePeriods = false;
+		}
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+	private countDays() {
+		let actStart = moment(this.actStart);
+		let actEnd = moment(this.actEnd);
+		let prenStart = moment(this.prenStart);
+		let prenEnd = moment(this.prenEnd);
+
+		this.actPeriod = actEnd.diff(actStart, 'd');
+		this.reservationPeriod = prenEnd.diff(prenStart, 'd');
+		this.emptyPeriod = actStart.diff(prenEnd, 'd');
+	}
+\end{lstlisting}
+
+\begin{lstlisting}
+	private submit(isRetryCall?: boolean): void {
+		if (this.actStart != undefined && this.actEnd != undefined && this.prenStart != undefined && this.prenEnd != undefined && this.checkedTeachings.length > 0) {
+			let loader = this.loadingCtrl.create({
+				spinner: 'crescent',
+				content: this.txt["RECORD_IN_PROGRESS"],
+			});
+			loader.present();
+
+			// If the start of the act is after the 31-01 of the current academic year, the teachings of the previous
+			// academic year will be deselected automatically.
+			if (this.actStart > moment(moment().year() + "01" + "31").format("YYYY-MM-DD")) {
+				for (let t of this.checkedTeachings) {
+					if (t.getAcademicYear().slice(t.getAcademicYear().indexOf("/") + 1) < moment().format("YYYY")) {
+						let i = this.checkedTeachings.indexOf(t);
+						if (i > -1) {
+							this.checkedTeachings.splice(i, 1);
+						}
+					}
+				}
+			}
+
+			this.ip.registerAct(
+				new ActTeachings({
+					"startdate": this.actStart,
+					"enddate": this.actEnd,
+					"bookingstart": this.prenStart,
+					"bookingend": this.prenEnd,
+					"notes": this.notes,
+					"opisneeded": this.opis,
+					"faculty": this.facultyId,
+					"teachings": this.checkedTeachings
+				})).then(() => {
+					// Save the user's preferencies before closing the modal.
+					this.countDays();
+
+					this.storage.set("actPeriod", this.actPeriod);
+					
+					// An act which has less than one reservation day is considered a "special case". Hence don't save it.
+					if (this.savePeriods) {
+						this.storage.set("reservationPeriod", this.reservationPeriod);
+						this.storage.set("emptyPeriod", this.emptyPeriod);
+					}
+
+					loader.dismiss();
+					this.events.publish('refreshPage');
+
+					this.navCtrl.pop();
+				}).catch((error: ApiError) => {
+					// Tutte le varie condizioni d'errore
+				});
+		} else {
+			let alert = this.alertCtrl.create({
+				title: this.txt["ERROR"],
+				subTitle: this.txt["INSERT_DATES_AND_TEACHINGS"],
+				buttons: ['OK']
+			});
+			alert.present();
+		}
+	}
+\end{lstlisting}
 
 \chapter{Conclusioni}
 \label{ch:4}
