@@ -26,7 +26,7 @@
 \usepackage{subcaption}
 \usepackage{bookmark}
 %portare linespread a 1.1-1.3
-\linespread{1.8}
+\linespread{1.4}
 %\usepackage{chngcntr}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
 %\onehalfspacing
@@ -105,7 +105,7 @@ del Gamification Lab.
 
 InfoStud è l'app che si rivolge unicamente agli studenti iscritti alla Sapienza e mette a disposizione un parco di funzionalità ampio
 che copre le funzioni standard del sistema padre (come visualizzazione e gestione esami) e andando oltre in alcuni casi: il sistema
-di gestione dell'orario didattico semi-automatico, la compilazione dei bollettini automatica, la prenotazione dei posti in biblioteca, ecc.
+di gestione dell'orario didattico semiautomatico, la compilazione dei bollettini automatica, la prenotazione dei posti in biblioteca, ecc.
 
 InfoProf, al contrario, è l'app che si rivolge ai professori della Sapienza e vuole essere uno strumento alternativo, e più intuitivo, 
 del sistema web. La semplicità di utilizzo dell'app va però analizzata e progettata in modo empirico. Questo studio porta via molto tempo 
@@ -275,7 +275,7 @@ Qui le risposte sono piuttosto eterogenee.
 \end{figure}
 
 \subsection{E quanti giorni prima, dal giorno dell’esame, chiude le prenotazioni? }
-Al contrario invece, qui la maggior parte dei docenti preferisce chidere le prenotazioni 1 o 2 giorni prima dal giorno dell'esame. Questa è una buona notizia perchè in questo caso posso utilizzare l'informazione per definire un default per una futura funzionalità di compilazione automatica del form.
+Al contrario invece, qui la maggior parte dei docenti preferisce chiedere le prenotazioni uno o due giorni prima dal giorno dell'esame. Questa è una buona notizia perché in questo caso posso utilizzare l'informazione per definire un default per una futura funzionalità di compilazione automatica del form.
 \begin{figure}[ht]
 	\caption{Grafico delle risposte date alla quinta domanda.}
 	\centering
@@ -413,7 +413,7 @@ Per quanto riguarda la prima regola, "Visibilità dello stato del sistema" dire
 
 \subsection{Iterazione 3}
 La terza iterazione in realtà va solo a risolvere i problemi individuati nella seconda, dunque non sarà piena di contenuti come le altre.
-Il cambiamento più importante è stato quello di togliere i corsi. L'obbiattivo finale dell'app è infatti togliere tutto ciò che non è indispensabile. Infatti nei test e nei questionari, non solo sono fonte di confusione, ma non vengono mai usati. Quindi aveva veramente senso lasciarli? La dimostrazione arriverà quando la funzionalità sarà rilasciata nella beta.
+Il cambiamento più importante è stato quello di togliere i corsi. L'obbiettivo finale dell'app è infatti togliere tutto ciò che non è indispensabile. Infatti nei test e nei questionari, non solo sono fonte di confusione, ma non vengono mai usati. Quindi aveva veramente senso lasciarli? La dimostrazione arriverà quando la funzionalità sarà rilasciata nella beta.
 
 Altri miglioramenti minori sono stati apportati all'alert per la scelta della facoltà dove ora il bottone per confermare la facoltà è disabilitato finchè non se ne seleziona una (questo elimina un triggher per gli errori). Inoltre le etichette agli input del form sono cambiate, adesso quelle per ogni singolo elemento sono più esplicative ed ho tolto i titoli nelle varie sezioni che occupavano solo spazio. Anche il textbox ora è più grigio in modo tale da essere ben visibile all'utente. Infine è stato aggiunto un messaggio che inviti l'utente ad utilizzare gli alias e il perché esistono. Dunque in \ref{fig:it-3} si può vedere l'interfaccia finale.
 
@@ -476,11 +476,22 @@ Ho dunque realizzato il diagramma delle classi \ref{fig:classDiagram}.
 
 Adesso analizzarò i metodi principali partendo da quelli del provider. InfoprofProvider è la classe che si occupa di utilizzare le API per accedere ai dati nel server, quando questi dati sono dei "getter" il server risponde con dei dati in formato JSON che andranno deserializzati con gli appositi metodi che ogni classe di tipo "entity" forsnisce nel costruttore o, se trattiamo un array di JSON, allora con il metodo uniserializeAll() fornito sempre dalle classi entity stesse che hanno inoltre i classici getters e setters per ogni attributo. La funzionalità di apertura di un verbale ha dunque bisogno di comunicare in 2 occasioni con il server, per un totale di 3 chiamate: la prima e la seconda vvengono chiamate quando l'utente accede al form di apertura del verbale e scarica prima le facoltà (getFaculties()) in cui l'utente è coinvolto e poi (getTeachings()) gli insegnamenti corrispondenti alla facoltà scelta. L'ultima chiamata (registerAct()) invece viene attivata quando bisogna registrare l'appello, ovvero quando l'utente clicca sul pulsante "Invia".
 
-Passando invece alle pagine, NewActPage è la prima e contiene il form nel quale inserire le varie informazioni necessarie al successo dell'operazione. Il primo metodo è fillDates() e, come il nome suggerisce, è il responsabile della compilazione automatica delle date per l'utente. 
+Passando invece alle pagine, NewActPage è la prima e contiene il form nel quale inserire le varie informazioni necessarie al successo dell'operazione. Il primo metodo è fillDates() e, come il nome suggerisce, è il responsabile della compilazione automatica delle date per l'utente. Come si può notare, il metodo in prima battuta controlla che non ci sia già una data in uno dei campi preposti, apparte actStart. Se la condizione è verificata, si occuperà di compilare le date in automatico, altrimenti no per non sovrascrivere quello che l'utente ha fatto in precedenza.
+Le variabili "actPeriod", "emptyPeriod" e "reservationPeriod" rappresentano rispettivamente la differenza espressa in giorni tra la fine dell'appello e l'inizio, l'inizio dell'appello e la fine delle prenotazioni e, infine, la fine delle prenotazioni e l'inizio delle stesse. Questi valori vengono presi dallo storage interno del telefono all'interno del costruttore della classe e assumono "-1" se non esistono valori precedentemente salvati.
+
+La seconda parte del metodo inoltre, si occupa di decidere se le variabili "periods" andranno salvate nello storage. Prima di questo però bisogna tenere presente che ci sono dei vincoli che le date devono rispettare:
+\begin{enumerate}
+	\item Il minimo valore che può assumere resStart è "oggi" (minResStart);
+	\item Il minimo valore che può assumere actStart è resStart + 1 giorno (minActStart);
+	\item Il minimo valore che può assumere resEnd è minResStart;
+	\item Il massimo valore che può assumere resStart è actStart - 1 giorno (maxResStart);
+	\item Il massimo valore che può asssumere resEnd è  actStart - 1 giorno (maxResEnd);
+\end{enumerate}
+A questo punto, se alla fine del calcolo, i valori assunti dalle date violano uno dei vincoli posti, il sistema va ad aggiustare le date interessate in modo che rispettino tutti i vincoli. Se comunque si verificasse questa condizione, chiaramente le variabili "periods" assumerebbero valori calcolati dal sistema, non dall'utente. Dunque non verrebbero salvati, ma rimarrebbero quelli che c'erano precedentemente.
 
 \begin{lstlisting}[frame=single]
 private fillDates() {
-	if (this.actEnd == undefined && this.prenStart == undefined && this.prenEnd == undefined) {
+	if (this.actEnd == undefined && this.resStart == undefined && this.resEnd == undefined) {
 		let actStart = moment(this.actStart);
 		if (this.actPeriod >= 0) {
 			this.actEnd = actStart.add(this.actPeriod, 'd').format("YYYY-MM-DD");
@@ -489,111 +500,108 @@ private fillDates() {
 		}
 		actStart = moment(this.actStart);
 		if (this.emptyPeriod >= 0) {
-			this.prenEnd = actStart.subtract(this.emptyPeriod, 'd').format("YYYY-MM-DD");
+			this.resEnd = actStart.subtract(this.emptyPeriod, 'd').format("YYYY-MM-DD");
 		} else {
-			this.prenEnd = actStart.subtract(1, 'd').format("YYYY-MM-DD");
+			this.resEnd = actStart.subtract(1, 'd').format("YYYY-MM-DD");
 		}
-		let prenEnd = moment(this.prenEnd);
+		let resEnd = moment(this.resEnd);
 		if (this.reservationPeriod >= 0) {
-			this.prenStart = prenEnd.subtract(this.reservationPeriod, 'd').format("YYYY-MM-DD");
+			this.resStart = resEnd.subtract(this.reservationPeriod, 'd').format("YYYY-MM-DD");
 		} else {
-			this.prenStart = actStart.subtract(1, 'M').format("YYYY-MM-DD");
+			this.resStart = actStart.subtract(1, 'M').format("YYYY-MM-DD");
 		}
+
 		actStart = moment(this.actStart);
-		this.maxPrenEnd = actStart.subtract(1, "d").format("YYYY-MM-DD");
-		actStart = moment(this.actStart);
-		this.maxPrenStart = actStart.subtract(1, "d").format("YYYY-MM-DD");
-		if (moment(this.prenStart).isBefore(this.minPrenStart)) {
-			this.prenStart = this.minPrenStart;
+		this.maxResEnd = actStart.subtract(1, "d").format("YYYY-MM-DD");
+		this.maxResStart = this.maxResEnd;
+		if (moment(this.resStart).isBefore(this.minResStart)) {
+			this.resStart = this.minResStart;
 			this.savePeriods = false;
-		} else if (moment(this.prenStart).isAfter(this.maxPrenStart)) {
-			this.prenStart = this.maxPrenStart
+		} else if (moment(this.resStart).isAfter(this.maxResStart)) {
+			this.resStart = this.maxResStart
 			this.savePeriods = false;
 		}
-		if (moment(this.prenEnd).isBefore(this.prenStart)) {
-			this.prenEnd = this.prenStart;
+		if (moment(this.resEnd).isBefore(this.resStart)) {
+			this.resEnd = this.resStart;
 			this.savePeriods = false;
-		} else if (moment(this.prenEnd).isAfter(this.maxPrenEnd)) {
-			this.prenEnd = this.maxPrenEnd;
+		} else if (moment(this.resEnd).isAfter(this.maxResEnd)) {
+			this.resEnd = this.maxResEnd;
 			this.savePeriods = false;
 		}
 	}
 }
 \end{lstlisting}
 
-\begin{lstlisting}
-	private countDays() {
-		let actStart = moment(this.actStart);
-		let actEnd = moment(this.actEnd);
-		let prenStart = moment(this.prenStart);
-		let prenEnd = moment(this.prenEnd);
+Questo metono invece semplicemente calcola le variabili "periods" esattamente come ho spiegato poco sopra.
 
-		this.actPeriod = actEnd.diff(actStart, 'd');
-		this.reservationPeriod = prenEnd.diff(prenStart, 'd');
-		this.emptyPeriod = actStart.diff(prenEnd, 'd');
-	}
+\begin{lstlisting}
+private countDays() {
+	let actStart = moment(this.actStart);
+	let actEnd = moment(this.actEnd);
+	let resStart = moment(this.resStart);
+	let resEnd = moment(this.resEnd);
+	this.actPeriod = actEnd.diff(actStart, 'd');
+	this.reservationPeriod = prenEnd.diff(prenStart, 'd');
+	this.emptyPeriod = actStart.diff(prenEnd, 'd');
+}
 \end{lstlisting}
 
 \begin{lstlisting}
-	private submit(isRetryCall?: boolean): void {
-		if (this.actStart != undefined && this.actEnd != undefined && this.prenStart != undefined && this.prenEnd != undefined && this.checkedTeachings.length > 0) {
-			let loader = this.loadingCtrl.create({
-				spinner: 'crescent',
-				content: this.txt["RECORD_IN_PROGRESS"],
-			});
-			loader.present();
-
-			// If the start of the act is after the 31-01 of the current academic year, the teachings of the previous
-			// academic year will be deselected automatically.
-			if (this.actStart > moment(moment().year() + "01" + "31").format("YYYY-MM-DD")) {
-				for (let t of this.checkedTeachings) {
-					if (t.getAcademicYear().slice(t.getAcademicYear().indexOf("/") + 1) < moment().format("YYYY")) {
-						let i = this.checkedTeachings.indexOf(t);
-						if (i > -1) {
-							this.checkedTeachings.splice(i, 1);
-						}
+private submit(isRetryCall?: boolean): void {
+	if (this.actStart != undefined && this.actEnd != undefined && this.prenStart != undefined && this.prenEnd != undefined && this.checkedTeachings.length > 0) {
+		let loader = this.loadingCtrl.create({
+			spinner: 'crescent',
+			content: this.txt["RECORD_IN_PROGRESS"],
+		});
+		loader.present();
+		
+		// If the start of the act is after the 31-01 of the current academic year, the teachings of the previous
+		// academic year will be deselected automatically.
+		if (this.actStart > moment(moment().year() + "01" + "31").format("YYYY-MM-DD")) {
+			for (let t of this.checkedTeachings) {
+				if (t.getAcademicYear().slice(t.getAcademicYear().indexOf("/") + 1) < moment().format("YYYY")) {
+					let i = this.checkedTeachings.indexOf(t);
+					if (i > -1) {
+						this.checkedTeachings.splice(i, 1);
 					}
 				}
 			}
-
-			this.ip.registerAct(
-				new ActTeachings({
-					"startdate": this.actStart,
-					"enddate": this.actEnd,
-					"bookingstart": this.prenStart,
-					"bookingend": this.prenEnd,
-					"notes": this.notes,
-					"opisneeded": this.opis,
-					"faculty": this.facultyId,
-					"teachings": this.checkedTeachings
-				})).then(() => {
-					// Save the user's preferencies before closing the modal.
-					this.countDays();
-
-					this.storage.set("actPeriod", this.actPeriod);
-					
-					// An act which has less than one reservation day is considered a "special case". Hence don't save it.
-					if (this.savePeriods) {
-						this.storage.set("reservationPeriod", this.reservationPeriod);
-						this.storage.set("emptyPeriod", this.emptyPeriod);
-					}
-
-					loader.dismiss();
-					this.events.publish('refreshPage');
-
-					this.navCtrl.pop();
-				}).catch((error: ApiError) => {
-					// Tutte le varie condizioni d'errore
-				});
-		} else {
-			let alert = this.alertCtrl.create({
-				title: this.txt["ERROR"],
-				subTitle: this.txt["INSERT_DATES_AND_TEACHINGS"],
-				buttons: ['OK']
-			});
-			alert.present();
 		}
+
+		this.ip.registerAct(
+			new ActTeachings({
+				"startdate": this.actStart,
+				"enddate": this.actEnd,
+				"bookingstart": this.prenStart,
+				"bookingend": this.prenEnd,
+				"notes": this.notes,
+				"opisneeded": this.opis,
+				"faculty": this.facultyId,
+				"teachings": this.checkedTeachings
+			})).then(() => {
+				// Save the user's preferencies before closing the modal.
+				this.countDays();
+				this.storage.set("actPeriod", this.actPeriod);
+				// An act which has less than one reservation day is considered a "special case". Hence don't save it.
+				if (this.savePeriods) {
+					this.storage.set("reservationPeriod", this.reservationPeriod);
+					this.storage.set("emptyPeriod", this.emptyPeriod);
+				}
+				loader.dismiss();
+				this.events.publish('refreshPage');
+				this.navCtrl.pop();
+			}).catch((error: ApiError) => {
+				// Tutte le varie condizioni d'errore
+			});
+	} else {
+		let alert = this.alertCtrl.create({
+			title: this.txt["ERROR"],
+			subTitle: this.txt["INSERT_DATES_AND_TEACHINGS"],
+			buttons: ['OK']
+		});
+		alert.present();
 	}
+}
 \end{lstlisting}
 
 \chapter{Conclusioni}
