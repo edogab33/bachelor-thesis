@@ -521,6 +521,41 @@ public getFaculties(): Promise<Faculty[]> {
 }
 \end{lstlisting}
 
+\subsection{ActController}
+\label{sc:controller}
+Prima di mostrare come funzionano le pagine è opportuno presentare anche l'ActController che ha il compito di gestire gli insegnamenti in strutture dati più semplici. I metodi più importanti sono \textbf{packCommonTeachings()} e \textbf{getKeys()}.
+
+Come si può vedere, il primo si occupa di raccogliere gli insegnamenti con lo stesso nome in un dizionario dove le chiavi rappresentano il nome dell'insegnamento e i valori invece sono un array di insegnamenti. Se osserviamo i nomi, infatti, possiamo vedere che rispettano uno schema: nella prima parte c'è il nome dell'insegnamento, nella seconda parte invece ci sono le informazioni aggiuntive e sono proprio quelle a cambiare, mentre la prima rimane sempre uguale. Ecco un esempio \textbf{HUMAN COMPUTER INTERACTION ON THE WEB (cod. 1047630 - INF/01 - cfu: 6, canale: NESSUNA CANALIZZAZIONE)} e \textbf{HUMAN COMPUTER INTERACTION ON THE WEB (cod. 1047630 - INF/01 - cfu: 6, canale: NESSUNA CANALIZZAZIONE)}. Dunque basta tagliare la stringa tra le parentesi per ricavare il nome in comune e raccogliere tutte le stringhe che matchano in un dizionario.
+\begin{lstlisting}
+public packCommonTeachings(teachings: Teaching[]): Map<string, Teaching[]> {
+	// All teachings with the same names are collected under the same key.
+	let map: Map<string, Teaching[]> = new Map<string, Teaching[]>();
+
+	for (let teaching of teachings) {
+		let key = teaching.getName().slice(0, teaching.getName().indexOf("(") - 1);
+		if (map.has(key)) {
+			map.get(key).push(teaching);
+		} else {
+			let t: Teaching[] = [teaching];
+			map.set(key, t);
+		}
+	}
+	return map;
+}
+\end{lstlisting}
+
+Le chiavi del dizionario saranno ciò che l'utente vedrà nella tabella al posto degli insegnamenti originari. Per gestire meglio queste chiavi nel DOM, fa comodo averle in un array. Per questo esiste il metodo \textbf{getKeys()}.
+
+\begin{lstlisting}
+public getKeys(packedTeachings: Map<string, Teaching[]>): string[] {
+	let keys: string[] = [];
+	packedTeachings.forEach((value, key) => {
+		keys.push(key);
+	});
+	return keys;
+}
+\end{lstlisting}
+
 \subsection{NewActPage}
 Passando invece alle pagine, NewActPage è la prima e contiene il form nel quale inserire le varie informazioni necessarie al successo dell'operazione. Il primo metodo è fillDates() e, come il nome suggerisce, è il responsabile della compilazione automatica delle date per l'utente. Come si può notare, il metodo in prima battuta controlla che non ci sia già una data in uno dei campi preposti, apparte actStart. Se la condizione è verificata, si occuperà di compilare le date in automatico, altrimenti no per non sovrascrivere quello che l'utente ha fatto in precedenza.
 Le variabili "actPeriod", "emptyPeriod" e "reservationPeriod" rappresentano rispettivamente la differenza espressa in giorni tra la fine dell'appello e l'inizio, l'inizio dell'appello e la fine delle prenotazioni e, infine, la fine delle prenotazioni e l'inizio delle stesse. Questi valori vengono presi dallo storage interno del telefono all'interno del costruttore della classe e assumono "-1" se non esistono valori precedentemente salvati.
@@ -607,9 +642,7 @@ private submit(isRetryCall?: boolean): void {
 		// academic year will be deselected automatically.
 		if (this.actStart > moment(moment().year() + "01" + "31").format("YYYY-MM-DD")) {
 			let checkedTeachings = []
-			for (let t of this.checkedTeachings) {
-				checkedTeachings.push(t)
-			}
+			checkedTeachings.push(...this.checkedTeachings)
 
 			for (let t of checkedTeachings) {
 				if (t.getAcademicYear().slice(t.getAcademicYear().indexOf("/") + 1) < moment().format("YYYY")) {
@@ -644,7 +677,7 @@ private submit(isRetryCall?: boolean): void {
 				this.events.publish('refreshPage');
 				this.navCtrl.pop();
 			}).catch((error: ApiError) => {
-				// Tutte le varie condizioni d'errore che sono state omesse qui
+				// Tutte le varie condizioni d'errore, che sono state omesse qui
 			});
 	} else {
 		let alert = this.alertCtrl.create({
@@ -658,6 +691,58 @@ private submit(isRetryCall?: boolean): void {
 \end{lstlisting}
 
 \subsection{TeachingListPage}
+%spostare questa parte prima di NewActPage
+Questa pagina si occupa, per l'appunto, di gestire la grande tabella di ingegnamenti che su InfoStud desktop è il problema più grande di usabilità. Come abbiamo visto nelle sezioni precedenti dedicate alla progettazione della UI, l'intento era di raccogliere tutti quei duplicati che popolavano la tabella. In fondo l'utente, da quel che ho potuto constatare, non è mai interessato a fare distinzioni tra anni accademici, corsi, insegnamenti vecchi che hanno cambiato nome, ecc... Possiamo quindi assumere che la tabella serva solo in casi particolari e quindi ho deciso di sintetizzarla e lasciare che l'app si prenda l'onere di gestire la parte più burocratica, disabilitando anche la selezione dei corsi di studio. All'utente spetterà solo il compito di selezionare per quali insegnamenti l'appello dovrà essere aperto. Per l'appunto ho pensato di raccogliere gli insegnamenti in un dizionario, come visto nella sezione \ref{sc:controller}.
+
+Il metodo \textbf{ionViewWillEnter} fa parte del ciclo di vita di una pagina in Ionic. In sintesi viene chiamato quando la pagina sta per terminare la transizione da quella precedente \cite{ref:ionicViewLifeCycle}. Il compito che ha in questo caso è di far rispettare il seguente vincolo "Un insegnamento è selezionato se e solo se c'è almeno un corso al suo interno che è selezionato". Come è possibile vedere infatti il codice mette a \textit{true} la variabile \textit{b} non appena trova un corso che è "checkato".
+
+\begin{lstlisting}
+ionViewWillEnter() {
+	this.packedTeachings.forEach((teachings) => {
+		let b = false;
+		for (let t of teachings) {
+			for (let p of t.getPrograms()) {
+				if (p.isChecked()) {
+					b = true;
+				}
+			}
+			t.setChecked(b);
+			this.checked[this.keys.indexOf(t.getName().slice(0, t.getName().indexOf("(") - 1))] = b;
+		}
+	});
+}
+\end{lstlisting}
+
+Questo metodo viene chiamato non appena un utente clicca su un insegnamento per selezionarlo. Quello che fa è semplicemente checkare ogni insegnamento, all'interno del dizionario \textit{packedTeachings}, che hanno come chiave \textit{teach} e fa lo stesso con tutti i corsi collegati agli insegnamenti. Inoltre si occupa di gestire gli Alias, che altro non sono che delle stringhe con tutti i nomi completi degli insegnamenti separati da una virgola. Quando all'argomento \textit{teach} viene passato un alias, semplicemente si fa uno split sulla virgola e così si ottiene un array di insegnamenti che vengono poi sprovvisti
+
+\begin{lstlisting}
+private onStateChange(teach: string, b: boolean) {
+	// Check the teachings as 'true' and so ALL the programs contained in
+	// the teaching object must be checked as 'true'. If an alias is clicked,
+	// then check as 'true' each teaching contained in it and so all the programs.
+
+	let keys = teach.split(", ");		// splits the teachings when coming from an alias
+	let teachings: Teaching[] = [];
+
+	for (let k of keys) {
+		if (k.indexOf("(") >= 0) {
+			k = k.slice(0, k.indexOf("(") - 1);
+		}
+		if (k.indexOf('Canale') >= 0) {
+			continue;
+		}
+		teachings.push(...this.packedTeachings.get(k.toUpperCase()));
+	}
+
+	for (let t of teachings) {
+		t.setChecked(b);
+		for (let p of t.getPrograms()) {
+			p.setChecked(b);
+		}
+		this.packedTeachings.set(t.getName().slice(0, t.getName().indexOf("(") - 1), teachings);
+	}
+}
+\end{lstlisting}
 
 \chapter{Conclusioni}
 \label{ch:4}
@@ -669,6 +754,9 @@ private submit(isRetryCall?: boolean): void {
 \bibitem{ref:mit}
 Tratto da MIT:
 \url{http://web.mit.edu/6.813/www/sp18/classes/09-more-learnability/#consistency}
+
+\bibitem{ref:ionicViewLifeCycle}
+\url{https://ionicframework.com/docs/angular/lifecycle}
 
 \end{thebibliography}
 
