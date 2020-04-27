@@ -1,49 +1,45 @@
-\documentclass[Lau, oneside]{sapthesis}%remove "english" for a thesis written in Italian
+\documentclass[Lau, oneside, noexaminfo]{sapthesis}%remove "english" for a thesis written in Italian
 \graphicspath{ {images/} }
 %Bachelor's (laurea triennale) thesis : Lau 
 %Master's (laurea specialistica) thesis: LaM 
 %PhD's thesis: PhD 
 \usepackage[italian]{babel} %use this package for a thesis written in Italian
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenx}
-\usepackage{indentfirst}
-\usepackage{microtype}
-\usepackage{amsmath}  % for \hookrightarrow
-\usepackage{xcolor}   % for \textcolor
 \usepackage{listings}
-%\usepackage{chemformula}
-%\usepackage{setspace}
-%\usepackage{yfonts,color}https://www.overleaf.com/project/5e4187442ef81c00013a37ea
-%\usepackage{siunitx}
-%\usepackage{comment}
-%\usepackage{multirow}
-%\usepackage{varioref}
-%\usepackage[bottom]{footmisc}
+\usepackage{hyperref}
 \usepackage{wrapfig}
 \usepackage{float}
-%\usepackage{type1cm}
 \usepackage{lettrine}
-\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{bookmark}
 %portare linespread a 1.1-1.3
-\linespread{1.4}
+\linespread{1.3}
 %\usepackage{chngcntr}
 \usepackage[nottoc, notlof, notlot]{tocbibind}
+\usepackage{selinput}
+\SelectInputMappings{
+	agrave={à},
+	eacute={é},
+	Euro={€},
+	accent={ ̀}
+}
 %\onehalfspacing
 %\counterwithout{footnote}{chapter}
+
 \usepackage{hyperref}
 \hypersetup{
-			hyperfootnotes=true,			
-			bookmarks=true,			
-			colorlinks=true,
-			linkcolor=red,
-                        linktoc=page,
-			anchorcolor=black,
-			citecolor=red,
-			urlcolor=blue,
-			pdftitle={Sviluppo App},
-			pdfauthor={Edoardo Gabrielli},
-			pdfkeywords={thesis, sapienza, roma, university}
+	hyperfootnotes=true,			
+	bookmarks=true,			
+	colorlinks=true,
+	linkcolor=red,
+    linktoc=page,
+	anchorcolor=black,
+	citecolor=red,
+	urlcolor=blue,
+	pdftitle={Sviluppo App},
+	pdfauthor={Edoardo Gabrielli},
+	pdfkeywords={thesis, sapienza, roma, university}
 }
 
 \lstdefinelanguage{JavaScript}{
@@ -73,7 +69,7 @@
 \author{Edoardo Gabrielli}
 \IDnumber{1693726}
 \course[]{Informatica}
-\courseorganizer{Facolt\`a di Ingegneria dell’Informazione, Informatica e Statistica}
+\courseorganizer{Facolt\`a di Ingegneria dell'Informazione, Informatica e Statistica}
 \submitdate{2019/2020}
 \copyyear{2020}
 \advisor{Prof. Emanuele Panizzi}
@@ -100,34 +96,30 @@
 L'app InfoStud nasce \textit{n} anni fa dalla necessità degli studenti di avere il sistema InfoStud sviluppato da InfoSapienza su mobile.
 Data la natura poco \textit{mobile-friendly} del sistema web, nacque l'app ufficiale sotto il brand di SapienzaApps.
 
-SapienzaApps, sotto il coordinamento del Prof. Emanuele Panizzi, pubblica e mantiene progetti come SeismoCloud e GeneroCity all'interno
-del Gamification Lab.
+SapienzaApps, grazie al coordinamento del Prof. Emanuele Panizzi e all'aiuto degli studenti, pubblica e mantiene progetti come SeismoCloud, GeneroCity, InfoStud e InfoProf all'interno del Gamification Lab.
 
 InfoStud è l'app che si rivolge unicamente agli studenti iscritti alla Sapienza e mette a disposizione un parco di funzionalità ampio
 che copre le funzioni standard del sistema padre (come visualizzazione e gestione esami) e andando oltre in alcuni casi: il sistema
-di gestione dell'orario didattico semiautomatico, la compilazione dei bollettini automatica, la prenotazione dei posti in biblioteca, ecc.
+di gestione dell'orario didattico, la compilazione dei bollettini automatica, la prenotazione dei posti in biblioteca e molto altro.
 
 InfoProf, al contrario, è l'app che si rivolge ai professori della Sapienza e vuole essere uno strumento alternativo, e più intuitivo, 
-del sistema web. La semplicità di utilizzo dell'app va però analizzata e progettata in modo empirico. Questo studio porta via molto tempo 
-al lavoro ed è per questo che gran parte della progettazione si traduce in prototyping e test di usabilità, con eventualmente molteplici
-iterazioni. Lo stato dell'arte attualmente è un'app che permette di verbalizzare gli studenti, attivare gli OPIS e cercare le aule.
+al sistema web. La ricerca della semplicità di utilizzo è la ricetta che accomuna tutti i progetti nel laboratorio ed ha bisogno di un'attenta progettazione. Spesso infatti ci si affeziona ad una interfaccia senza coglierne i problemi di usabilità. Ciò significa che bisogna sempre mettersi in discussione attraverso lo studio dei bisogni dell'utente, chiamato \textit{need finding}, la realizzazione di prototipi e il confronto con gli utenti finali tramite test di usabilità, con eventualmente molteplici iterazioni. 
+
+Lo stato dell'arte attualmente è un'app che permette di verbalizzare gli studenti, attivare gli OPIS e cercare le aule.
 Queste funzionalità hanno un denominatore in comune: sono casi d'uso in cui l'utente potrebbe non avere il computer quando ha bisogno
 di utilizzarle. La verbalizzazione infatti può essere fatta subito dopo un orale, senza dover aspettare di tornare in ufficio e 
 registrare i voti di tutti gli studenti. L'OPIS, date le ultime disposizioni, deve essere attivato durante la lezione, ma un utente
 potrebbe non voler portare un computer in aula solo per attivare il codice OPIS.
 
-Il mio tirocinio, in larga parte, è stato composto dall'aggiunta di piccole funzionalità richieste dall'utenza o dalla risoluzione di 
-problemi: su InfoStud mi sono occupato di migliorare il login, aggiungere un'icona su SmartBiblio per indicare i posti non gestiti
-dal sistema, migliorare la dark-mode e aggiungere l'immagine del profilo nel menù laterale. Su InfoProf invece ho lavorato alla
+Il mio tirocinio, in larga parte, è stato composto dall'aggiunta di piccole funzionalità richieste dall'utenza o dalla risoluzione dei bug: su InfoStud mi sono occupato di migliorare il login, aggiungere un'icona su SmartBiblio per indicare i posti non gestiti
+dal sistema, migliorare la dark-mode e aggiungere l'immagine del profilo degli studenti. Su InfoProf invece ho lavorato alla
 traduzione automatica, anche qui sul login, sul date-picker nella registrazione del voto di un esame e infine sul vero protagonista del 
 tirocinio, ovvero l'apertura di un verbale, in cui ho fatto uno studio più approfondito di cui parlerò in \ref{ch:3}.
 
 \section{Perché?}
 \label{sec:why}
 %trovare articoli scientifici in merito. 
-Lo smartphone è ormai uno strumento radicato nella nostra quotidianeità. Sono innumerevoli i modi in cui ha cambiato la nostra vita e la
-produttività è uno degli aspetti centrali. Nel settore pubblico l'evoluzione dei sistemi informatici però pecca di una rigorosa analisi 
-e progettazione, il che comporta perdite di tempo e difficoltà nell'utilizzo.
+Lo smartphone è ormai uno strumento radicato nella nostra quotidianità. Sono innumerevoli i modi in cui ha cambiato la nostra vita e la produttività è uno degli aspetti centrali. Nel settore pubblico l'evoluzione dei sistemi informatici però pecca di una rigorosa analisi progettazione, il che comporta perdite di tempo e difficoltà nell'utilizzo.
 Dall'indagine preliminare che ho svolto infatti emerge che alcuni intervistati trovano l'interfaccia web \textit{error-prone}, mentre 
 un professore assunto recentemente, ha dichiarato che la piattaforma non è affatto user-friendly e che la logica vorrebbe che ci fosse
 un tasto "crea appello", non che debba andarlo a cercare in "verbalizzazione". Anche all'interno del team di sviluppo, quando ci è
@@ -196,7 +188,7 @@ così fatta incoraggia il riuso del codice ovviamente. %fare diagramma di sequen
 
 \chapter{Progettazione}
 \label{ch:3}
-%inserire diagramma di flusso di come viene fatta la progettazione (nf -> prototyping -> test -> repeat)
+
 L'attività di progettazione consiste nel trovare i bisogni dell'utente attraverso delle domande rivolte agli stessi, costruire un prototipo che rispecchi ciò che è emerso dalle domande, eseguire dei test di usabilità sul prototipo e, a seconda delle criticità, emerse dai test modificare il prototipo e ripetere i test finchè si è trovata un'interfaccia che funzioni per gran parte degli utenti.
 
 \section{Need-finding}
@@ -208,9 +200,9 @@ Essendomi fatto un'idea delle criticità dell'interfaccia attuale, ho creato un 
 \begin{enumerate}
 	\item Se tiene più di un corso, preferisce aprire un verbale unico o aprirne uno per ogni corso che tiene? 
 	\item Trova confusionario il processo di apertura di un verbale? Perché?
-	\item Quanto tempo prima dalla data dell’esame apre il verbale?
+	\item Quanto tempo prima dalla data dell'esame apre il verbale?
 	\item Quanto tempo dà agli studenti per prenotarsi?
-	\item E quanti giorni prima, dal giorno dell’esame, chiude le prenotazioni? 
+	\item E quanti giorni prima, dal giorno dell'esame, chiude le prenotazioni? 
 \end{enumerate}
 
 Il sondaggio ha solo una domanda aperta, tra l'altro opzionale, in quanto volevo rendere il sondaggio molto corto in modo da aumentare 
@@ -230,7 +222,7 @@ Come vediamo dall'immagine \ref{fig:d-i} la maggioranza degli intervistati prefe
 \begin{figure}[H]
 	\caption{Grafico delle risposte date alla prima domanda.}
 	\centering
-	\includegraphics[width=0.6\textwidth]{d-i}
+	\includegraphics[width=0.6\textwidth]{d-i.png}
 	\label{fig:d-i}
 \end{figure}
 
@@ -254,7 +246,7 @@ Ho avuto inoltre la fortuna di intervistare un docente nuovo, che mi ha esplicit
 	\label{fig:d-ii}
 \end{figure}
 
-\subsection{Quanto tempo prima dalla data dell’esame apre il verbale?}
+\subsection{Quanto tempo prima dalla data dell'esame apre il verbale?}
 La metà degli intervistati ha dichiarato di aprire i verbali all'inizio dell'anno accademico. Infatti molti dipartimenti impongono questa condizione ai docenti, dunque è necessario velocizzare il tempo di apertura di un singolo verbale perchè aprirne 7 per ogni insegnamento potrebbe essere un'attività che porta via del tempo.
 
 \begin{figure}[H]
@@ -274,7 +266,7 @@ Qui le risposte sono piuttosto eterogenee.
 	\label{fig:d-iv}
 \end{figure}
 
-\subsection{E quanti giorni prima, dal giorno dell’esame, chiude le prenotazioni? }
+\subsection{E quanti giorni prima, dal giorno dell'esame, chiude le prenotazioni? }
 Al contrario invece, qui la maggior parte dei docenti preferisce chiedere le prenotazioni uno o due giorni prima dal giorno dell'esame. Questa è una buona notizia perché in questo caso posso utilizzare l'informazione per definire un default per una futura funzionalità di compilazione automatica del form.
 \begin{figure}[H]
 	\caption{Grafico delle risposte date alla quinta domanda.}
@@ -315,7 +307,7 @@ Le euristiche sono delle regole, o linee guida, utilizzate per valutare o guidar
 	\item Coerenza e standard
 	\item Prevenzione degli errori
 	\item Riconoscere piuttosto che ricordare
-	\item Flessibilit\'a ed efficienza d’uso 
+	\item Flessibilit\'a ed efficienza d'uso 
 	\item Design minimalista ed estetico
 	\item Aiutare gli utenti a riconoscere, diagnosticare e correggere gli errori
 	\item Aiutare e documentare
@@ -328,7 +320,7 @@ Gli alias sono etichette che si applicano ad uno o più insegnamenti in modo da 
 
 Inoltre accanto ad ogni insegnamento c'è un'icona blu "i" che se cliccata porta ad una nuova vista che mostra i corsi collegati all'insegnamento. Tutti questi elementi (insegnamenti e corsi) sono selezionabili e quando si clicca sul bottone "Continua" si arriva infine al form che richiede l'inserimento delle date di inizio e fine appello, inizio e fine prenotazioni, la necessità dell'OPIS ed eventualmente le note per gli studenti.
 
-Dai test svolti questa interfaccia è andata sempre bene. Ogni intervistato è sempre riuscito ad aprire il verbale senza difficoltà nell'ordine di due o tre minuti. C'era qualche incertezza nel campo note, dove "Note per gli studenti" veniva spesso confuso con un placeholder. In pochi si sono interessati del tasto "i" accanto agli insegnamenti. Ho provato inoltre ad interrompere il test quando l'intervistato si trovava nella schermata di inserimento delle date. Quando riprendevamo il test, l'intervistato non ricordava che insegnamenti aveva selezionato. Serviva dunque un modo per far ricordare all'utente le scelte fatte nel corso dell'attività. Inoltre il prototipo ha una lista degli insegnamenti "ottimistica". Nella realtà la lista sarebbe molto più grande e non volevo vincolare gli utenti ad utilizzare per forza gli alias i quali, allo stato attuale, passano inosservati.
+Dai test svolti questa interfaccia è andata sempre bene. Ogni intervistato è sempre riuscito ad aprire il verbale senza difficoltà nell'ordine di due o tre minuti. C'era qualche incertezza nel campo note, dove "Note per gli studenti" veniva spesso confuso con un placeholder. In pochi si sono interessati del tasto "i" accanto agli insegnamenti. Ho provato inoltre a interrompere il test quando l'intervistato si trovava nella schermata di inserimento delle date. Quando riprendevamo il test, l'intervistato non ricordava che insegnamenti aveva selezionato. Serviva dunque un modo per far ricordare all'utente le scelte fatte nel corso dell'attività. Inoltre il prototipo ha una lista degli insegnamenti "ottimistica". Nella realtà la lista sarebbe molto più grande e non volevo vincolare gli utenti ad utilizzare per forza gli alias i quali, allo stato attuale, passano inosservati.
 
 \begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
@@ -694,7 +686,7 @@ private submit(isRetryCall?: boolean): void {
 %spostare questa parte prima di NewActPage
 Questa pagina si occupa, per l'appunto, di gestire la grande tabella di ingegnamenti che su InfoStud desktop è il problema più grande di usabilità. Come abbiamo visto nelle sezioni precedenti dedicate alla progettazione della UI, l'intento era di raccogliere tutti quei duplicati che popolavano la tabella. In fondo l'utente, da quel che ho potuto constatare, non è mai interessato a fare distinzioni tra anni accademici, corsi, insegnamenti vecchi che hanno cambiato nome, ecc... Possiamo quindi assumere che la tabella serva solo in casi particolari e quindi ho deciso di sintetizzarla e lasciare che l'app si prenda l'onere di gestire la parte più burocratica, disabilitando anche la selezione dei corsi di studio. All'utente spetterà solo il compito di selezionare per quali insegnamenti l'appello dovrà essere aperto. Per l'appunto ho pensato di raccogliere gli insegnamenti in un dizionario, come visto nella sezione \ref{sc:controller}.
 
-Il metodo \textbf{ionViewWillEnter} fa parte del ciclo di vita di una pagina in Ionic. In sintesi viene chiamato quando la pagina sta per terminare la transizione da quella precedente \cite{ref:ionicViewLifeCycle}. Il compito che ha in questo caso è di far rispettare il seguente vincolo "Un insegnamento è selezionato se e solo se c'è almeno un corso al suo interno che è selezionato". Come è possibile vedere infatti il codice mette a \textit{true} la variabile \textit{b} non appena trova un corso che è "checkato".
+Il metodo \textbf{ionViewWillEnter} fa parte del ciclo di vita di una pagina in Ionic. In sintesi viene chiamato quando la pagina sta per terminare la transizione da quella precedente \cite{ref:ionicViewLifeCycle}. Il compito che ha in questo caso è di far rispettare il seguente vincolo "Un insegnamento è selezionato se e solo se c'è almeno un corso al suo interno che è selezionato", vincolo che su InfoStud desktop non è rispettato. Come è possibile vedere infatti il codice mette a \textit{true} la variabile \textit{b} non appena trova un corso che è "checkato".
 
 \begin{lstlisting}
 ionViewWillEnter() {
@@ -713,7 +705,7 @@ ionViewWillEnter() {
 }
 \end{lstlisting}
 
-Questo metodo viene chiamato non appena un utente clicca su un insegnamento per selezionarlo. Quello che fa è semplicemente checkare ogni insegnamento, all'interno del dizionario \textit{packedTeachings}, che hanno come chiave \textit{teach} e fa lo stesso con tutti i corsi collegati agli insegnamenti. Inoltre si occupa di gestire gli Alias, che altro non sono che delle stringhe con tutti i nomi completi degli insegnamenti separati da una virgola. Quando all'argomento \textit{teach} viene passato un alias, semplicemente si fa uno split sulla virgola e così si ottiene un array di insegnamenti che vengono poi sprovvisti
+Questo metodo viene chiamato non appena un utente clicca su un insegnamento per selezionarlo. Quello che fa è semplicemente checkare ogni insegnamento, all'interno del dizionario \textit{packedTeachings}, che hanno come chiave \textit{keys} e fa lo stesso con tutti i corsi collegati agli insegnamenti. Inoltre si occupa di gestire gli Alias, che altro non sono che delle stringhe con tutti i nomi completi degli insegnamenti separati da una virgola. Quando all'argomento \textit{teach} viene passato un alias, semplicemente si fa uno split sulla virgola e sulle stringhe risultanti si toglie la parte tra parentesi. A questo punto da \textit{packedTeachings} si ricavano tutti gli insegnamenti collegati alle chiavi. In questo modo, anche se l'input ha due formati differenti, \textit{teach} viene normalizzato in un array \textit{keys} che nel primo caso è composto da un solo elemento, mentre nel caso dell'alias da tanti elementi quanti sono quelli nell'alias.
 
 \begin{lstlisting}
 private onStateChange(teach: string, b: boolean) {
@@ -741,6 +733,15 @@ private onStateChange(teach: string, b: boolean) {
 		}
 		this.packedTeachings.set(t.getName().slice(0, t.getName().indexOf("(") - 1), teachings);
 	}
+}
+\end{lstlisting}
+
+\subsection{DetailedListPage}
+Sebbene questa pagina sia stata disabilitata, non abbiamo scartato il codice in quanto in futuro potrebbe tornare. Probabilmente è la view più semplice, perché di fatto sono le altre a occuparsi di tutto: se immaginiamo la struttura \textit{packedTeachings} come un albero, questa pagina deve preoccuparsi di gestire solo le foglie, cioè i corsi. Saranno poi \textit{TeachingListPage} e \textit{NewActPage} a preoccuparsi di assegnare dei valori true o false agli insegnamenti, come visto nelle sezioni precedenti. Infatti l'unico metodo qui disponibile è \textit{onStateChange()}, che viene attivato dal DOM non appena l'utente clicca su un corso, prendendo come argomento il corso interessato e cambiando il suo valore a true o false.
+
+\begin{lstlisting}
+private onStateChange(p: Program) {
+	p.isChecked() ? p.setChecked(false) : p.setChecked(true);
 }
 \end{lstlisting}
 
