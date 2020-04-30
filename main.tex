@@ -259,7 +259,6 @@ A partire dalle considerazioni fatte e dai problemi riscontrati sul sistema orig
 \begin{enumerate}
 	\item L'ambiente in cui l'app funzionerà per la maggior parte del tempo è su uno smartphone quindi, essendo uno schermo piccolo, è necessario togliere le informazioni superflue.
 	\item L'apertura di un verbale deve avvenire nel minor tempo possibile, in modo da velocizzare l'apertura consecutiva di più verbali.
-	\item L'interfaccia deve aiutare l'utente ad evitare gli errori o perlomeno minimizzarli, dando delle informazioni chiare per risolverlo.
 	\item L'interfaccia dovrebbe essere ragionevolmente semplice da capire ed utilizzare e senza aver bisogno di una spiegazione.
 \end{enumerate}
 
@@ -287,11 +286,13 @@ Le euristiche sono delle regole, o linee guida, utilizzate per valutare o guidar
 \end{enumerate}
 
 \subsection{Iterazione 1}
-L'apertura di un verbale è una delle funzionalità base del sistema InfoStud, per questo è importante che venga messa in prima pagina proprio dove viene mostrata la lista degli esami aperti in passato. Un bottone con il simbolo "+" in alto a destra suggerisce l'aggiunta di un nuovo elemento alla lista. Se cliccato, l'applicazione propone una la lista degli insegnamenti tenuti dal professore e un'altra di \textit{alias}. Gli alias sono etichette che si applicano ad uno o più insegnamenti in modo da non doverli selezionare ad ogni apertura di un nuovo verbale. Questo meccanismo, pre-esistente all'interno dell'applicazione, va a sostituire quello che fa il "Duplica appello" di InfoStud.
+L'apertura di un verbale è una delle funzionalità base del sistema InfoStud, per questo è importante che venga messa in prima pagina proprio dove viene mostrata la lista degli esami aperti in passato. Un bottone con il simbolo "+" in alto a destra suggerisce l'aggiunta di un nuovo elemento alla lista. Se cliccato, l'applicazione propone una la lista degli insegnamenti tenuti dal professore e un'altra di \textit{alias}. Gli alias sono etichette che si applicano ad uno o più insegnamenti in modo che se l'alias viene selezionato, allora vengono selezionati anche tutti gli insegnamenti ad esso collegati. Questo meccanismo va a sostituire quello che fa il "Duplica appello" di InfoStud desktop.
 
-Inoltre accanto ad ogni insegnamento c'è un'icona blu "i" che se cliccata porta ad una nuova vista che mostra i corsi di studio ad esso collegati. Tutti questi elementi (insegnamenti e corsi) sono selezionabili e quando si clicca sul bottone "Continua" si arriva infine al form che richiede l'inserimento delle date di inizio e fine appello, inizio e fine prenotazioni, la necessità dell'OPIS ed eventualmente le note per gli studenti. La navigazione, così impostata, va a semplificare leggermente il form dividendolo in due pagine e quindi riducendo il carico di informazioni su una singola view. Il prototipo è visibile in figura \ref{fig:it-1}.
+Inoltre accanto ad ogni insegnamento c'è un'icona blu "i" che se cliccata porta ad una nuova vista che mostra i corsi di studio in cui l'insegnamento è attivo. Questi elementi sono selezionabili e quando si clicca sul bottone "Continua" si arriva infine al form che richiede l'inserimento delle date di inizio e fine appello, inizio e fine prenotazioni, la necessità dell'OPIS ed eventualmente le note per gli studenti. La navigazione, così impostata, va a semplificare leggermente il form dividendolo in due pagine e quindi riducendo il carico di informazioni su una singola view. Il prototipo è visibile in figura \ref{fig:it-1}.
 
-Nei test, ogni intervistato è sempre riuscito ad aprire il verbale senza difficoltà nell'ordine di pochissimi minuti. C'era qualche incertezza nel campo note, dove "Note per gli studenti" veniva spesso confuso con un placeholder. In pochi si sono interessati del tasto "i" accanto agli insegnamenti. Ho provato inoltre a interrompere il test quando l'intervistato si trovava nella schermata di inserimento delle date. Quando riprendevamo il test, l'intervistato non ricordava che insegnamenti aveva selezionato, quindi serve un modo per far ricordare all'utente le scelte fatte nel corso della navigazione. Inoltre c'è bisogno di etichette e titoli per le view un po' più precisi.
+Un altro miglioramento che è stato apportato è quello del compilamento automatico delle date. L'idea è quella di selezionare la data di inizio dell'appello e l'app, ricordando le date che sono state utilizzate precedentemente, prevede quali saranno quelle che l'utente inserirà, facendolo per lui. Infatti se dalle interviste è emerso che i professori tendono a frammentarsi nel scegliere il numero di giorni dedicati all'appello e alle prenotazioni, d'altro canto la maggior parte è costante e utilizza sempre quelli. Dunque far ricordare all'applicazione le scelte fatte dall'utente in precedenza può essere una soluzione percorribile e dovrebbe velocizzare di molto l'apertura di un verbale. % aggiungere eventuali feedback dati dalla beta
+
+Nei test, ogni intervistato è sempre riuscito ad aprire il verbale senza difficoltà nell'ordine di pochissimi minuti. C'era qualche incertezza nel campo note, dove "Note per gli studenti" veniva spesso confuso con un placeholder. In pochi si sono interessati del tasto "i" accanto agli insegnamenti. Inoltre non avere nel form un'indicazione delle scelte fatte dall'utente nel corso della navigazione può essere una fonte di errore, quindi serve un modo per mostrare all'utente le scelte fatte nel corso della navigazione.
 
 \begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
@@ -330,55 +331,47 @@ Nei test, ogni intervistato è sempre riuscito ad aprire il verbale senza diffic
 \end{figure}	
 
 \subsection{Iterazione 2}
-Il problema più grande della prima iterazione era il fatto che la prima view e la seconda (nella quale si inseriscono le date) non erano legate in alcun modo, questo costringe l'utente a ricordare le scelte fatte nella view precedente. Dato che la lista può essere complicata da gestire ed è importante aiutarlo a non fargli commettere errori, ho deciso di cambiare l'ordine della navigazione: la prima pagina infatti è stata spostata come prima view, con un bottone "Scegli insegnamenti" che porta alla pagina della scelta degli insegnamenti e degli alias. Quando questi vengono selezionati, si torna indietro e sopra al bottone di prima compaiono gli insegnamenti selezionati.
+Il problema più grande dell'iterazione precedente è che la prima view e la seconda (nella quale si inseriscono le date) non sono legate in alcun modo, questo costringe l'utente a ricordare le scelte fatte nella view precedente. Dato che la lista può essere complicata da gestire ed è importante aiutarlo a non fargli commettere errori, ho deciso di cambiare l'ordine della navigazione: la prima pagina infatti è stata spostata all'interno del form, con un bottone "Scegli insegnamenti" che porta alla pagina della scelta degli insegnamenti e degli alias. Quando questi vengono selezionati, si torna indietro e sopra al bottone di prima compaiono gli insegnamenti selezionati.
 
-Altre modifiche all'interfaccia sono state quelle relative ai titoli delle navbar, che ora sono più inerenti, sono stati aggiunti dei messaggi di errore, il campo di testo ora è più chiaro ed ha un placeholder. In questa iterazione ho inoltre collegato le view al backend, dunque potevo lavorare su dei dati che strutturalmente rappresentavano i dati reali. Da qui ho implementato un meccanismo per sintetizzare la tabella degli insegnamenti, in cui parlerò più approfonditamente in \ref{sec:dev}. Per ora basti sapere che, mentre nell'interfaccia desktop abbiamo almeno due copie per ogni insegnamento (vecchio o presente che sia) \footnote{Gli insegnamenti infatti hanno tutti una voce per l'A.A. corrente e quello precedente.}, nell'app questo non avviene perchè saranno racchiusi in una voce sola. Sarà poi l'app, in modo totalmente trasparente all'utente, a decidere quali voci devono essere selezionate.
+Altre modifiche all'interfaccia sono state quelle relative ai titoli delle navbar, che ora sono più esplicativi. Sono stati aggiunti dei messaggi di errore e il campo di testo ora è più chiaro ed ha un placeholder. In questa iterazione ho inoltre collegato le view al backend, in modo da lavorare su dei dati che strutturalmente rappresentassero i dati reali. Da qui ho implementato il meccanismo per sintetizzare la tabella degli insegnamenti, in cui parlerò più approfonditamente nella sezione \ref{sec:dev}. Per ora basti sapere che, mentre nell'interfaccia desktop abbiamo almeno due copie per ogni insegnamento (vecchio o presente che sia) \footnote{Gli insegnamenti infatti hanno tutti una voce per l'A.A. corrente e quello precedente.}, nell'app questo non avviene perchè saranno racchiusi in una voce sola. Sarà poi l'app, in modo totalmente trasparente all'utente, a decidere quali corsi e insegnamenti andranno inviati al server.
 
-Anche la grafica è cambiata, rendendola più simile a quella dell'aggiunta di un appuntamento sul calendario di iOS e Google. Non potendo fare più i test di usabilità, che hanno bisogno di essere fatti in presenza, mi sono affidato agli standard che hanno applicazioni più importanti. Infatti l'aggiunta di un appuntamento su un calendario non è tanto differente dall'apertura di un verbale: abbiamo infatti da gestire tre date in più rispetto ad un appuntamento, che in realtà si esaurisce nella giornata stessa, ma abbiamo da gestire in meno l'orario, il luogo, gli invitati e le etichette. Anche se, per utilizzare una metafora, si può pensare agli insegnamenti come degli invitati ed infatti il pulsante che permette di selezionare gli insegnamenti è molto simile a quello dell'aggiunta di persone all'evento.
+Anche la grafica è cambiata, rendendola più simile a quella dell'aggiunta di un appuntamento sul calendario di iOS e Google. Non potendo fare più i test di usabilità, che hanno bisogno di essere fatti in presenza, mi sono affidato agli standard che hanno applicazioni più importanti. Infatti l'aggiunta di un appuntamento su un calendario non è tanto differente dall'apertura di un verbale, solo che bisogna gestire tipi differenti di dati.
 
-Un altro miglioramento che è stato apportato è quello del compilamento automatico delle date. L'idea è quella di selezionare la data di inizio dell'appello e l'app, ricordando le date che sono state utilizzate precedentemente, prevede quali saranno quelle che l'utente inserirà, facendolo per lui. Infatti dalle interviste è emerso che i professori tendono a frammentarsi nel scegliere il numero di giorni dedicati all'appello e alle prenotazioni, ma la maggior parte è costante e utilizza sempre quelli. Dunque ho deciso di far ricordare all'applicazione le scelte fatte dall'utente in precedenza ed applicarle nella compilazione delle date.
-Questo dovrebbe velocizzare di molto l'apertura di un verbale. % aggiungere eventuali feedback dati dalla beta
-
-Infine, invece di utilizzare delle view, ho deciso di utilizzare dei modali per far sparire i tab a fine pagina. Questo impedisce all'utente di navigare all'interno dell'applicazione dopo aver iniziato l'apertura di un verbale, ma è ragionevole pensare che un utente non voglia farlo, semplicemente perchè ho fatto in modo che tutto ciò che serve all'utente per aprire un appello è visibile durante la navigazione della funzionalità. Inoltre questo permette di risparmiare un po' di spazio per evitare lo scroll.
+Infine, invece di utilizzare delle view, ho deciso di usare dei modali per far sparire i tab a fine pagina per impedire all'utente di navigare all'interno dell'applicazione dopo aver iniziato l'apertura di un verbale. Infatti è ragionevole pensare che un esso non voglia farlo, semplicemente perchè ho fatto in modo che tutto ciò che serve gli serve per aprire un verbale è visibile durante la navigazione. In più questo permette di risparmiare un po' di spazio per evitare lo scroll. Nell'immagine \ref{fig:it-2} è possibile vedere tutte le pagine.
 
 Come anticipato ad inizio capitolo \ref{heuristics}, valuterò questa iterazione tramite le euristiche di Neilsen. Possiamo dire che l'interfaccia, arrivata a questo punto, le soddisfa almeno per buona parte.
-Per quanto riguarda la prima regola, "Visibilità dello stato del sistema" direi che è soddisfatta pienamente da tutti gli elementi. La seconda, "Corrispondenza tra sistema e mondo reale", è soddisfatta pienamente anche lei in quanto i termini "Appello", "Corso", "Insegnamento" e "Facolt\'a" sono gli stessi utilizzati nel gergo comune, inoltre non essendo cambiati dall'iterazione precedente ed avendo fatto dei test su quella, nessun professore è rimasto confuso dalla scelta dei termini. Anche "Controllo e libertà" viene rispettata tramite l'aggiunta degli alias, che permettono una scorciatoia agli utenti esperti e la scelta dei corsi permette una certa libertà nell'apertura di un appello. L'uniformità dei termini usati garantisce la "coerenza", mentre la selezione delle date, che dovrà rispettare determinati vincoli \footnote{Non è possibile selezionare date nel passato e non devono accavallarsi tra di loro.} e saranno compilate automaticamente, unita al collasso degli insegnamenti in meno voci all'interno della tabella garantiscono la prevenzione degli errori, l'efficienza d'uso ed un design minimalista. La regola "riconoscere invece che ricordare" è stata già discussa ad inizio sezione, anche se, quando gli alias sono vuoti, non c'è alcuna indicazione su cosa sono e come vengono creati. Per quanto riguarda gli errori, per ora ci sono solo quelli che vengono lanciati quando l'utente preme "ok" senza selezionare una facoltà all'interno dell'alert e quando clicca su "invia" senza aver messo le date o almeno un insegnamento. Come si vede dalle immagini, però, sono stati creati ad arte per essere ben diagnosticabili. Le condizioni per cui un utente può lanciare un errore è solo in questi due casi comunque, quindi sono veramente poche. Vedremo nella terza iterazione come sono riuscito ad abbassare le condizioni a solo un caso, cioè quello dei campi obbligatori (date o insegnamenti) mancanti.
+Per quanto riguarda la prima regola, "Visibilità dello stato del sistema" è soddisfatta da tutti gli elementi tramite dei titoli esplicativi e pulsanti ben visibili. La seconda, "Corrispondenza tra sistema e mondo reale", è soddisfatta pienamente anche lei in quanto i termini "Appello", "Corso", "Insegnamento" e "Facolt\'a" sono gli stessi utilizzati nel gergo comune, inoltre non essendo cambiati dall'iterazione precedente ed avendo fatto dei test su quella, si può assumere che non sia fonte di ambiguità. Anche "Controllo e libertà" viene rispettata tramite l'aggiunta degli alias, che permettono una scorciatoia agli utenti esperti e la scelta dei corsi dà una certa libertà nell'apertura di un appello. L'uniformità dei termini usati garantisce la "consistenza"; mentre la selezione delle date, che deve rispettare determinati vincoli \footnote{Non è possibile selezionare date nel passato e non devono accavallarsi tra di loro.} e sono compilate automaticamente, unita al collasso degli insegnamenti in meno voci all'interno della tabella, garantiscono la prevenzione degli errori, l'efficienza d'uso ed un design minimalista. La regola "riconoscere invece che ricordare" è stata già discussa ad inizio sezione anche se, quando gli alias sono vuoti, non c'è alcuna indicazione su cosa sono e come vengono creati. Per quanto riguarda gli errori, per ora ci sono solo quelli che vengono lanciati quando l'utente preme "ok" senza selezionare una facoltà all'interno dell'alert e quando clicca su "invia" senza aver messo le date e almeno un insegnamento. Come si vede dalle immagini, però, sono stati creati ad arte per essere ben diagnosticabili. Le condizioni per cui un utente può lanciare un errore è solo in questi due casi comunque, quindi sono veramente poche. Vedremo nella terza iterazione come sono riuscito ad abbassare le condizioni a solo un caso, cioè quello dei campi obbligatori mancanti.
 
 \begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
 	  \centering
 	  \includegraphics[width=0.5\linewidth]{ui-iterations/ii/select-faculty}  
-	  \caption{Put your sub-caption here}
-	  \label{fig:sub-first}
+	  \caption{Alert per la selezione della facoltà.}
 	\end{subfigure}
 	\begin{subfigure}{0.6\textwidth}
 	  \centering
 	  \includegraphics[width=0.5\linewidth]{ui-iterations/ii/form}  
-	  \caption{Put your sub-caption here}
-	  \label{fig:sub-second}
+	  \caption{Form con le date inserite ed un inseegnamento selezionato.}
 	\end{subfigure}
 	\begin{subfigure}{0.6\textwidth}
 		\centering
 		\includegraphics[width=0.5\linewidth]{ui-iterations/ii/error-faculty}  
-		\caption{Put your sub-caption here}
-		\label{fig:sub-second}
+		\caption{Messaggio di errore.}
 	  \end{subfigure}
 	  \begin{subfigure}{0.6\textwidth}
 		\centering
 		\includegraphics[width=0.5\linewidth]{ui-iterations/ii/teaching-list}  
-		\caption{Put your sub-caption here}
-		\label{fig:sub-second}
+		\caption{Lista degli insegnamenti.}
 	  \end{subfigure}
 	  
-	\caption{Seconda iterazione}
-	\label{fig:fig}
+	\caption{Seconda iterazione.}
+	\label{fig:it-2}
 \end{figure}
 
 \subsection{Iterazione 3}
-La terza iterazione in realtà va solo a risolvere i problemi individuati nella seconda, dunque non sarà piena di contenuti come le altre.
-Il cambiamento più importante è stato quello di togliere i corsi. L'obbiettivo finale dell'app è infatti togliere tutto ciò che non è indispensabile. Infatti nei test e nei questionari, non solo sono fonte di confusione, ma non vengono mai usati. Quindi aveva veramente senso lasciarli? La dimostrazione arriverà quando la funzionalità sarà rilasciata nella beta.
+La scelta dei corsi di studio è un componente che ho voluto tenere fino ad ora per non togliere libertà di scelta all'utente. Da quanto è emerso nelle interviste e nei test, però, è un elemento che crea confusione e gli utenti sono riluttanti nell'usare tale strumento. Pertanto in questa iterazione abbiamo deciso di oscurare i pulsanti per accedervi e verificare se sia una funzionalità richiesta. Ma se l'ipotesi che non serve fosse corretta allora avremmo tolto una fonte di distrazione e avremmo alleggerito l'interfaccia.
 
-Altri miglioramenti minori sono stati apportati all'alert per la scelta della facoltà dove ora il bottone per confermare la facoltà è disabilitato finchè non se ne seleziona una (questo elimina un triggher per gli errori). Inoltre le etichette agli input del form sono cambiate, adesso quelle per ogni singolo elemento sono più esplicative ed ho tolto i titoli nelle varie sezioni che occupavano solo spazio. Anche il textbox ora è più grigio in modo tale da essere ben visibile all'utente. Infine è stato aggiunto un messaggio che inviti l'utente ad utilizzare gli alias e il perché esistono. Dunque in \ref{fig:it-3} si può vedere l'interfaccia finale.
+Altri miglioramenti sono stati apportati all'alert per la scelta della facoltà dove ora il bottone per confermare la facoltà è disabilitato finchè non se ne seleziona una (questo elimina un triggher per gli errori). Inoltre le etichette agli input del form sono cambiate, adesso quelle per ogni singolo elemento sono più esplicative e ho tolto i titoli nelle varie sezioni che occupavano solo spazio. Anche il textbox ora è più grigio in modo tale da essere ben visibile all'utente. Infine è stato aggiunto un messaggio che inviti l'utente ad utilizzare gli alias e il perché esistono. Dunque nell'immagine \ref{fig:it-3} si può vedere l'interfaccia finale.
 
 \begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
@@ -413,8 +406,8 @@ Altri miglioramenti minori sono stati apportati all'alert per la scelta della fa
 \newpage
 \section{Implementazione}
 \label{sec:dev}
-%inserire diagramma classi, sequenza e use case?
-%inserire qualche snippet, parlare di come si sono "collassati" gli insegnamenti, come si passano i dati tra le view, ecc...
+Spiegate e valutate le idee alla base dell'interfaccia, adesso spiegherò come ho realizzato la funzionalità di apertura di un verbale. In questa sezione andrò più nel dettaglio tecnico di ogni pagina e spiegherò i ruoli che ogni componente ha.
+
 \subsection{Le classi}
 Per realizzare tutto ciò che è stato detto nella sezione precedente, ho bisogno delle seguenti classi:
 \begin{itemize}
@@ -429,7 +422,7 @@ Per realizzare tutto ciò che è stato detto nella sezione precedente, ho bisogn
 	\item \textbf{InfoprofProvider}: Classe che accede ai dati del server.
 \end{itemize}
 
-Ho dunque realizzato il diagramma delle classi \ref{fig:classDiagram}.
+Ho dunque realizzato il diagramma delle classi visibile in figura \ref{fig:classDiagram}.
 \begin{figure}[H]
 	\caption{Diagramma delle classi.}
 	\centering
@@ -438,7 +431,7 @@ Ho dunque realizzato il diagramma delle classi \ref{fig:classDiagram}.
 \end{figure}
 
 \subsection{InfoprofProvider}
-Adesso analizzarò i metodi principali partendo da quelli del provider. InfoprofProvider è la classe che si occupa di utilizzare le API per accedere ai dati nel server, quando questi dati sono dei "getter" il server risponde con dei dati in formato JSON che andranno deserializzati con gli appositi metodi che ogni classe di tipo "entity" forsnisce nel costruttore o, se trattiamo un array di JSON, allora con il metodo uniserializeAll() fornito sempre dalle classi entity stesse che hanno inoltre i classici getters e setters per ogni attributo. La funzionalità di apertura di un verbale ha dunque bisogno di comunicare in 2 occasioni con il server, per un totale di 3 chiamate: la prima e la seconda vvengono chiamate quando l'utente accede al form di apertura del verbale e scarica prima le facoltà (getFaculties()) in cui l'utente è coinvolto e poi (getTeachings()) gli insegnamenti corrispondenti alla facoltà scelta. L'ultima chiamata (registerAct()) invece viene attivata quando bisogna registrare l'appello, ovvero quando l'utente clicca sul pulsante "Invia".
+InfoprofProvider è la classe che si occupa di utilizzare le API per accedere ai dati nel server, quando questi metodi sono dei "getter" il server risponde con dei dati in formato JSON che andranno deserializzati con gli appositi metodi che ogni classe di tipo "entity" forsnisce nel costruttore o, se trattiamo un array di JSON, allora con il metodo uniserializeAll() fornito sempre dalle classi entity. La funzionalità di apertura di un verbale ha dunque bisogno di comunicare in 2 occasioni con il server, per un totale di 3 chiamate: la prima e la seconda vengono chiamate quando l'utente accede al form di apertura del verbale e scarica prima le facoltà, \textbf{getFaculties()}, in cui l'utente lavora e poi gli insegnamenti corrispondenti alla facoltà scelta, con \textbf{getTeachings()}. L'utlimo metodo, \textbf{registerAct()}, invece viene chiamato quando bisogna registrare l'appello, ovvero quando l'utente clicca sul pulsante "Invia".
 
 \begin{lstlisting}
 public registerAct(act: ActTeachings): Promise<void> {
@@ -486,9 +479,10 @@ public getFaculties(): Promise<Faculty[]> {
 
 \subsection{ActController}
 \label{sc:controller}
-Prima di mostrare come funzionano le pagine è opportuno presentare anche l'ActController che ha il compito di gestire gli insegnamenti in strutture dati più semplici. I metodi più importanti sono \textbf{packCommonTeachings()} e \textbf{getKeys()}.
+Prima di mostrare come funzionano le pagine è opportuno presentare anche l'ActController che ha il compito di gestire gli insegnamenti in strutture dati diverse dall'array con cui ci vengono dati dal provider. I metodi più importanti sono \textbf{packCommonTeachings()} e \textbf{getKeys()}.
 
-Come si può vedere, il primo si occupa di raccogliere gli insegnamenti con lo stesso nome in un dizionario dove le chiavi rappresentano il nome dell'insegnamento e i valori invece sono un array di insegnamenti. Se osserviamo i nomi, infatti, possiamo vedere che rispettano uno schema: nella prima parte c'è il nome dell'insegnamento, nella seconda parte invece ci sono le informazioni aggiuntive e sono proprio quelle a cambiare, mentre la prima rimane sempre uguale. Ecco un esempio \textbf{HUMAN COMPUTER INTERACTION ON THE WEB (cod. 1047630 - INF/01 - cfu: 6, canale: NESSUNA CANALIZZAZIONE)} e \textbf{HUMAN COMPUTER INTERACTION ON THE WEB (cod. 1047630 - INF/01 - cfu: 6, canale: NESSUNA CANALIZZAZIONE)}. Dunque basta tagliare la stringa tra le parentesi per ricavare il nome in comune e raccogliere tutte le stringhe che matchano in un dizionario.
+Il primo metodo si occupa di raccogliere tutti gli insegnamenti con lo stesso nome in un dizionario dove le chiavi rappresentano il nome dell'insegnamento e i valori invece sono array contenenti gli insegnamenti che condividono quel nome. Infatti, possiamo vedere che gli appellativi che vengono dati rispettano uno schema: nella prima parte c'è il nome effettivo dell'insegnamento, mentre nella seconda ci sono le informazioni aggiuntive racchiuse tra parentesi. Ecco un esempio \textbf{HUMAN COMPUTER INTERACTION ON THE WEB (cod. 1047630 - INF/01 - cfu: 6, canale: NESSUNA CANALIZZAZIONE)} e \textbf{HUMAN COMPUTER INTERACTION ON THE WEB (cod. 1047630 - INF/01 - cfu: 6, canale: NESSUNA CANALIZZAZIONE)}. Dunque basta tagliare la stringa tra le parentesi per ricavare la chiave e raccogliere tutte le stringhe che matchano con essa in un dizionario.
+
 \begin{lstlisting}
 public packCommonTeachings(teachings: Teaching[]): Map<string, Teaching[]> {
 	// All teachings with the same names are collected under the same key.
@@ -507,7 +501,7 @@ public packCommonTeachings(teachings: Teaching[]): Map<string, Teaching[]> {
 }
 \end{lstlisting}
 
-Le chiavi del dizionario saranno ciò che l'utente vedrà nella tabella al posto degli insegnamenti originari. Per gestire meglio queste chiavi nel DOM, fa comodo averle in un array. Per questo esiste il metodo \textbf{getKeys()}.
+All'interno del DOM è molto complesso lavorare con i dizionari, quindi avere un metodo che all'occorrenza estrae le chiavi in un array e le mostra all'utente è comodo e per questo ho scritto il metodo \textbf{getKeys()}.
 
 \begin{lstlisting}
 public getKeys(packedTeachings: Map<string, Teaching[]>): string[] {
@@ -520,18 +514,18 @@ public getKeys(packedTeachings: Map<string, Teaching[]>): string[] {
 \end{lstlisting}
 
 \subsection{NewActPage}
-Passando invece alle pagine, NewActPage è la prima e contiene il form nel quale inserire le varie informazioni necessarie al successo dell'operazione. Il primo metodo è fillDates() e, come il nome suggerisce, è il responsabile della compilazione automatica delle date per l'utente. Come si può notare, il metodo in prima battuta controlla che non ci sia già una data in uno dei campi preposti, apparte actStart. Se la condizione è verificata, si occuperà di compilare le date in automatico, altrimenti no per non sovrascrivere quello che l'utente ha fatto in precedenza.
-Le variabili "actPeriod", "emptyPeriod" e "reservationPeriod" rappresentano rispettivamente la differenza espressa in giorni tra la fine dell'appello e l'inizio, l'inizio dell'appello e la fine delle prenotazioni e, infine, la fine delle prenotazioni e l'inizio delle stesse. Questi valori vengono presi dallo storage interno del telefono all'interno del costruttore della classe e assumono "-1" se non esistono valori precedentemente salvati.
+Passando invece alle pagine, NewActPage è la prima in ordine di navigazione e contiene il form nel quale inserire le varie informazioni necessarie al successo dell'operazione. Il primo metodo è \textbf{fillDates()} e, come il nome suggerisce, è il responsabile della compilazione automatica delle date. Il metodo in prima battuta controlla che non ci sia già una data in uno dei campi preposti, apparte actStart. Se la condizione è verificata, si occupa di compilare le date in automatico, altrimenti si ferma per non sovrascrivere quello che l'utente ha fatto in precedenza.
+Le variabili \textbf{actPeriod}, \textbf{emptyPeriod} e \textbf{reservationPeriod} rappresentano rispettivamente la differenza espressa in giorni tra la fine dell'appello e l'inizio, l'inizio dell'appello e la fine delle prenotazioni e la fine delle prenotazioni e l'inizio delle stesse (da questo momento chiamerò queste variabili \textbf{periods}). Questi valori vengono presi dallo storage interno del telefono nel del costruttore della classe e assumono "-1" se non esistono valori precedentemente salvati. In quest ultimo caso, la compilazione prenderà dei valori standard che sono un mese per le prenotazioni e l'appello e 1 giorno tra le due.
 
-La seconda parte del metodo inoltre, si occupa di decidere se le variabili "periods" andranno salvate nello storage. Prima di questo però bisogna tenere presente che ci sono dei vincoli che le date devono rispettare \footnote{Il DOM si occupa di controllare che tutti i vincoli siano soddisfatti.}:
+La seconda parte del metodo si occupa di decidere se le variabili "periods" andranno salvate nello storage. Prima di questo però bisogna tenere presente che ci sono dei vincoli che le date devono rispettare \footnote{Il DOM si occupa di controllare che tutti i vincoli siano soddisfatti.}:
 \begin{enumerate}
-	\item Il minimo valore che può assumere resStart è "oggi" (minResStart);
-	\item Il minimo valore che può assumere actStart è resStart + 1 giorno (minActStart);
+	\item Il minimo valore che può assumere resStart è "oggi" (chiameto minResStart);
+	\item Il minimo valore che può assumere actStart è resStart + 1 giorno (chiamato minActStart);
 	\item Il minimo valore che può assumere resEnd è minResStart;
-	\item Il massimo valore che può assumere resStart è actStart - 1 giorno (maxResStart);
-	\item Il massimo valore che può asssumere resEnd è  actStart - 1 giorno (maxResEnd);
+	\item Il massimo valore che può assumere resStart è actStart - 1 giorno (chiamato maxResStart);
+	\item Il massimo valore che può asssumere resEnd è  actStart - 1 giorno (chiamato maxResEnd);
 \end{enumerate}
-A questo punto, se alla fine del calcolo, i valori assunti dalle date violano uno dei vincoli posti, il sistema va ad aggiustare le date interessate in modo che rispettino tutti i vincoli. Se comunque si verificasse questa condizione, chiaramente le variabili "periods" assumerebbero valori calcolati dal sistema, non dall'utente. Dunque non verrebbero salvati, ma rimarrebbero quelli che c'erano precedentemente.
+A questo punto, se alla fine del calcolo, i valori assunti dalle date violano uno dei vincoli posti, il sistema va ad aggiustare le date interessate in modo che li rispettino tutti. Se si verificasse questa condizione le variabili "periods" assumerebbero valori calcolati dal sistema e non dall'utente, quindi non vanno salvati, ma nello storage rimangono quelli che c'erano precedentemente.
 
 \begin{lstlisting}[frame=single]
 private fillDates() {
@@ -590,7 +584,7 @@ private countDays() {
 }
 \end{lstlisting}
 
-Infine c'è submit, che viene triggherato quando si clicca sul pulsante "Invia", si occupa di controllare che tutti i campi obbligatori siano stati riempiti (la correttezza dei dati è già verificata a dal DOM). Se lo sono, controlla se si sta aprendo un verbale dopo il 1 gennaio in modo tale da eliminare dalla selezione gli insegnamenti dell'anno accademico passato, poiché non più accettati dal sistema InfoStud desktop. Infine crea un'istanza della classe ActTeachings chiamando il metodo di InfoprofProvider "registerAct" il quale invia l'appello appena creato al server. Al successo dell'operazione le preferenze sui "periods" vengono salvate nello storage del dispositivo.
+Infine c'è submit, che viene chiamato quando l'utente clicca sul pulsante "Invia" e si occupa di controllare che tutti i campi obbligatori siano stati riempiti (la correttezza dei dati invece è già verificata a dal DOM). Se lo sono, controlla se si sta aprendo un verbale dopo il 1 gennaio in modo tale da eliminare dalla selezione gli insegnamenti dell'anno accademico passato, poiché non più accettati dal sistema InfoStud desktop. Infine crea un'istanza della classe ActTeachings chiamando il metodo di InfoprofProvider \textbf{registerAct} il quale invia l'appello appena creato al server. Al successo dell'operazione le preferenze sui "periods" vengono salvate nello storage del dispositivo.
 
 \begin{lstlisting}
 private submit(isRetryCall?: boolean): void {
