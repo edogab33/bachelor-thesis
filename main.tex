@@ -106,23 +106,80 @@
 
 \section{InfoStud e InfoProf}
 \label{sec:pres}
-L'app InfoStud nasce \textit{n} anni fa dalla necessità degli studenti di avere il sistema InfoStud sviluppato da InfoSapienza su mobile.
+L'app InfoStud nasce nel 2012 dalla necessità degli studenti di avere il sistema InfoStud sviluppato da InfoSapienza su mobile.
 Data la natura poco \textit{mobile-friendly} del sistema web, nacque l'app ufficiale sotto il brand di SapienzaApps.
 
 SapienzaApps, grazie al coordinamento del Prof. Emanuele Panizzi e all'aiuto degli studenti, pubblica e mantiene progetti come SeismoCloud, GeneroCity, InfoStud e InfoProf all'interno del Gamification Lab.
 
-InfoStud è l'app che si rivolge unicamente agli studenti iscritti alla Sapienza e mette a disposizione un parco di funzionalità ampio che copre le funzioni standard del sistema padre (come visualizzazione e gestione esami) e andando oltre in alcuni casi: il sistema di gestione dell'orario didattico, la compilazione dei bollettini automatica, la prenotazione dei posti in biblioteca e molto altro.
+InfoStud è l'app che si rivolge unicamente agli studenti iscritti alla Sapienza e mette a disposizione un parco di funzionalità ampio che copre le funzioni standard della versione web (come visualizzazione e gestione esami) e andando oltre in alcuni casi: il sistema di gestione dell'orario didattico, la compilazione dei bollettini automatica, la prenotazione dei posti in biblioteca e molto altro.
 
-InfoProf, al contrario, è l'app che si rivolge ai professori della Sapienza e vuole essere uno strumento alternativo, e più intuitivo, al sistema web. La ricerca della semplicità di utilizzo è la ricetta che accomuna tutti i progetti nel laboratorio ed ha bisogno di un'attenta progettazione per essere raggiunta. Spesso infatti ci si affeziona ad una interfaccia senza coglierne i problemi di usabilità. Ciò significa che bisogna sempre mettersi in discussione attraverso lo studio dei bisogni dell'utente, chiamato \textit{need finding}, la realizzazione di prototipi e il confronto con gli utenti finali tramite test di usabilità, con eventualmente molteplici iterazioni.
+Infoprof, invece, è l'app che si rivolge ai professori della Sapienza. Nata nel 2019, vuole essere uno strumento alternativo, e più intuitivo, al sistema web. La ricerca della semplicità di utilizzo è la ricetta che accomuna tutti i progetti nel laboratorio ed ha bisogno di un'attenta progettazione per essere raggiunta. Spesso infatti ci si affeziona ad una interfaccia senza coglierne i problemi di usabilità. Ciò significa che bisogna sempre mettersi in discussione attraverso lo studio dei bisogni dell'utente, chiamato \textit{need finding}, la realizzazione di prototipi e il confronto con gli utenti finali tramite test di usabilità, con eventualmente molteplici iterazioni.
 
 Lo stato dell'arte è un'app che permette di verbalizzare i voti degli studenti, attivare gli OPIS e cercare le aule. Queste funzionalità hanno un denominatore in comune: sono casi d'uso in cui l'utente potrebbe non avere il computer quando ha bisogno di utilizzarle. La verbalizzazione infatti può essere fatta subito dopo un orale, senza dover aspettare di tornare in ufficio e registrare i voti di tutti gli studenti. L'OPIS, date le ultime disposizioni, deve essere attivato durante la lezione, ma un utente potrebbe non voler portare un computer in aula solo per attivare il codice OPIS.
 
-Il mio tirocinio è stato caratterizzato dall'aggiunta di piccole funzionalità richieste dall'utenza o dalla risoluzione dei bug: su InfoStud mi sono occupato di migliorare il login, aggiungere un'icona su SmartBiblio per indicare i posti non gestiti dal sistema, migliorare la dark-mode e aggiungere l'immagine del profilo degli studenti. Su InfoProf invece ho lavorato alla traduzione automatica, anche qui sul login, sul date-picker nella registrazione del voto di un esame e infine sul vero protagonista del tirocinio, ovvero l'apertura di un verbale, in cui ho fatto uno studio più approfondito di cui parlerò in \ref{ch:3}.
+%Il mio tirocinio è stato caratterizzato dall'aggiunta di piccole funzionalità richieste dall'utenza o dalla risoluzione dei bug: su InfoStud mi sono occupato di migliorare il login, aggiungere un'icona su SmartBiblio per indicare i posti non gestiti dal sistema, migliorare la dark-mode e aggiungere l'immagine del profilo degli studenti. Su InfoProf invece ho lavorato alla traduzione automatica, anche qui sul login, sul date-picker nella registrazione del voto di un esame e infine sul vero protagonista del tirocinio, ovvero l'apertura di un verbale, in cui ho fatto uno studio più approfondito di cui parlerò in \ref{ch:3}.
+
+Il tema principale del mio tirocinio è l'aggiunta della funzionalità di apertura di un verbale in Infoprof. Soprattutto all'inizio, però, mi sono occupato di risolvere dei bug e aggiungere alcune funzionalità minori ad entrambe le applicazioni. Nello specifico, in InfoStud ho lavorato a:
+\begin{itemize}
+	\item L'aggiunta dei posti non gestiti dal sistema SmartBiblio (imamgine \ref{subfig:1}). Prima venivano indicati solo come posti occupati;
+	\item Risolto un bug in cui, nella pagina riguardante le aule, la barra di ricerca non riceveva alcun input;
+	\item Nella pagina di login, il reset della password quando il login fallisce e l'aggiunta della funzionalità di "Ricorda password". Mentre la matricola ora viene sempre sempre salvata
+	(immagine \ref{subfig:2});
+	\item L'aggiunta dell'opzione, nell'orario delle lezioni, per seguire dei corsi che non sono nella lista degli esami prenotabili;
+	\item La darkmode, che prima utilizzava un nero tendente al grigio ed ora invece usa un nero puro. Questo per risparmiare batteria sui dispositivi dotati di schermo OLED (immagine \ref{subfig:3});
+	\item L'aggiunta della foto del profilo dello studente (immagini \ref{subfig:4} e \ref{subfig:5}).
+\end{itemize}
+
+Mentre su Infoprof mi sono occupato:
+\begin{itemize}
+	\item Di migliorare la registrazione dei voti degli studenti, in particolare aggiungendo dei vincoli alla data di registrazione e dei default;
+	\item Al reset della password nel caso in cui il login fallisce;
+	\item Di migliorare il sistema di traduzione, che prima non coinvolgeva adeguatamente tutti i componenti dell'applicazione;
+	\item E infine di vari ed eventuali piccoli errori.
+\end{itemize}
+
+Questa attività iniziale è stata utile per diversi fattori: innanzi tutto per conoscere entrambi i progetti che sono di medio-grandi dimensioni e richiedono quindi un po' di tempo, inoltre per approfondire le tecnologie alla base di Ionic, per me nuove, e infine per collaborare insieme agli altri colleghi. Solo nell'ultimo periodo invece mi sono dedicato full-time all'apertura del verbale, nel quale però ho svolto un'attività di progettazione molto più approfondita. Come dicevo prima, infatti, il processo non è immediato. Durante il tirocinio ho svolto delle interviste/sondaggi agli utenti finali (cioè i docenti) per catturare quanti più dettagli possibili sull'utilizzo che non conoscevo, individuando così i \textit{needs} degli utenti. In seguito ho creato iterativamente i prototipi analizzandoli con dei test di usabilità con gli utenti oppure grazie a delle euristiche che descriverò più avanti. Lo step finale è stato quello dell'implementazione, grazie al quale oggi la funzionalità è effettivamente funzionante.
+
+\begin{figure}[H]
+	\begin{subfigure}{0.6\textwidth}
+		\label{subfig:1}
+		\centering
+		\includegraphics[width=0.5\linewidth]{issues/sb-l}  
+		\caption{Il posto trattegiato indica un posto non gestito.}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\label{subfig:2}
+		\centering
+		\includegraphics[width=0.5\linewidth]{issues/password}  
+		\caption{L'opzione per ricordare la password.}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\label{subfig:3}
+		\centering
+		\includegraphics[width=0.5\linewidth]{issues/darkmode}  
+		\caption{La darkmode, ora più scura.}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\label{subfig:4}
+		\centering
+		\includegraphics[width=0.5\linewidth]{issues/propic-1}
+		\caption{Immagine del profilo con nome nel menù laterale.}
+	\end{subfigure}
+	\begin{subfigure}{0.6\textwidth}
+		\label{subfig:5}
+		\centering
+		\includegraphics[width=0.5\linewidth]{issues/propic-2}
+		\caption{Immagine del profilo nella pagina del profilo utente.}
+	\end{subfigure}
+	\caption{Alcune delle issues a cui ho lavorato.}
+	\label{fig:issues}
+\end{figure}
+
 
 \section{Perché?}
 \label{sec:why}
 %trovare articoli scientifici in merito. 
-Lo smartphone è ormai uno strumento radicato nella nostra quotidianità. Sono innumerevoli i modi in cui ha cambiato la nostra vita e la produttività è uno degli aspetti centrali. Nel settore pubblico l'evoluzione dei sistemi informatici però pecca di una rigorosa analisi progettazione, il che comporta perdite di tempo e difficoltà nell'utilizzo. Dall'indagine preliminare che ho svolto infatti emerge che alcuni intervistati trovano l'interfaccia web \textit{error-prone}, mentre un professore assunto recentemente, ha dichiarato che la piattaforma non è affatto user-friendly e che la logica vorrebbe che ci fosse un tasto "crea appello", non che debba andarlo a cercare in "verbalizzazione". Anche all'interno del team di sviluppo, quando ci è stata presentata per la prima volta l'interfaccia, abbiamo faticato a capire come svolgere i task che un professore è tenuto normalmente a fare. Tolti errori grossolani come l'assegnazione di termini differenti alla per rappresentare lo stesso concetto, esistono delle criticità che vanno contro la logica comune: se andiamo ad osservare la lista degli insegnamenti, alla destra di ogni elemento possiamo osservare un numero che rappresenta il numero di \textit{corsi} selezionati accoppiati con quell'insegnamento. Se selezioniamo il checkbox dell'elemento e andiamo all'interno del sotto-menù, deselezionando tutti i corsi, l'insegnamento rimarrà selezionato. Una buona interfaccia \textbf{(citare)}, invece, dovrebbe essere coerente e aiutare l'utente ad evitare gli errori.
+Lo smartphone è ormai uno strumento radicato nella nostra quotidianità. Sono innumerevoli i modi in cui ha cambiato la nostra vita e la produttività è uno degli aspetti centrali. Nel settore pubblico l'evoluzione dei sistemi informatici però pecca di una rigorosa analisi progettazione, il che comporta perdite di tempo e difficoltà nell'utilizzo. Dall'indagine preliminare che ho svolto infatti emerge che alcuni intervistati trovano l'interfaccia web \textit{error-prone}, mentre un professore assunto recentemente, ha dichiarato che la piattaforma non è affatto user-friendly e che la logica vorrebbe che ci fosse un tasto "crea appello", non che debba andarlo a cercare in "verbalizzazione". Anche all'interno del team di sviluppo, quando ci è stata presentata per la prima volta l'interfaccia, abbiamo faticato a capire come svolgere i task che un professore è tenuto normalmente a fare. Tolti errori grossolani come l'assegnazione di termini differenti alla per rappresentare lo stesso concetto, esistono delle criticità che vanno contro la logica comune: se andiamo ad osservare la lista degli insegnamenti, alla destra di ogni elemento possiamo osservare un numero che rappresenta la quantità di \textit{corsi} selezionati accoppiati con quell'insegnamento. Se si clicca il checkbox dell'elemento e si va all'interno del sotto-menù, deselezionando tutti i corsi, l'insegnamento rimarrà selezionato. Una buona interfaccia, invece, dovrebbe essere coerente, efficiente e aiutare l'utente ad evitare gli errori.
 
 %L'approccio che ho avuto quindi è stato quello di capire cosa gli utenti ritengono più importante nell'apertura di un verbale e mettere in secondo piano le funzionalità che vengono usate raramente. Vedremo infatti che paradossalmente l'interfaccia web, ai docenti che hanno imparato ad usarla, piace.
 
@@ -140,11 +197,10 @@ Ad ogni \textit{merge request}, le modifiche apportate al codice sono revisionat
 
 \section{Tecnologie utilizzate}
 \label{sec:tech}
-Per sviluppare il front-end delle applicazioni utilizziamo Ionic Framework v3, che è basato su AngularJS. Ionic permette di utilizzare tecnologie web per creare interfacce secondo gli standard di Android e iOS. Il vantaggio dell'uso di Angular è che il codice non va adattato ad alcuna piattaforma, inoltre per chiunque abbia già una discreta conoscenza della programmazione web, risulta abbastanza immediato iniziare a programmare. Tutto ciò velocizza molto la scrittura di una UI, ma bisogna fare dei compromessi: l'interfaccia non segue diligentemente gli standard imposti dal Material Design o dall'iOS UI Design perché deve adattarsi a entrambe le piattaforme. Un'altra criticità è che di fatto l'app è un'interfaccia web con caratteristiche \textit{app-like}, ovvero una Progressive Web App come Google le definisce. Questo spesso va a peggiorare significativamente le prestazioni. 
+Per sviluppare il front-end delle applicazioni utilizziamo Ionic Framework v3, che è basato su AngularJS. Ionic permette di utilizzare tecnologie web per creare interfacce secondo gli standard di Android e iOS. Il vantaggio dell'uso di Angular è che il codice non va adattato ad alcuna piattaforma, inoltre per chiunque abbia già una discreta conoscenza della programmazione web, risulta immediato iniziare a programmare. Tutto ciò velocizza molto la scrittura di una UI, ma bisogna fare dei compromessi: l'interfaccia non segue diligentemente gli standard imposti dal Material Design o dall'iOS UI Design perché deve adattarsi a entrambe le piattaforme. Un'altra criticità è che di fatto l'app è un'interfaccia web con caratteristiche \textit{app-like}, ovvero una Progressive Web App come Google le definisce \cite{ref:pwa}. Questo spesso va a peggiorare significativamente le prestazioni. 
 %Il ruolo di Ionic è fornire gli elementi dei vari standard di design già fatti e di integrare anche le funzionalità native attraverso Ionic Native o Cordova. Ciò significa che le prestazioni ne risentono ripetto ad un'app nativa. Inoltre ad oggi Ionic è alla versione 5, ma è impossibile aggiornare i progetti senza andare a creare dei conflitti che vanno risolti manualmente, vista la mole di codice che è stato scritto quindi, siamo costretti a rimanere ad una versione di qualche anno fa, all'occorenza programmando manualmente le novità introdotte dagli standard.
 
-InfoStud ed InfoProf sono progettati seguendo un pattern architetturale simile ad MVC. L'idea generale è quella di tenere separate le responsabilità di ogni componente. Ciò si traduce sinteticamente in:
-
+InfoStud ed InfoProf sono progettati seguendo un pattern architetturale la cui idea generale è quella di tenere separate le responsabilità di ogni componente. Ciò si traduce sinteticamente in:
 \begin{itemize}
 	\item Model: rappresentano le classi, contengono i dati dell'applicazione a cui si accede attraverso i metodi che forniscono;
 	\item View: la view accede ai dati forniti dai modelli e li presenta all'utente. Può comunicare con i controller, i provider e i model;
@@ -159,7 +215,7 @@ InfoStud ed InfoProf sono progettati seguendo un pattern architetturale simile a
 	\label{fig:pattern}
 \end{figure}
 
-I vantaggi dell'utilizzo di questo modello è quello di separare la logica di presentazione, quella di business e quella di accesso ai dati in entità distinte tra loro in modo da favorire il lavoro di gruppo. Inoltre, essendo Angular un framework che impone una separazione in moduli del codice [citare], una divisione così fatta ne incoraggia il riuso.
+I vantaggi dell'utilizzo di questo modello è quello di separare la logica di presentazione, quella di business e quella di accesso ai dati in entità distinte tra loro in modo da favorire il lavoro di gruppo. Inoltre, essendo Angular un framework che impone una separazione in moduli del codice \cite{ref:modules}, una divisione così fatta ne incoraggia il riuso.
 
 %Tra ch 1 e 2 bisognerebbe aggiungere altre 8 pagine, magari apliare la descrizione delle issues
 
@@ -271,7 +327,7 @@ Prima di cominciare a parlare della fase di prototyping, introduco le tecniche d
 
 Inizialmente ho valutato il prototipo attraverso dei test di usabilità "sul campo", con la partecipazione di rappresentati scelti a caso dagli utenti stessi. Essi prevedono di avere un prototipo funzionante da far provare agli utenti, i quali durante il test descrivono ciò che stanno facendo (think aloud). Nei casi in cui questo test produce poche informazioni ho introdotto la variante del \textit{cooperative evaluation} che permette sia all'utente che al valutatore di fare domandee. A causa di forza maggiore ho dovuto abbandonare questa via per fare spazio alle euristiche.
 
-Le euristiche sono delle regole, o linee guida, utilizzate per valutare o guidare la progettazione delle interfacce grafiche. Per il mio progetto di tirocinio ho utilizzato le euristiche di Neilsen che riporto qui di seguito:
+Le euristiche sono delle regole, o linee guida, utilizzate per valutare o guidare la progettazione delle interfacce grafiche. Per il mio progetto di tirocinio ho utilizzato le euristiche di Neilsen \cite{ref:nielsen} che riporto qui di seguito:
 \begin{enumerate}
 	\item Visibilità dello stato del sistema
 	\item Corrispondenza tra il mondo reale e il sistema
@@ -713,7 +769,7 @@ private onStateChange(p: Program) {
 
 Durante il mio tirocinio ho cercato di dare il meglio, dedicando molto tempo alla crescita delle due applicazioni risolvendo problemi e aggiungendo funzionalità che vedranno la luce presto. Ritengo che il lavoro fatto all'interno del Gamification Lab migliori, nel suo piccolo, il nostro ateneo e la comunità degli studenti e dei professori fornendo degli strumenti più moderni e facili da utilizzare costruiti dalla comunità stessa.
 
-L'applicazione InfoProf è ancora in una fase iniziale del suo sviluppo e per questo sono stato felice di aver contribuito ad un progetto con una delle funzionalità base del sistema, la quale verrà utilizzata molto se ben realizzata. Chiaramente ci sono ancora dei problemi che vanno risolti, come ad esempio il fatto che il sistema non permette di strutturare in modo adeguato le date degli esami. Ragionando insieme infatti siamo arrivati alla conclusione che sarebbe opportuno progettare e sviluppare un modo per aggiungere un numero arbitrario di esami associati ad un appello. Infatti con il sistema attuale il giorno dell'esame che gli studenti vedono in fase di prenotazione è determinato dalla data di inizio appello. In realtà però spesso un appello ha molteplici date d'esame: ci sono insegnamenti che hanno sia lo scritto che l'orale, hanno più date per gli orali o addirittura hanno più di uno scritto. Questo dato nel sistema attuale può essere rappresentato solo nel campo note oppure nei siti web dei docenti, creando quindi dati non strutturati e addirittura frammentati tra più piattaforme. Grazie a questa funzionalità dunque, i professori potrebbero aggiungere le date tra l'inizio dell'appello e la fine, l'orario di ogni esame e anche l'aula, tramite il sistema di ricerca che già è implementato.
+L'applicazione InfoProf è ancora in una fase iniziale del suo sviluppo e per questo sono stato felice di aver contribuito ad un progetto con una delle funzionalità base del sistema, la quale verrà utilizzata molto se ben realizzata. Chiaramente ci sono ancora dei problemi che vanno risolti, come ad esempio il fatto che il sistema non permette di strutturare in modo adeguato le date degli esami. Ragionando insieme infatti siamo arrivati alla conclusione che sarebbe opportuno progettare e sviluppare un modo per aggiungere un numero arbitrario di esami associati ad un appello. Con il sistema attuale il giorno dell'esame che gli studenti vedono in fase di prenotazione è determinato dalla data di inizio appello. In realtà però un appello può avere molteplici date d'esame: ci sono insegnamenti che hanno sia lo scritto che l'orale, hanno più date per gli orali o addirittura hanno più di uno scritto. Questo dato nel sistema attuale può essere rappresentato solo nel campo note oppure nei siti web dei rispettivi docenti, creando dati non strutturati e addirittura frammentati tra più piattaforme. Grazie a questa funzionalità dunque, i professori potrebbero aggiungere le date, l'orario e anche l'aula in cui l'esame si svolgerà, tramite il sistema di ricerca che già è implementato.
 
 
 \backmatter
@@ -723,6 +779,18 @@ L'applicazione InfoProf è ancora in una fase iniziale del suo sviluppo e per qu
 \bibitem{ref:mit}
 Tratto da MIT:
 \url{http://web.mit.edu/6.813/www/sp18/classes/09-more-learnability/#consistency}
+
+\bibitem{ref:pwa}
+Progressive Web App:
+\url{https://web.dev/what-are-pwas/}
+
+\bibitem{ref:modules}
+Angulare modules:
+\url{https://angular.io/guide/architecture-modules}
+
+\bibitem{ref:nielsen}
+Nielsen heuristics:
+\url{https://www.nngroup.com/articles/ten-usability-heuristics/}
 
 \bibitem{ref:ionicViewLifeCycle}
 \url{https://ionicframework.com/docs/angular/lifecycle}
