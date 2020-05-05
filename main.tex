@@ -119,15 +119,14 @@ Lo stato dell'arte è un'app che permette di verbalizzare i voti degli studenti,
 
 %Il mio tirocinio è stato caratterizzato dall'aggiunta di piccole funzionalità richieste dall'utenza o dalla risoluzione dei bug: su InfoStud mi sono occupato di migliorare il login, aggiungere un'icona su SmartBiblio per indicare i posti non gestiti dal sistema, migliorare la dark-mode e aggiungere l'immagine del profilo degli studenti. Su InfoProf invece ho lavorato alla traduzione automatica, anche qui sul login, sul date-picker nella registrazione del voto di un esame e infine sul vero protagonista del tirocinio, ovvero l'apertura di un verbale, in cui ho fatto uno studio più approfondito di cui parlerò in \ref{ch:3}.
 
-Il tema principale del mio tirocinio è l'aggiunta della funzionalità di apertura di un verbale in Infoprof. Soprattutto all'inizio, però, mi sono occupato di risolvere dei bug e aggiungere alcune funzionalità minori ad entrambe le applicazioni. Nello specifico, in InfoStud ho lavorato a:
+Il tema principale del mio tirocinio è l'aggiunta della funzionalità di apertura di un verbale in Infoprof. Soprattutto all'inizio, però, mi sono occupato di risolvere dei bug e aggiungere alcune funzionalità minori ad entrambe le applicazioni. Nello specifico, in InfoStud ho lavorato a (immagine \ref{fig:issues}):
 \begin{itemize}
-	\item L'aggiunta dei posti non gestiti dal sistema SmartBiblio (imamgine \ref{subfig:1}). Prima venivano indicati solo come posti occupati;
+	\item L'aggiunta dei posti non gestiti dal sistema SmartBiblio. Prima venivano indicati solo come posti occupati;
 	\item Risolto un bug in cui, nella pagina riguardante le aule, la barra di ricerca non riceveva alcun input;
-	\item Nella pagina di login, il reset della password quando il login fallisce e l'aggiunta della funzionalità di "Ricorda password". Mentre la matricola ora viene sempre sempre salvata
-	(immagine \ref{subfig:2});
+	\item Nella pagina di login, il reset della password quando il login fallisce e l'aggiunta della funzionalità di "Ricorda password". Mentre la matricola ora viene sempre sempre salvata;
 	\item L'aggiunta dell'opzione, nell'orario delle lezioni, per seguire dei corsi che non sono nella lista degli esami prenotabili;
-	\item La darkmode, che prima utilizzava un nero tendente al grigio ed ora invece usa un nero puro. Questo per risparmiare batteria sui dispositivi dotati di schermo OLED (immagine \ref{subfig:3});
-	\item L'aggiunta della foto del profilo dello studente (immagini \ref{subfig:4} e \ref{subfig:5}).
+	\item La darkmode, che prima utilizzava un nero tendente al grigio ed ora invece usa un nero puro. Questo per risparmiare batteria sui dispositivi dotati di schermo OLED;
+	\item L'aggiunta della foto del profilo dello studente.
 \end{itemize}
 
 Mentre su Infoprof mi sono occupato:
@@ -142,31 +141,26 @@ Questa attività iniziale è stata utile per diversi fattori: innanzi tutto per 
 
 \begin{figure}[H]
 	\begin{subfigure}{0.6\textwidth}
-		\label{subfig:1}
 		\centering
 		\includegraphics[width=0.5\linewidth]{issues/sb-l}  
 		\caption{Il posto trattegiato indica un posto non gestito.}
 	\end{subfigure}
 	\begin{subfigure}{0.6\textwidth}
-		\label{subfig:2}
 		\centering
 		\includegraphics[width=0.5\linewidth]{issues/password}  
 		\caption{L'opzione per ricordare la password.}
 	\end{subfigure}
 	\begin{subfigure}{0.6\textwidth}
-		\label{subfig:3}
 		\centering
 		\includegraphics[width=0.5\linewidth]{issues/darkmode}  
 		\caption{La darkmode, ora più scura.}
 	\end{subfigure}
 	\begin{subfigure}{0.6\textwidth}
-		\label{subfig:4}
 		\centering
 		\includegraphics[width=0.5\linewidth]{issues/propic-1}
 		\caption{Immagine del profilo con nome nel menù laterale.}
 	\end{subfigure}
 	\begin{subfigure}{0.6\textwidth}
-		\label{subfig:5}
 		\centering
 		\includegraphics[width=0.5\linewidth]{issues/propic-2}
 		\caption{Immagine del profilo nella pagina del profilo utente.}
@@ -179,7 +173,7 @@ Questa attività iniziale è stata utile per diversi fattori: innanzi tutto per 
 \section{Perché?}
 \label{sec:why}
 %trovare articoli scientifici in merito. 
-Lo smartphone è ormai uno strumento radicato nella nostra quotidianità. Sono innumerevoli i modi in cui ha cambiato la nostra vita e la produttività è uno degli aspetti centrali. Nel settore pubblico l'evoluzione dei sistemi informatici però pecca di una rigorosa analisi progettazione, il che comporta perdite di tempo e difficoltà nell'utilizzo. Dall'indagine preliminare che ho svolto infatti emerge che alcuni intervistati trovano l'interfaccia web \textit{error-prone}, mentre un professore assunto recentemente, ha dichiarato che la piattaforma non è affatto user-friendly e che la logica vorrebbe che ci fosse un tasto "crea appello", non che debba andarlo a cercare in "verbalizzazione". Anche all'interno del team di sviluppo, quando ci è stata presentata per la prima volta l'interfaccia, abbiamo faticato a capire come svolgere i task che un professore è tenuto normalmente a fare. Tolti errori grossolani come l'assegnazione di termini differenti alla per rappresentare lo stesso concetto, esistono delle criticità che vanno contro la logica comune: se andiamo ad osservare la lista degli insegnamenti, alla destra di ogni elemento possiamo osservare un numero che rappresenta la quantità di \textit{corsi} selezionati accoppiati con quell'insegnamento. Se si clicca il checkbox dell'elemento e si va all'interno del sotto-menù, deselezionando tutti i corsi, l'insegnamento rimarrà selezionato. Una buona interfaccia, invece, dovrebbe essere coerente, efficiente e aiutare l'utente ad evitare gli errori.
+Lo smartphone è ormai uno strumento radicato nella nostra quotidianità. Sono innumerevoli i modi in cui ha cambiato la nostra vita e la produttività è uno degli aspetti centrali. Nel settore pubblico l'evoluzione dei sistemi informatici però pecca di una rigorosa analisi progettazione, il che comporta perdite di tempo e difficoltà nell'utilizzo. Dall'indagine preliminare che ho svolto infatti emerge che alcuni intervistati trovano l'interfaccia web \textit{error-prone}, mentre un professore assunto recentemente, ha dichiarato che la piattaforma non è affatto user-friendly e che la logica vorrebbe che ci fosse un tasto "crea appello", non che debba andarlo a cercare in "verbalizzazione". Anche all'interno del team di sviluppo, quando ci è stata presentata per la prima volta l'interfaccia, abbiamo faticato a capire come svolgere i task che un professore è tenuto normalmente a fare. Tolti errori grossolani come l'assegnazione di termini differenti per rappresentare lo stesso concetto, esistono delle criticità che vanno contro la logica comune: se andiamo ad osservare la lista degli insegnamenti, alla destra di ogni elemento possiamo osservare un numero che rappresenta la quantità di \textit{corsi} selezionati accoppiati con quell'insegnamento. Se si clicca il checkbox dell'elemento e si va all'interno del sotto-menù, deselezionando tutti i corsi, l'insegnamento rimarrà selezionato. Una buona interfaccia, invece, dovrebbe essere coerente, efficiente e aiutare l'utente ad evitare gli errori.
 
 %L'approccio che ho avuto quindi è stato quello di capire cosa gli utenti ritengono più importante nell'apertura di un verbale e mettere in secondo piano le funzionalità che vengono usate raramente. Vedremo infatti che paradossalmente l'interfaccia web, ai docenti che hanno imparato ad usarla, piace.
 
